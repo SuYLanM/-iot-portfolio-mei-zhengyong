@@ -32,20 +32,47 @@ The key point is that the phone does not directly measure "sound" as a number. T
 ### Circuit
 - ESP32 DevKit
 - Potentiometer: signal -> GPIO34, VCC -> 3.3 V, GND -> GND
-- LED: GPIO16 -> LED -> 220 ohm resistor -> GND
+- LED: GPIO18 -> 220 ohm resistor -> LED -> GND
 
 Use the supplied `sketch.ino` and `diagram.json`.
 
 ### Observation
-With a **12-bit ADC**, the ideal integer range is **0-4095**, so the full-scale range contains **4096 discrete levels**. With an **8-bit ADC**, the range becomes **0-255**, so there are **256 discrete levels**.
+With a **12-bit ADC**, the ideal integer range is **0-4095**, so the full-scale range contains **4096 discrete levels**. With a **10-bit ADC**, the range becomes **0-1023**, so there are **1024 discrete levels**.
 
-Changing from 12 bits to 8 bits changes **resolution**: the quantization step becomes 16 times coarser. It does **not automatically change the physical accuracy** of the sensor/ADC. Accuracy also depends on reference voltage, offset, gain error, noise, non-linearity, wiring, and calibration.
+Changing from 12 bits to 10 bits changes the **resolution**: the number of available digital levels is reduced by a factor of four, so the quantization step becomes four times coarser. This does **not automatically change the physical accuracy** of the measurement. Accuracy also depends on reference voltage, offset, gain error, noise, non-linearity, wiring, and calibration.
 
-When the output is deliberately quantized into only a few levels, the LED brightness visibly "jumps" instead of changing smoothly. This is a simple demonstration of coarse quantization.
+In the normal 10-bit mapping, the potentiometer value is mapped smoothly to LED brightness. For example, the simulation produced values such as `ADC = 95, Brightness = 23`, `ADC = 500, Brightness = 124`, and `ADC = 890, Brightness = 221`.
 
-**Evidence to insert here before committing:**
-- `images/wokwi-circuit.png`
-- `images/wokwi-serial.png`
+For the coarse-step test, the brightness mapping was temporarily changed to:
+
+```cpp
+int brightness = (adcValue / 256) * 85;
+```
+
+This creates only four brightness levels: approximately **0, 85, 170, and 255**. The screenshots show, for example, `ADC = 508 -> Brightness = 85`, `ADC = 720 -> Brightness = 170`, and `ADC = 890 -> Brightness = 255`. The LED therefore changes in visible jumps instead of smoothly because many ADC input values are mapped to the same output level.
+
+### Wokwi Evidence
+
+**12-bit simulation running**
+
+![12-bit Wokwi simulation](images/wokwi_12bit_running.png)
+
+**10-bit simulation running**
+
+![10-bit Wokwi simulation](images/wokwi_10bit_running.png)
+
+**Normal 10-bit mapping with Serial Monitor**
+
+![Normal 10-bit output at ADC 500](images/wokwi_normal_adc500.png)
+
+**Coarse-step mapping**
+
+![Coarse-step output at ADC 508](images/wokwi_coarse_adc508_brightness85.png)
+
+![Coarse-step output at ADC 720](images/wokwi_coarse_adc720_brightness170.png)
+
+![Coarse-step output at ADC 890](images/wokwi_coarse_adc890_brightness255.png)
+
 
 ## 3. Datasheet Notes
 
@@ -138,7 +165,7 @@ The project is a small smart-workstation node for a laboratory or shared study a
 ## 7. Guiding Questions - Short Answers
 
 1. **The chain:** smartphone microphone -> analog conditioning -> ADC/digital audio conversion -> SoC -> OS/app -> speaker/headphones when played back.
-2. **Wokwi observation:** 12 bit = 4096 levels (0-4095); 8 bit = 256 levels (0-255). Resolution becomes coarser; physical accuracy does not automatically change.
+2. **Wokwi observation:** 12 bit = 4096 levels (0-4095); 10 bit = 1024 levels (0-1023). The 10-bit setting has four times coarser quantization than 12-bit. Resolution changes; physical accuracy does not automatically change.
 3. **Datasheet example (VL53L0X):** I2C; address 0x52 in ST's address-byte notation / 0x29 as a 7-bit address; accuracy is condition-dependent, with a high-accuracy profile < +/-3% around 1.2 m at 200 ms under specified conditions.
 4. **Accuracy vs. precision:** biased bathroom scale = precise but inaccurate; noisy thermometer centered on the reference = accurate on average but not precise.
 5. **I2C anticipation:** devices share SDA/SCL, so each slave needs a unique address. Two devices with the same fixed address cause an address collision unless one address can be changed, one device is disabled, or a multiplexer/separate bus is used.
@@ -148,9 +175,9 @@ The project is a small smart-workstation node for a laboratory or shared study a
 
 ## 8. Day-1 Checklist
 
-- [ ] Create/fork the personal GitHub portfolio from the course template.
-- [ ] Copy this file into `pre-study/README.md` or `00-pre-study.md`.
-- [ ] Run the Wokwi project and add two screenshots.
+- [x] Create the personal GitHub portfolio from the course template.
+- [x] Copy this file into `pre-study/README.md` or `00-pre-study.md`.
+- [x] Run the Wokwi project and add Wokwi evidence screenshots.
 - [ ] Commit `sketch.ino`, `diagram.json`, notes, screenshots, and project abstract.
 - [ ] Install Arduino IDE v2 or PlatformIO.
 - [ ] Check the course LMS for any last-minute syllabus changes before class.
