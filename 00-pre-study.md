@@ -178,7 +178,7 @@ The project is a small smart-workstation node for a laboratory or shared study a
 - [x] Create the personal GitHub portfolio from the course template.
 - [x] Copy this file into `pre-study/README.md` or `00-pre-study.md`.
 - [x] Run the Wokwi project and add Wokwi evidence screenshots.
-- [ ] Commit `sketch.ino`, `diagram.json`, notes, screenshots, and project abstract.
-- [ ] Install Arduino IDE v2 or PlatformIO.
-- [ ] Check the course LMS for any last-minute syllabus changes before class.
+- [x] Commit `sketch.ino`, `diagram.json`, notes, screenshots, and project abstract.
+- [x] Install Arduino IDE v2 or PlatformIO.
+- [x] Check the course LMS for any last-minute syllabus changes before class.
 
