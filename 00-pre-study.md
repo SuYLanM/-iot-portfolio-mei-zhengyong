@@ -52,7 +52,7 @@ int brightness = (adcValue / 256) * 85;
 This creates only four brightness levels: approximately **0, 85, 170, and 255**. The screenshots show, for example, `ADC = 508 -> Brightness = 85`, `ADC = 720 -> Brightness = 170`, and `ADC = 890 -> Brightness = 255`. The LED therefore changes in visible jumps instead of smoothly because many ADC input values are mapped to the same output level.
 
 ### Wokwi Evidence
-
+**Wokwi simulation:** [Open the simulation in Wokwi](https://wokwi.com/projects/476869641648482305)
 **12-bit simulation running**
 
 ![12-bit Wokwi simulation](wokwi_12bit_running.png)
