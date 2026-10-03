@@ -55,23 +55,23 @@ This creates only four brightness levels: approximately **0, 85, 170, and 255**.
 
 **12-bit simulation running**
 
-![12-bit Wokwi simulation](images/wokwi_12bit_running.png)
+![12-bit Wokwi simulation](wokwi_12bit_running.png)
 
 **10-bit simulation running**
 
-![10-bit Wokwi simulation](images/wokwi_10bit_running.png)
+![10-bit Wokwi simulation](wokwi_10bit_running.png)
 
 **Normal 10-bit mapping with Serial Monitor**
 
-![Normal 10-bit output at ADC 500](images/wokwi_normal_adc500.png)
+![Normal 10-bit output at ADC 500](wokwi_normal_adc500.png)
 
 **Coarse-step mapping**
 
-![Coarse-step output at ADC 508](images/wokwi_coarse_adc508_brightness85.png)
+![Coarse-step output at ADC 508](wokwi_coarse_adc508_brightness85.png)
 
-![Coarse-step output at ADC 720](images/wokwi_coarse_adc720_brightness170.png)
+![Coarse-step output at ADC 720](wokwi_coarse_adc720_brightness170.png)
 
-![Coarse-step output at ADC 890](images/wokwi_coarse_adc890_brightness255.png)
+![Coarse-step output at ADC 890](wokwi_coarse_adc890_brightness255.png)
 
 
 ## 3. Datasheet Notes
