@@ -41,3 +41,7 @@ Challenges:
 
 ## Reflection 1
 [Reflection 1](/Reflections/ref01.md)
+
+## Task 4 — LDR hardware evidence
+
+[Task 4 English experiment report](evidence/Task04_LDR.md) documents the real wiring photograph and three serial screenshots for ambient, brighter and covered conditions. This evidence entry updates the earlier Task 4 preparation checklist: the qualitative light-response demonstration is documented; meter checks, repeated controlled trials and quantitative characterization remain TODO.
