@@ -5,6 +5,11 @@
 
 The reports below document real ESP32 demonstrations. Their limitations remain part of the evidence; no instructor grade or complete module pass is claimed. Task numbers follow the portfolio reports. Button work retains its original Task 1 source filename and also supports the workbook's basic-electronics goal. The workbook's separate serial/plot/timing task remains pending.
 
+## Group Members
+
+- Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
+- Felix — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)
+
 ## Task 1 — LED Blinking
 
 **Status:** Core GPIO/LED demonstration documented; remaining quantitative checks are TODO.

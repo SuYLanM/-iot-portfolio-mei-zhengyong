@@ -5,6 +5,11 @@
 
 This portfolio documents preparation, ESP32 experiments, Arduino source code and learning evidence. Reports separate observations from calculations and identify measurements still needed. Hardware demonstrations are not claims of instructor grading or complete fulfillment of every course requirement.
 
+## Group Members
+
+- Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
+- Felix — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)
+
 ## Module 01 Hardware Experiments
 
 [Open the Module 01 experiment guide](Module01/README.md) for wiring, serial screenshots, code instructions and follow-up records.
