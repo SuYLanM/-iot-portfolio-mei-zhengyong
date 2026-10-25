@@ -1,0 +1,26 @@
+# Local build products and caches
+.pio/
+build/
+.build/
+__pycache__/
+*.py[cod]
+*.elf
+*.bin
+*.hex
+*.o
+*.a
+*.map
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+Desktop.ini
+# Local credentials / machine configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json

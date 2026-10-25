@@ -1,1 +1,3 @@
-# Pictures for Module 1
+# Pictures for Module 02
+
+Pending: no Module 02 experiment photographs supplied. [Module entry](../README.md).

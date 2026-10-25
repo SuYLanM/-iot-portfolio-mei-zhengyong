@@ -1,16 +1,7 @@
-# Hardware
+# Hardware Documentation
 
-This is the hardware, I/we took out.
+[Module 01 experiments](../Module01/README.md) · [Original photos and serial screenshots](pictures/README.md)
 
-## year-month-day
+The experiment reports identify an ESP32 Dev Module, LED/resistor, button, B10K potentiometer and LDR divider. Exact parts, measured resistance/supply, inventory dates and ownership/checkout details remain TODO where not documented. This page is not a completed equipment checkout record.
 
-- Dupont cables 20 socket to socket (watch https://youtu.be/yXirMBP3x4U for documentation)
-- 1x large breadboard, 1x medium size breadboard (watch https://youtu.be/yXirMBP3x4U for documentation)
--  ...
-
-![A picture showing all parts taken out this day.](/images/img01.jpg "A picture showing all parts taken out this day.]")
-
-## Connectivity Classification Table
-
-TODO: here will be a table showing different connection options like serial (uart/rs232), i2c, onewire, pwm, ... 
-and corresponding wiring documentation (update table when you get new and/or interesting parts)
+A connectivity classification table remains TODO. The [original hardware template](../docs/archive/hardware-template.txt) is retained for reference; its placeholder picture was not actual evidence.
