@@ -1,0 +1,3 @@
+Task 9 PWM source: WeMos D1 mini (ESP8266)
+Pin=D1 GPIO5 | target_frequency=1000 Hz | range=0-1023 | duty_code=512 (about 50%)
+Configured values only; measure period and duty with the separate ESP32 analyzer.

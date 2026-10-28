@@ -1,6 +1,6 @@
 # Module 02 — Arduino Preparation
 
-Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. The external analyzer has a [verified static CH0 LOW/HIGH stage](../evidence/task09-logic-analyzer/README.md); this does not hardware-validate the PWM/I2C target sketches or other tasks. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Open each same-name .ino folder separately; no third-party sensor library has been selected.
+Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; the separate WeMos PWM sketch compiles for **ESP8266 / d1_mini / Core 3.1.2**. The external analyzer has a [verified static CH0 LOW/HIGH stage](../evidence/task09-logic-analyzer/README.md); the later [ESP8266 PWM source and capture](../evidence/task09-esp8266-pwm.md) are also verified. The ESP32 PWM/I2C target sketches and other tasks retain their existing status. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Open each same-name .ino folder separately; no third-party sensor library has been selected.
 
 | Task | Sketch and English instructions | Default behavior |
 |---|---|---|
@@ -13,9 +13,10 @@ Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. The externa
 | 6 | [Direct register adapter](task06_register_template/README.md) | PENDING_CONFIG; no guessed address/register |
 | 7 | [Two-device framework](task07_two_devices/README.md) | PENDING_CONFIG; actual addresses/read adapters needed |
 | 8 | [Mux selection template](task08_mux_template/README.md) | PENDING_CONFIG; actual TCA9548A/straps needed |
-| 9 | [PWM reference](task09_pwm_reference/README.md) | GPIO25 configured 1 kHz, not measured timing |
+| 9 | [PWM reference](task09_pwm_reference/README.md) | ESP32 GPIO25 alternative; not used in the actual WeMos experiment |
+| 9 | [ESP8266 WeMos PWM generator](task09_esp8266_pwm_generator/README.md) | D1/GPIO5, 1000 Hz requested, approximately 50%; COM4 upload and real capture verified |
 | 9 | [I2C capture source](task09_i2c_capture_source/README.md) | Separate target: SDA21/SCL22, 100 kHz, ACK/NACK logging; Task 5 source unchanged |
 
-Task 9 uses a **separate analyzer board** running pinned upstream SUMP firmware plus the [Core 3 retune patch](../patches/task09-core3-clock-retune.patch); do not combine firmware. [Chinese operation manual](../task09-logic-analyzer-guide-zh.md) · [Actual software build checks](../task09-analyzer-build.md). PWM, I2C capture and effective timing remain Pending.
+Task 9 uses a **separate analyzer board**. Actual static and WeMos PWM captures used its unchanged official SUMP firmware; the [Core 3 retune patch](../patches/task09-core3-clock-retune.patch) remains prepared and was not flashed for those results. Do not combine firmware. [Chinese operation manual](../task09-logic-analyzer-guide-zh.md) · [Actual software build checks](../task09-analyzer-build.md). The [ESP8266 PWM capture](../evidence/task09-esp8266-pwm.md) is now documented; I2C capture and independently calibrated timing remain Pending.
 
 [Chinese wiring guide](../wiring-zh.md) · [Validation](../validation.md). Final pins must follow actual board/module documentation. Source compilation does not satisfy Tasks 5–9 hardware evidence.

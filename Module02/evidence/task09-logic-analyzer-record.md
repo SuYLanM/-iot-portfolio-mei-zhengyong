@@ -1,6 +1,6 @@
 # Task 9 A — Actual Capture and Class Record
 
-**Static CH0 LOW/HIGH stage verified; dynamic measurements/class decision Pending.** [Preserved real files and verification](task09-logic-analyzer/README.md). The remaining tables below are blank future-work templates, not completed measurements. [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
+**Static CH0 LOW/HIGH and a real ESP8266-source PWM capture verified; I2C/calibrated timing/class decision Pending.** [Actual PWM results](task09-esp8266-pwm.md). [Preserved real files and verification](task09-logic-analyzer/README.md). The remaining tables below are blank future-work templates, not completed measurements. [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
 
 ## Completed Static Input Stage
 
@@ -18,9 +18,9 @@ On 2026-10-28, one classic ESP32 with GPIO22→GPIO23 captured GPIO21/CH0 connec
 |---|---|---|---|---|---|
 | | | | | | |
 
-## PWM Measurements
+## PWM Measurements — Real WeMos Capture Linked Separately
 
-Configured target: GPIO25, 1000 Hz, 50%; these are design parameters only. Capture on A CH0/GPIO21. The table contains no measured values.
+The actual blue WeMos D1 mini source uses D1/GPIO5; [complete raw data, screenshots and sample-derived measurements](task09-esp8266-pwm.md) record its real acquisition. The blank table below is retained for further tests; the earlier GPIO25 source is an untested ESP32 alternative.
 
 | Run | Requested sample rate | Samples / duration shown | Trigger / channels / RLE | Period measured | f=1/T | High time / duty | Repeatability / missed edges | Screenshot / .sr |
 |---|---|---|---|---|---|---|---|---|

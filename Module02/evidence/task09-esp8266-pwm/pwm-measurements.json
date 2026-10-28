@@ -1,0 +1,137 @@
+{
+  "file": "pulseview-pwm-esp8266-10000.sr",
+  "sha256": "94cdc3d80c2f904140df032849705de47dfa47da1441f5b6f7dc0026c5ab0526",
+  "configured_samplerate_hz": 1000000,
+  "independent_timebase_calibration": null,
+  "logic_bytes": 20000,
+  "samples": 10000,
+  "channel": 0,
+  "rising_indices": [
+    729,
+    1729,
+    2728,
+    3728,
+    4728,
+    5728,
+    6728,
+    7727,
+    8727,
+    9727
+  ],
+  "falling_indices": [
+    229,
+    1229,
+    2229,
+    3229,
+    4228,
+    5228,
+    6228,
+    7228,
+    8228,
+    9228
+  ],
+  "complete_cycles": [
+    {
+      "rise_start": 729,
+      "fall": 1229,
+      "rise_end": 1729,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 1729,
+      "fall": 2229,
+      "rise_end": 2728,
+      "period_samples": 999,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 999,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1001.001001001001,
+      "duty_percent": 50.050050050050054
+    },
+    {
+      "rise_start": 2728,
+      "fall": 3229,
+      "rise_end": 3728,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 3728,
+      "fall": 4228,
+      "rise_end": 4728,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 4728,
+      "fall": 5228,
+      "rise_end": 5728,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 5728,
+      "fall": 6228,
+      "rise_end": 6728,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 6728,
+      "fall": 7228,
+      "rise_end": 7727,
+      "period_samples": 999,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 999,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1001.001001001001,
+      "duty_percent": 50.050050050050054
+    },
+    {
+      "rise_start": 7727,
+      "fall": 8228,
+      "rise_end": 8727,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 8727,
+      "fall": 9228,
+      "rise_end": 9727,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    }
+  ],
+  "mean_period_samples": 999.7777777777778,
+  "mean_high_samples": 500.3333333333333,
+  "mean_duty_percent": 50.04445556667779
+}

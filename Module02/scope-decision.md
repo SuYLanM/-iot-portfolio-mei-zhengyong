@@ -1,6 +1,6 @@
 # Task 9 — Scope / Logic Analyzer Decision Record
 
-**Stage verified: A-class CH0/GPIO21 static LOW and HIGH acquisition, 10,000 samples each. PWM, I2C captures, independent timebase calibration and class decision remain Pending.** The user reported successful IDE compilation/flashing; the assistant checked real serial transfers and PulseView acquisitions without reflashing. Proposed pairing remains digital SUMP plus browser analog scope; final adoption and instruction ownership require an actual class decision. [Original research sources](references.md#r11-instrument-candidates) · [Original captures, replay screenshots and verification](evidence/task09-logic-analyzer/README.md).
+**Stages verified: CH0 static LOW/HIGH and a real PWM capture from a WeMos D1 mini (ESP8266), each with 10,000 samples. I2C capture, independent timebase calibration and class decision remain Pending.** The user reported successful IDE compilation/flashing; the assistant checked real serial transfers and PulseView acquisitions without reflashing. Proposed pairing remains digital SUMP plus browser analog scope; final adoption and instruction ownership require an actual class decision. [Original research sources](references.md#r11-instrument-candidates) · [Original captures, replay screenshots and verification](evidence/task09-logic-analyzer/README.md).
 
 ## Project Objective
 
@@ -19,7 +19,7 @@ Prepare and evaluate a classic ESP32 digital analyzer for known PWM and I2C traf
 | GPIO | Captured channels below; GPIO22/23 reserved for clock loop; LED2 and UART0 used | ADC1 GPIO34 input, GPIO25 1 kHz test output, Wi-Fi active |
 | Input limit | Bare GPIO: 3.3 V logic only, no negative or 5 V input; project PCB/level-shifter design is separate and under validation | Positive low-voltage ADC signal only, useful range depends on attenuation/nonlinearity; keep test amplitude comfortably below 3.0 V after verified conditioning |
 | Main limitations | Digital levels only; no calibrated analog rise-time/amplitude measurement; claimed maximum rate needs reference tests | Wi-Fi/analogRead timing jitter and ADC error; requested rate is not an independently measured rate; cannot resolve 100 kHz I2C with its claimed analog rates |
-| Current status | Original source also compiled with Core 3.3.7; IDE flash user-confirmed; real CH0 LOW/HIGH captures verified; PWM/I2C/timebase Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
+| Current status | Original source compiled with Core 3.3.7; real CH0 LOW/HIGH and ESP8266-source PWM captures verified; I2C/calibrated timebase Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
 
 These are project statements or code constants, **not our measured specifications**. The browser project's own README states its interface image uses a simulated capture and its timing figures are unvalidated design targets. No upstream image is imported as student evidence.
 
@@ -75,9 +75,25 @@ T GND -------------------------------- A GND
 5. GPIO34 is ADC1, suitable for a candidate using Wi-Fi, but voltage calibration/nonlinearity remains unverified. For a proposed 3.3 V PWM source use a verified 10k/10k divider to approximately 1.65 V, check node voltage before connecting and evaluate loading/bandwidth. Do not blindly copy the upstream high-voltage/biased input drawing or treat a 0–3.3 V rail test as calibrated amplitude. Viewing an AP-hosted page differs from Web Serial flashing; record browser/OS and actual route used.
 6. The web sampler uses a micros()-paced loop; capture metadata is calculated from requested period, not measured timestamps for every ADC conversion. Its main.cpp header mentions a hardware timer, while sampler.cpp implements the polling loop. Inspect working code and measure real timing rather than trusting either label.
 
-## PWM Capture — Pending
+## PWM Capture — Verified ESP8266 Source, Uncalibrated Timebase
 
-Use two separate boards. Target T runs [task09_pwm_reference.ino](code/task09_pwm_reference/task09_pwm_reference.ino), requesting GPIO25, 1 kHz and 50% duty. Wire **T25→A21/CH0**, T GND→A GND and analyzer-local **A22→A23**. Keep both boards' regulated supply outputs separate. Start with requested 1 MS/s, 16k samples, CH0, no trigger and RLE off. Measure adjacent same-direction edges and high duration using cursors: f=1/T, duty=tH/T. Record actual values, jitter/missing edges and a genuine screenshot; none are available yet.
+On 2026-10-28 the actual source was **blue WeMos D1 mini / ESP8266**, not another ESP32. Its independent [ESP8266 sketch](code/task09_esp8266_pwm_generator/task09_esp8266_pwm_generator.ino) uses D1=GPIO5, analogWriteRange(1023), analogWriteFreq(1000), duty code 512 and Serial 115200. ESP8266 Community **3.1.2** / `esp8266:esp8266:d1_mini` compiled successfully. After user confirmation of **COM4 (CH340)**, common GND and removal of the former static input tie, upload identified ESP8266EX and returned `Hash of data verified`. Startup settings were read from COM4. Black analyzer **COM3 retained its official firmware**; it was not reflashed or patched.
+
+Actual connections: **B D1/GPIO5→A GPIO21/CH0**, B GND→A GND, analyzer-local A GPIO22→GPIO23. Each board was separately USB powered; no 3V3/5V rails were joined. Wiring is user-confirmed; a wiring photograph/continuity test is not supplied.
+
+PulseView real ESP32 ols device / COM3 / 921600 baud captured **1 MHz requested, 10 k samples, no trigger**, RLE off, External Clock off and Pattern=None. CH0 was enabled; the saved archive stores 16 channels but only CH0 was driven/validated. The [original .sr, live/replay screenshots and complete measurements](evidence/task09-esp8266-pwm.md) are preserved.
+
+| Actual sample-derived result | Observation |
+|---|---|
+| Complete rising-to-rising cycles | 9, in a 10,000-sample record |
+| Period | 999–1000 samples ≈ 0.999–1.000 ms at configured rate |
+| HIGH duration | 500–501 samples ≈ 0.500–0.501 ms at configured rate |
+| Per-cycle duty | 50.000–50.100%; mean 50.0445% |
+| Inverse mean period | Approximately 1000.22 Hz, conditional on configured analyzer timebase |
+
+Example: indices rise=729, fall=1229, next rise=1729 give 1000-point period and 500-point HIGH. Values are calculated from actual raw samples, not invented cursor readings. A nominal 1 µs/sample quantization, source software PWM and analyzer timing can contribute to variation. No independent timebase reference, long-term jitter bound or absence of missed edges was established. The existing [ESP32 GPIO25 reference](code/task09_pwm_reference/README.md) remains an untested alternative; it was not uploaded to the WeMos or analyzer.
+
+![Genuine live PulseView capture of ESP8266 PWM](evidence/task09-esp8266-pwm/pwm-live-overview.jpg)
 
 ## I2C Protocol Decoding — Pending
 
@@ -93,7 +109,7 @@ An important Core 3 issue was found: repeated ledcAttach calls reject an attache
 
 ## Windows 11 / PulseView Compatibility
 
-User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Exact Core 3.3.7 compilation was checked separately from the earlier Core 3.3.12 preparation. COM3 CP210x transport, SUMP identification, PulseView static capture and saved-file reopening were observed. I2C decoding and dynamic timing remain **Pending**. The successful transfers provide no basis for declaring the CP210x driver generally incompatible; no driver replacement or baud downgrade was performed. The analyzer port is exclusive to PulseView; close conflicting monitors and reconnect/rescan after a USB power cycle. Do not use Zadig to replace the working UART driver.
+User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Exact Core 3.3.7 compilation was checked separately from the earlier Core 3.3.12 preparation. COM3 CP210x transport, SUMP identification, PulseView static capture and saved-file reopening were observed. I2C decoding and independent dynamic timing calibration remain **Pending**; the later real ESP8266 PWM acquisition is documented above. The successful transfers provide no basis for declaring the CP210x driver generally incompatible; no driver replacement or baud downgrade was performed. The analyzer port is exclusive to PulseView; close conflicting monitors and reconnect/rescan after a USB power cycle. Do not use Zadig to replace the working UART driver.
 
 ## Actual Static LOW/HIGH Captures — Verified Stage
 
@@ -118,7 +134,7 @@ Code review did identify repeated Core 3 LEDC attachment, unchecked fixed-delay 
 
 ## Capture Test Plan
 
-Use [our Core 3 PWM reference](code/task09_pwm_reference/README.md) on the separate target, configured for 1 kHz at GPIO25. The number printed by that sketch is a configured target, not a measured frequency.
+The actual PWM test used the [ESP8266 WeMos source](code/task09_esp8266_pwm_generator/README.md) on D1/GPIO5. The earlier [ESP32 Core 3 PWM reference](code/task09_pwm_reference/README.md), GPIO25, remains an alternative preparation, not the source used in the preserved capture. Source console parameters are configuration targets, not independent frequency measurements.
 
 - Digital baseline: capture a known PWM signal at several sample settings; measure period/duty stability, missing edges and duration. Start conservatively; check maximum claims against a reference if available.
 - I2C: run the scanner at configured 100 kHz and decode SDA/SCL on correct channels. Course rule of thumb: at least 1 MS/s for 100 kHz and 4 MS/s for 400 kHz, subject to real sample reliability and decoder behavior. This is a margin recommendation, not a demonstrated acquisition rate or analog edge-quality guarantee.
@@ -140,7 +156,7 @@ Use [our Core 3 PWM reference](code/task09_pwm_reference/README.md) on the separ
 
 ## Experimental Results and Limits
 
-**Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Not measured:** independent input voltage, effective sample rate/timebase, edge timing, PWM frequency/duty, I2C ACK/NACK, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. The requested PWM/I2C captures and final Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
+**Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Later PWM stage:** the WeMos source produced a real dynamic CH0 record with sample-derived period/duty as reported above. **Still not measured:** independent input voltage, calibrated effective sample rate/timebase, independently referenced edge timing/frequency, I2C ACK/NACK, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. The PWM capture is now available; I2C capture, calibration, class demo/decision and remaining Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
 
 ## Class Decision and Conclusion — Pending
 
