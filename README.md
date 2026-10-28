@@ -24,6 +24,10 @@ This portfolio documents preparation, ESP32 experiments, Arduino source code and
 
 Task labels follow this portfolio's experiment reports. The button sketch retains its original `task01_button_debounce.ino` name. In the course workbook, button/debounce work is part of Task 1; the separate serial plotting and delay/millis comparison remains [pending](Module01/records/task02-serial.md). Task 5 code is preparation only.
 
+## Module 02 — Buses and I2C Preparation
+
+[Module 02 guide and Task 1–10 checklist](Module02/README.md) covers pin/divider theory, bus research, I2C study, scanner/register/multi-device code and scope feasibility. **Prepared / not hardware tested**: no discovered addresses, sensor values, instrument captures, pod assignment or class decision are claimed. Task 10 is optional.
+
 ## Pre-study and Preparation
 
 - [Module 0 pre-study](00-pre-study.md): original notes, datasheet study, project idea and Wokwi evidence; retained as submitted.
@@ -31,7 +35,7 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 - [Personal profile and Task Pod template](Module01/who-am-i.md): TODO personal answers and actual pod agreement.
 - [Task A / Task B study log](Module01/study-log.md): theory draft; actual student/pod verification and discussion remain TODO.
 - [Task 6 signal-chain draft](Module01/task06-chain.md): literature-based diagram, not a tested VL53L0X build.
-- [Module 02](Module02/README.md): pending; original template retained in the archive.
+- [Module 02](Module02/README.md): theory and Arduino preparation available; all hardware tests, bus assignment and classroom decisions remain Pending.
 
 ## Learning Reflections
 
@@ -48,7 +52,7 @@ Module01/
   code/                     Separate Arduino sketch folders and instructions
   records/                  Follow-up plans and blank measurement tables
 Hardware/pictures/          Original hardware photographs and screenshots
-Module02/                   Pending course module
+Module02/                   Bus/I2C theory and code; hardware tests pending
 Reflections/                Reflection instructions and original prompts
 sketch.ino, diagram.json    Original Wokwi preparation source
 wokwi_*.png                 Original simulation screenshots

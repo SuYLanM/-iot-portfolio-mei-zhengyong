@@ -1,7 +1,48 @@
-# Module 02 — Pending
+# Module 02 — Buses, I2C and Sensor Addressing
 
-No Module 02 experiment report or completion evidence has been supplied. This directory is retained for future coursework; template statements are not claims of work performed.
+**Preparation status: theory and compile-checked code prepared; all Module 02 hardware experiments Pending.** No scanned device addresses, physical readings, captures, classroom decisions or completed presentations are claimed.
 
-[Portfolio home](../README.md) · [Module 01](../Module01/README.md) · [Original Module 02 template](../docs/archive/module02-template.txt)
+[Portfolio home](../README.md) · [Official Module 2](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md) · [Requirements checklist](task-checklist.md) · [Sources / verification](references.md)
 
-TODO: add real task notes, source and evidence when performed. Reflection 2 and Reflection 3 have not been supplied, so no links to nonexistent files are published.
+## Group Members
+
+- Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
+- Felix — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)
+
+Individual experimental/discussion contributions will be recorded only after they occur. Bus assignment and final class instrument choice are not yet known.
+
+## Task Navigation
+
+| Task | English document / report framework | Arduino preparation | Current status |
+|---|---|---|---|
+| 1 Pins, PWM, UART, divider | [pins-and-dividers.md](pins-and-dividers.md) | [UART loopback](code/task01_uart_loopback/README.md) | Theory/code Prepared; DMM/UART measurements Pending |
+| 2 Bus systems survey | [Research notes](bus-survey-notes.md), [bus profile template](bus-profile-template.md), [pitch](bus-pitch.md) | No bus-specific driver assumed | Prepared research; final bus-<name>.md awaits assignment |
+| 3 Class bus comparison | [bus-comparison.md](bus-comparison.md) | — | Research draft Prepared; actual class merge/discussion Pending |
+| 4 / 4a / 4b I2C study | [study-log.md](study-log.md) | [Code index](code/README.md) | Theory Prepared; student/pod validation and sharing Pending |
+| 5 I2C scan | [Blank scan report](evidence/README.md) | [Scanner](code/task05_i2c_scanner/README.md) | Code Prepared; **not hardware tested** |
+| 6 Library versus register | [Comparison / decoding checklist](register-reading.md) | [Library template](code/task06_library_template/README.md), [register template](code/task06_register_template/README.md) | Disabled scaffolds Prepared; sensor/adapters/tests Pending |
+| 7 Two devices | [Address table / dual-device report](two-devices.md) | [Framework](code/task07_two_devices/README.md) | Prepared; actual models/addresses/readings Pending |
+| 8 Address conflict | [address-conflict.md](address-conflict.md) | [Mux template](code/task08_mux_template/README.md) | Theory Prepared; no physical conflict/fix or simulation claimed |
+| 9 Instrument sprint | [scope-decision.md](scope-decision.md) | [PWM reference](code/task09_pwm_reference/README.md) | Pinned candidate research Prepared; build/flash/captures/class choice Pending |
+| 10 Decode waveform | [Optional guide](i2c-decode-guide.md) | Use a verified Task 9 instrument later | **Optional / Not yet tested** |
+
+The original required English output filenames are retained. A final bus-<name>.md will be added and linked after a real assignment, rather than arbitrarily choosing a bus. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
+
+## Wiring, Code and Evidence
+
+- [Detailed Chinese wiring / safety guide](wiring-zh.md).
+- [Seven independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
+- Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
+- [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). No Module 02 photos/logs are supplied yet; create links only after actual files exist.
+- [Software validation](validation.md). External instrument firmware was researched, not installed or compiled here. GPIO22/23 conflict and Core 2/3 compatibility are explicit in the scope record.
+
+## Next Actual Session
+
+1. Identify board/modules, meter-check voltage/pull-ups/divider and test UART.
+2. Confirm the assigned bus with the instructor; finalize one page and rehearse/deliver the actual pitch.
+3. Scan one device and changed configurations, then implement library/register adapters for the real sensor.
+4. Test two devices, and an address conflict only if suitable hardware is available.
+5. Evaluate instruments on separate reviewed boards, compare actual captures, and make the real class decision.
+6. Complete personal/pod understanding, neighbouring-pod discussion and real Discord sharing. Optional Task 10 follows working instrumentation.
+
+Existing Module 01, Module 0, Reflection and original template archive remain intact. [Original Module 02 template](../docs/archive/module02-template.txt) is historical material, not completed evidence.
