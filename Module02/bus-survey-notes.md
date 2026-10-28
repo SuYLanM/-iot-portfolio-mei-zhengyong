@@ -1,6 +1,6 @@
-# Task 2 — Candidate Bus Research (Assignment Pending)
+# Task 2 — Candidate Bus Research (Preparation Archive)
 
-No bus has been assigned or chosen for Mei Zhengyong and Felix in the supplied information. These are preparatory notes, not seven completed pod presentations. After actual assignment, use [the profile template](bus-profile-template.md) to create **bus-<name>.md**, choose the relevant evidence and keep it to about one page. [Comparison table](bus-comparison.md) covers wiring, rates and diagnosis.
+The group has now selected **Pod 4 — CAN Bus**: see the [CAN profile](bus-can.md), [speech](can-pitch.md) and [verification log](can-research-log.md). **Research Prepared / CAN Hardware Test Pending.** The candidate material below is retained as preparatory context, not seven completed pod presentations. The [generic profile template](bus-profile-template.md) remains available. [Comparison table](bus-comparison.md) covers wiring, rates and diagnosis; actual classroom contributions and other pods' pitches remain unrecorded.
 
 | Candidate | History/background and design purpose | Distinctive feature / relation to other buses | Electrical / addressing notes | Example and diagnosis |
 |---|---|---|---|---|

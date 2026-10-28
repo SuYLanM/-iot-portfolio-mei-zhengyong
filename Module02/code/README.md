@@ -6,6 +6,8 @@ Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. No Module 0
 |---|---|---|
 | 1 | [UART loopback](task01_uart_loopback/README.md) | UART2 RX16/TX17, pending physical jumper test |
 | 1 | [Fixed-resistor voltage divider](task01_voltage_divider/README.md) | GPIO35, 32 raw + 32 API-mV samples; Prepared / Awaiting hardware validation |
+| 2 Pod 4 | [CAN A — local self-test](task02_can_self_test/README.md) | 500 kbit/s, same unconnected GPIO5 TX/RX feedback; no physical CAN validation |
+| 2 Pod 4 | [CAN B — external communication](task02_can_external/README.md) | 500 kbit/s, GPIO5 TX / GPIO4 RX, SN65HVD230 and active peer required; hardware Pending |
 | 5 | [I2C scanner](task05_i2c_scanner/README.md) | Repeating probes, SDA21/SCL22, 100 kHz |
 | 6 | [Library adapter](task06_library_template/README.md) | PENDING_CONFIG; stubs do not invent readings |
 | 6 | [Direct register adapter](task06_register_template/README.md) | PENDING_CONFIG; no guessed address/register |

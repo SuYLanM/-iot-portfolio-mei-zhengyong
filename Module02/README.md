@@ -9,14 +9,14 @@
 - Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
 - Felix — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)
 
-Individual experimental/discussion contributions will be recorded only after they occur. Bus assignment and final class instrument choice are not yet known.
+Individual experimental/discussion contributions will be recorded only after they occur. The group has selected **Task 2 — Pod 4: CAN Bus**. **Research Prepared / CAN Hardware Test Pending**; the classroom pitch, sharing and final class instrument choice remain Pending.
 
 ## Task Navigation
 
 | Task | English document / report framework | Arduino preparation | Current status |
 |---|---|---|---|
 | 1 Pins, PWM, UART, divider | [pins-and-dividers.md](pins-and-dividers.md) | [UART loopback](code/task01_uart_loopback/README.md), [GPIO35 divider](code/task01_voltage_divider/README.md) | Prepared / Awaiting hardware validation; 3.3 V baseline and original 5 V measurement Pending |
-| 2 Bus systems survey | [Research notes](bus-survey-notes.md), [bus profile template](bus-profile-template.md), [pitch](bus-pitch.md) | No bus-specific driver assumed | Prepared research; final bus-<name>.md awaits assignment |
+| 2 Pod 4 — CAN Bus | [CAN profile](bus-can.md), [technical notes / comparison](can-technical-notes.md), [2–3 min speech](can-pitch.md), [research log](can-research-log.md) | [A local self-test](code/task02_can_self_test/README.md), [B external CAN](code/task02_can_external/README.md) | **Research Prepared / CAN Hardware Test Pending**; presentation and Discord sharing Pending |
 | 3 Class bus comparison | [bus-comparison.md](bus-comparison.md) | — | Research draft Prepared; actual class merge/discussion Pending |
 | 4 / 4a / 4b I2C study | [study-log.md](study-log.md) | [Code index](code/README.md) | Theory Prepared; student/pod validation and sharing Pending |
 | 5 I2C scan | [Blank scan report](evidence/README.md) | [Scanner](code/task05_i2c_scanner/README.md) | Code Prepared; **not hardware tested** |
@@ -26,11 +26,12 @@ Individual experimental/discussion contributions will be recorded only after the
 | 9 Instrument sprint | [scope-decision.md](scope-decision.md) | [PWM reference](code/task09_pwm_reference/README.md) | Pinned candidate research Prepared; build/flash/captures/class choice Pending |
 | 10 Decode waveform | [Optional guide](i2c-decode-guide.md) | Use a verified Task 9 instrument later | **Optional / Not yet tested** |
 
-The original required English output filenames are retained. A final bus-<name>.md will be added and linked after a real assignment, rather than arbitrarily choosing a bus. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
+The original required English output filenames are retained. Task 2 now uses **bus-can.md** for the group's confirmed CAN selection; the [original generic profile](bus-profile-template.md), [pitch template](bus-pitch.md) and [candidate research](bus-survey-notes.md) remain available. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
 
 ## Wiring, Code and Evidence
 
 - [Detailed Chinese wiring / safety guide](wiring-zh.md).
+- [CAN wiring / module checks](can-wiring.md) · [Blank CAN hardware and classroom record](evidence/task02-can-test-record.md). Local self-test is separate from two-node physical CAN verification.
 - [Independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
 - Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
 - [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). No Module 02 photos/logs are supplied yet; create links only after actual files exist.
@@ -39,7 +40,7 @@ The original required English output filenames are retained. A final bus-<name>.
 ## Next Actual Session
 
 1. Identify board/modules, meter-check voltage/pull-ups/divider and test UART.
-2. Confirm the assigned bus with the instructor; finalize one page and rehearse/deliver the actual pitch.
+2. Review the Pod 4 CAN profile together, rehearse/deliver the actual pitch, record other pods' points and perform real Discord sharing. Inspect CAN modules before the optional supporting hardware demonstrations.
 3. Scan one device and changed configurations, then implement library/register adapters for the real sensor.
 4. Test two devices, and an address conflict only if suitable hardware is available.
 5. Evaluate instruments on separate reviewed boards, compare actual captures, and make the real class decision.
