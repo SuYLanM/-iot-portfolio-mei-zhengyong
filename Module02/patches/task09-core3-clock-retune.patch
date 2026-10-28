@@ -1,0 +1,19 @@
+diff --git a/ESP32_LogicAnalyzer/LogicAnalyzer.cpp b/ESP32_LogicAnalyzer/LogicAnalyzer.cpp
+index 039b0b9..b3cdba5 100644
+--- a/ESP32_LogicAnalyzer/LogicAnalyzer.cpp
++++ b/ESP32_LogicAnalyzer/LogicAnalyzer.cpp
+@@ -557,6 +557,12 @@ void LogicAnalyzer::enable_out_clock(uint32_t freq_in_hz)
+ {
+ #if ESP_ARDUINO_VERSION_MAJOR >= 3
+-    ledcAttach(CLK_OUT, freq_in_hz, 1);
+-    ledcWrite(CLK_OUT, 1);
++    // Core 3: attaching an already attached pin fails; explicitly retune it.
++    static bool clock_attached = false;
++    if (!clock_attached) {
++        clock_attached = ledcAttach(CLK_OUT, freq_in_hz, 1);
++    } else {
++        ledcChangeFrequency(CLK_OUT, freq_in_hz, 1);
++    }
++    if (clock_attached) ledcWrite(CLK_OUT, 1);
+ #else
+     ledcSetup(0, freq_in_hz, 1);

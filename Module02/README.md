@@ -23,7 +23,7 @@ Individual experimental/discussion contributions will be recorded only after the
 | 6 Library versus register | [Comparison / decoding checklist](register-reading.md) | [Library template](code/task06_library_template/README.md), [register template](code/task06_register_template/README.md) | Disabled scaffolds Prepared; sensor/adapters/tests Pending |
 | 7 Two devices | [Address table / dual-device report](two-devices.md) | [Framework](code/task07_two_devices/README.md) | Prepared; actual models/addresses/readings Pending |
 | 8 Address conflict | [address-conflict.md](address-conflict.md) | [Mux template](code/task08_mux_template/README.md) | Theory Prepared; no physical conflict/fix or simulation claimed |
-| 9 Instrument sprint | [scope-decision.md](scope-decision.md) | [PWM reference](code/task09_pwm_reference/README.md) | Pinned candidate research Prepared; build/flash/captures/class choice Pending |
+| 9 A-class instrument preparation | [English decision report](scope-decision.md), [Chinese operation manual](task09-logic-analyzer-guide-zh.md), [build/source audit](task09-analyzer-build.md), [blank evidence](evidence/task09-logic-analyzer-record.md) | [PWM target](code/task09_pwm_reference/README.md), [I2C capture target](code/task09_i2c_capture_source/README.md), [upstream Core 3 patch](patches/task09-core3-clock-retune.patch) | Analyzer and target code compile-checked; **Prepared / hardware captures and class decision Pending** |
 | 10 Decode waveform | [Optional guide](i2c-decode-guide.md) | Use a verified Task 9 instrument later | **Optional / Not yet tested** |
 
 The original required English output filenames are retained. Task 2 now uses **bus-can.md** for the group's confirmed CAN selection; the [original generic profile](bus-profile-template.md), [pitch template](bus-pitch.md) and [candidate research](bus-survey-notes.md) remain available. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
@@ -35,7 +35,7 @@ The original required English output filenames are retained. Task 2 now uses **b
 - [Independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
 - Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
 - [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). No Module 02 photos/logs are supplied yet; create links only after actual files exist.
-- [Software validation](validation.md). External instrument firmware was researched, not installed or compiled here. GPIO22/23 conflict and Core 2/3 compatibility are explicit in the scope record.
+- [Original software validation](validation.md) · [Task 9 follow-up build/host validation](task09-analyzer-build.md). The A-class analyzer now compiles with Core 3.3.12, including a separate clock-retuning patch; no flashing or capture occurred. GPIO22/23 conflicts and pending runtime timing checks remain explicit in the scope record. B-class research is unchanged.
 
 ## Next Actual Session
 

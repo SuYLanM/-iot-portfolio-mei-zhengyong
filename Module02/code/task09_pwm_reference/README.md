@@ -2,7 +2,7 @@
 
 ## Parts / Pins / Wiring
 
-A separate, verified classic ESP32 target board and USB cable; GPIO25 generates a 3.3 V logic PWM command. The instrument must have its own reviewed pin map. For the digital analyzer, target25 can feed CH2/GPIO18 input after voltage/ground checks; **do not use analyzer GPIO22**. For the browser analog candidate GPIO34, first use a reviewed divider (e.g. 10k/10k nominally halves 3.3 V to 1.65 V), verify voltage before attachment and assess loading/bandwidth. Do not tie two boards' regulated 3V3 outputs together.
+A separate, verified classic ESP32 target board and USB cable; GPIO25 generates a 3.3 V logic PWM command. The instrument must have its own reviewed pin map. The first digital test uses **target GPIO25 → analyzer CH0/GPIO21**, common GND, and **analyzer-local GPIO22→GPIO23** clock jumper; never probe analyzer GPIO22. GPIO25 avoids the analyzer's reserved clock pins; on the separate analyzer it is also CH11, which is not used here. For the browser analog candidate GPIO34, first use a reviewed divider (e.g. 10k/10k nominally halves 3.3 V to 1.65 V), verify voltage before attachment and assess loading/bandwidth. Do not tie two boards' regulated 3V3 outputs together.
 
 ## Operation / Output
 
@@ -13,3 +13,5 @@ Save actual measured frequency/duty, requested/measured instrument rates, wiring
 ## Run and Status
 
 Prepared and compile-checked for **ESP32 Dev Module / Espressif Core 3.3.12**, Arduino IDE 2.3.10. Open the same-name `.ino` in this folder, select the actual board/port and verify. After inspecting actual hardware, power off to wire, reconnect and upload yourself; no upload was performed during preparation. Open Serial Monitor at **115200 baud**. Compilation is not hardware testing. [Chinese wiring guide](../../wiring-zh.md) · [Evidence register](../../evidence/README.md).
+
+Recompiled 2026-10-28: **PASS**, 278043 bytes flash / 22312 bytes global RAM. Setup now prints GPIO, requested frequency, duty and success status explicitly; periodic messages do not claim measured performance. [Complete Task 9 Chinese manual](../../task09-logic-analyzer-guide-zh.md) · [Build audit](../../task09-analyzer-build.md) · [Blank capture record](../../evidence/task09-logic-analyzer-record.md).

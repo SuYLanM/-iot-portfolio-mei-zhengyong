@@ -14,5 +14,8 @@ Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. No Module 0
 | 7 | [Two-device framework](task07_two_devices/README.md) | PENDING_CONFIG; actual addresses/read adapters needed |
 | 8 | [Mux selection template](task08_mux_template/README.md) | PENDING_CONFIG; actual TCA9548A/straps needed |
 | 9 | [PWM reference](task09_pwm_reference/README.md) | GPIO25 configured 1 kHz, not measured timing |
+| 9 | [I2C capture source](task09_i2c_capture_source/README.md) | Separate target: SDA21/SCL22, 100 kHz, ACK/NACK logging; Task 5 source unchanged |
+
+Task 9 uses a **separate analyzer board** running pinned upstream SUMP firmware plus the [Core 3 retune patch](../patches/task09-core3-clock-retune.patch); do not combine firmware. [Chinese operation manual](../task09-logic-analyzer-guide-zh.md) · [Actual software build checks](../task09-analyzer-build.md). PWM, I2C capture and effective timing remain Pending.
 
 [Chinese wiring guide](../wiring-zh.md) · [Validation](../validation.md). Final pins must follow actual board/module documentation. Source compilation does not satisfy Tasks 5–9 hardware evidence.
