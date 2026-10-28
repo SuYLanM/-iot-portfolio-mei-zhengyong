@@ -1,6 +1,6 @@
 # Task 9 — Scope / Logic Analyzer Decision Record
 
-**Stages verified: CH0 static LOW/HIGH and a real PWM capture from a WeMos D1 mini (ESP8266), each with 10,000 samples. I2C capture, independent timebase calibration and class decision remain Pending.** The user reported successful IDE compilation/flashing; the assistant checked real serial transfers and PulseView acquisitions without reflashing. Proposed pairing remains digital SUMP plus browser analog scope; final adoption and instruction ownership require an actual class decision. [Original research sources](references.md#r11-instrument-candidates) · [Original captures, replay screenshots and verification](evidence/task09-logic-analyzer/README.md).
+**Stages verified: CH0 static LOW/HIGH and a real PWM capture from a WeMos D1 mini (ESP8266), each with 10,000 samples. A real NACK-only I2C capture is also verified; sensor ACK/data, independent timebase calibration and class decision remain Pending.** The user reported successful IDE compilation/flashing; the assistant checked real serial transfers and PulseView acquisitions without reflashing. Proposed pairing remains digital SUMP plus browser analog scope; final adoption and instruction ownership require an actual class decision. [Original research sources](references.md#r11-instrument-candidates) · [Original captures, replay screenshots and verification](evidence/task09-logic-analyzer/README.md).
 
 ## Project Objective
 
@@ -19,7 +19,7 @@ Prepare and evaluate a classic ESP32 digital analyzer for known PWM and I2C traf
 | GPIO | Captured channels below; GPIO22/23 reserved for clock loop; LED2 and UART0 used | ADC1 GPIO34 input, GPIO25 1 kHz test output, Wi-Fi active |
 | Input limit | Bare GPIO: 3.3 V logic only, no negative or 5 V input; project PCB/level-shifter design is separate and under validation | Positive low-voltage ADC signal only, useful range depends on attenuation/nonlinearity; keep test amplitude comfortably below 3.0 V after verified conditioning |
 | Main limitations | Digital levels only; no calibrated analog rise-time/amplitude measurement; claimed maximum rate needs reference tests | Wi-Fi/analogRead timing jitter and ADC error; requested rate is not an independently measured rate; cannot resolve 100 kHz I2C with its claimed analog rates |
-| Current status | Original source compiled with Core 3.3.7; real CH0 LOW/HIGH and ESP8266-source PWM captures verified; I2C/calibrated timebase Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
+| Current status | Original source compiled with Core 3.3.7; real CH0 LOW/HIGH and ESP8266-source PWM captures verified; I2C NACK capture verified; sensor ACK/calibrated timebase Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
 
 These are project statements or code constants, **not our measured specifications**. The browser project's own README states its interface image uses a simulated capture and its timing figures are unvalidated design targets. No upstream image is imported as student evidence.
 
@@ -95,13 +95,17 @@ Example: rise=288, fall=789, next rise=1288 gives 1000-point period, 501-point H
 
 ![Genuine replay of the grounded PWM retest](evidence/task09-esp8266-pwm/pwm-grounded-retest-01-replay.jpg)
 
-## I2C Protocol Decoding — Pending
+## I2C Protocol Decoding — NACK-Only Capture Verified
 
-For the currently available **blue WeMos D1 mini / ESP8266**, use the new [ESP8266 source](code/task09_esp8266_i2c_source/README.md): **D2/GPIO4 SDA→analyzer GPIO21/CH0; D1/GPIO5 SCL→analyzer GPIO19/CH1**, dedicated common ground and unchanged analyzer-local GPIO22→GPIO23 jumper. It compiled with ESP8266 Core 3.1.2 on 2026-10-28; upload, pull-up/module verification, serial scan and capture are still Pending. It starts paused. Recheck the blue port before upload; only COM3 was detected during preparation. [Blank real-evidence record](evidence/task09-esp8266-i2c.md). The ESP32 target described below remains an alternative and must not be uploaded to the ESP8266.
+On 2026-10-28 the blue WeMos D1 mini / ESP8266 ran the separate [ESP8266 I2C source](code/task09_esp8266_i2c_source/README.md), compiled with Core 3.1.2 and uploaded to confirmed CH340 **COM4** with flash hash verification. **Black ESP32 COM3 was not reflashed.** User-confirmed connections: blue D2/GPIO4 SDA→black GPIO21/CH0, blue D1/GPIO5 SCL→black GPIO19/CH1, common ground and analyzer-local black GPIO22→GPIO23 jumper. The user confirmed no sensor. Requested pull-up setup was confirmed, but actual resistance/voltage/rise time and a wiring photograph were not independently checked.
 
-Target T instead runs the independent [Task 9 I2C capture source](code/task09_i2c_capture_source/README.md), with SDA21/SCL22 and configured 100 kHz; Task 5 code is preserved. Wire T21→A21/CH0, **T22→A19/CH1**, and common ground, retaining A22→A23. Use only verified target-side 3.3 V pull-ups. A sensor is optional for NACK traffic; a genuine ACK test requires a compatible real device.
+A real single scan returned **ACK=0, NACK=112, other_errors=0**. Continuous scans then enabled a real PulseView acquisition: **1 MHz requested, 10 k samples, no trigger**, RLE/external clock off, Pattern=None. The source was paused afterward. Decoder mapping: SDA=CH0, SCL=CH1. [Original raw capture, serial text, real screenshots and sample analysis](evidence/task09-esp8266-i2c.md).
 
-Enable CH0/CH1, request at least 1 MS/s, start with 16k samples and RLE off. A short capture may miss the scan interval: arm a supported LOW-level SCL trigger or request a scan with `s` on target T's separate 115200 console. Assign I2C decoder SDA=CH0, SCL=CH1; identify START, seven-bit address, write bit, ninth-clock ACK/NACK and STOP. Empty-write scans do not contain sensor measurements. Save actual serial results and original acquisition; no device address or decoded result is pre-filled.
+The saved 20,000 logic bytes contain 10,000 16-bit samples and **12 complete empty-write frames, seven-bit addresses 0x08–0x13, R/W=0, all NACK**. This short window contains part of a scan, not all 112 probes. START, address, write bit, ninth-clock SDA HIGH and STOP were checked in PulseView and raw samples. Within-byte SCL periods are **13–14 samples**, mean 13.4167; inverse mean period is approximately **74.53 kHz at the uncalibrated configured timebase**, distinct from the 100 kHz request. This is a digital timing estimate, not independent calibration or a measured analog rise time.
+
+![Real I2C NACK decoder screenshot](evidence/task09-esp8266-i2c/i2c-nack-detail.jpg)
+
+No responder means no sensor discovery, real ACK or register/data reading is demonstrated. Those remain Pending. The older [ESP32 I2C target sketch](code/task09_i2c_capture_source/README.md), SDA21/SCL22, remains a prepared alternative, not the source used here; Tasks 1–8 are unchanged.
 
 ## Sampling Rate and Limitations
 
@@ -111,7 +115,7 @@ An important Core 3 issue was found: repeated ledcAttach calls reject an attache
 
 ## Windows 11 / PulseView Compatibility
 
-User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Exact Core 3.3.7 compilation was checked separately from the earlier Core 3.3.12 preparation. COM3 CP210x transport, SUMP identification, PulseView static capture and saved-file reopening were observed. I2C decoding and independent dynamic timing calibration remain **Pending**; the later real ESP8266 PWM acquisition is documented above. The successful transfers provide no basis for declaring the CP210x driver generally incompatible; no driver replacement or baud downgrade was performed. The analyzer port is exclusive to PulseView; close conflicting monitors and reconnect/rescan after a USB power cycle. Do not use Zadig to replace the working UART driver.
+User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Exact Core 3.3.7 compilation was checked separately from the earlier Core 3.3.12 preparation. COM3 CP210x transport, SUMP identification, PulseView static capture and saved-file reopening were observed. I2C NACK decoding and ESP8266 PWM acquisition were observed; sensor ACK/data and independent dynamic timing calibration remain **Pending**. The successful transfers provide no basis for declaring the CP210x driver generally incompatible; no driver replacement or baud downgrade was performed. The analyzer port is exclusive to PulseView; close conflicting monitors and reconnect/rescan after a USB power cycle. Do not use Zadig to replace the working UART driver.
 
 ## Actual Static LOW/HIGH Captures — Verified Stage
 
@@ -158,7 +162,7 @@ The actual PWM test used the [ESP8266 WeMos source](code/task09_esp8266_pwm_gene
 
 ## Experimental Results and Limits
 
-**Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Later PWM stage:** the WeMos source produced a real dynamic CH0 record with sample-derived period/duty as reported above. **Still not measured:** independent input voltage, calibrated effective sample rate/timebase, independently referenced edge timing/frequency, I2C ACK/NACK, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. The PWM capture is now available; I2C capture, calibration, class demo/decision and remaining Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
+**Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Later PWM stage:** the WeMos source produced a real dynamic CH0 record with sample-derived period/duty as reported above. **Still not measured:** independent input voltage, calibrated effective sample rate/timebase, independently referenced edge timing/frequency, sensor ACK/register data, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. PWM and NACK-only I2C captures are now available; sensor ACK/data, calibration, class demo/decision and remaining Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
 
 ## Class Decision and Conclusion — Pending
 

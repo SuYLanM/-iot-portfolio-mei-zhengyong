@@ -14,7 +14,7 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 | 6 | Library value and raw register reconstruction under matched settings | Pending |
 | 7 | A-only/B-only/both scans and actual readings of both devices | Pending |
 | 8 | Conflict/fix evidence if hardware available; otherwise explicitly theoretical | Theory prepared; physical experiment Pending |
-| 9 | Install/version/pins, PWM/I2C captures, measured timebase and class decision | [CH0 LOW/HIGH verified](task09-logic-analyzer/README.md), 10,000 samples each; [ESP8266 PWM verified](task09-esp8266-pwm.md); I2C/calibrated timebase/class decision Pending |
+| 9 | Install/version/pins, PWM/I2C captures, measured timebase and class decision | [CH0 LOW/HIGH verified](task09-logic-analyzer/README.md), 10,000 samples each; [ESP8266 PWM verified](task09-esp8266-pwm.md); [I2C NACK-only capture verified](task09-esp8266-i2c.md); sensor ACK/calibrated timebase/class decision Pending |
 | 10 | Optional decoded transaction and measured SCL | Optional / not tested |
 
 ## Scanner Report — Pending

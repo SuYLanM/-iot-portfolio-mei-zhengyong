@@ -1,0 +1,528 @@
+{
+  "file": "pulseview-i2c-esp8266-nack-01.sr",
+  "sha256": "dd0ce4991051c673a4b5c3875ca5b08842cbab049ba5dfc10375dd25dd4324d5",
+  "configured_samplerate_hz": 1000000,
+  "independent_timebase_calibration": null,
+  "logic_bytes": 20000,
+  "samples": 10000,
+  "sda_channel": 0,
+  "scl_channel": 1,
+  "start_indices": [
+    8011,
+    8177,
+    8343,
+    8510,
+    8676,
+    8842,
+    9008,
+    9174,
+    9340,
+    9506,
+    9672,
+    9838
+  ],
+  "stop_indices": [
+    8158,
+    8324,
+    8490,
+    8656,
+    8822,
+    8988,
+    9155,
+    9321,
+    9486,
+    9652,
+    9819,
+    9985
+  ],
+  "frames": [
+    {
+      "start": 8011,
+      "stop": 8158,
+      "data_ack_rising_scl_indices": [
+        8030,
+        8044,
+        8057,
+        8070,
+        8084,
+        8097,
+        8111,
+        8124,
+        8137
+      ],
+      "stop_setup_rising_scl_index": 8151,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x08",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13
+      ]
+    },
+    {
+      "start": 8177,
+      "stop": 8324,
+      "data_ack_rising_scl_indices": [
+        8196,
+        8210,
+        8223,
+        8236,
+        8250,
+        8263,
+        8277,
+        8290,
+        8303
+      ],
+      "stop_setup_rising_scl_index": 8317,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x09",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13
+      ]
+    },
+    {
+      "start": 8343,
+      "stop": 8490,
+      "data_ack_rising_scl_indices": [
+        8362,
+        8376,
+        8389,
+        8402,
+        8416,
+        8429,
+        8443,
+        8456,
+        8469
+      ],
+      "stop_setup_rising_scl_index": 8483,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x0A",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13
+      ]
+    },
+    {
+      "start": 8510,
+      "stop": 8656,
+      "data_ack_rising_scl_indices": [
+        8528,
+        8542,
+        8555,
+        8568,
+        8582,
+        8595,
+        8609,
+        8622,
+        8636
+      ],
+      "stop_setup_rising_scl_index": 8649,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x0B",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        14
+      ]
+    },
+    {
+      "start": 8676,
+      "stop": 8822,
+      "data_ack_rising_scl_indices": [
+        8694,
+        8708,
+        8721,
+        8735,
+        8748,
+        8762,
+        8775,
+        8788,
+        8802
+      ],
+      "stop_setup_rising_scl_index": 8815,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x0C",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13,
+        14
+      ]
+    },
+    {
+      "start": 8842,
+      "stop": 8988,
+      "data_ack_rising_scl_indices": [
+        8860,
+        8874,
+        8887,
+        8901,
+        8914,
+        8928,
+        8941,
+        8954,
+        8968
+      ],
+      "stop_setup_rising_scl_index": 8982,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x0D",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13,
+        14
+      ]
+    },
+    {
+      "start": 9008,
+      "stop": 9155,
+      "data_ack_rising_scl_indices": [
+        9027,
+        9040,
+        9053,
+        9067,
+        9080,
+        9094,
+        9107,
+        9121,
+        9134
+      ],
+      "stop_setup_rising_scl_index": 9148,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x0E",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        14,
+        13
+      ]
+    },
+    {
+      "start": 9174,
+      "stop": 9321,
+      "data_ack_rising_scl_indices": [
+        9193,
+        9206,
+        9219,
+        9233,
+        9246,
+        9260,
+        9273,
+        9287,
+        9300
+      ],
+      "stop_setup_rising_scl_index": 9314,
+      "bits": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x0F",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        14,
+        13
+      ]
+    },
+    {
+      "start": 9340,
+      "stop": 9486,
+      "data_ack_rising_scl_indices": [
+        9359,
+        9372,
+        9386,
+        9399,
+        9413,
+        9426,
+        9439,
+        9453,
+        9466
+      ],
+      "stop_setup_rising_scl_index": 9479,
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x10",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        13,
+        14,
+        13,
+        14,
+        13,
+        13,
+        14,
+        13
+      ]
+    },
+    {
+      "start": 9506,
+      "stop": 9652,
+      "data_ack_rising_scl_indices": [
+        9524,
+        9538,
+        9551,
+        9565,
+        9578,
+        9592,
+        9605,
+        9618,
+        9632
+      ],
+      "stop_setup_rising_scl_index": 9646,
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x11",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        14,
+        13,
+        14,
+        13,
+        14,
+        13,
+        13,
+        14
+      ]
+    },
+    {
+      "start": 9672,
+      "stop": 9819,
+      "data_ack_rising_scl_indices": [
+        9691,
+        9704,
+        9717,
+        9731,
+        9744,
+        9758,
+        9771,
+        9785,
+        9798
+      ],
+      "stop_setup_rising_scl_index": 9812,
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "address_7bit": "0x12",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        14,
+        13
+      ]
+    },
+    {
+      "start": 9838,
+      "stop": 9985,
+      "data_ack_rising_scl_indices": [
+        9857,
+        9870,
+        9883,
+        9897,
+        9910,
+        9924,
+        9937,
+        9951,
+        9964
+      ],
+      "stop_setup_rising_scl_index": 9978,
+      "bits": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "address_7bit": "0x13",
+      "rw": 0,
+      "ack": "NACK",
+      "scl_period_samples": [
+        13,
+        13,
+        14,
+        13,
+        14,
+        13,
+        14,
+        13
+      ]
+    }
+  ],
+  "complete_transactions": 12,
+  "complete_acks": 0,
+  "complete_nacks": 12,
+  "scl_period_min_samples": 13,
+  "scl_period_max_samples": 14,
+  "scl_period_mean_samples": 13.416666666666666,
+  "scl_hz_from_inverse_mean_period": 74534.16149068324,
+  "method": "SDA edges with SCL stably HIGH identify START/STOP. First eight SCL rising edges sample MSB-first address/RW; ninth samples ACK/NACK. These actual empty writes have a tenth SCL rising edge with SDA LOW preparing STOP, not an extra data bit; SDA then rises for STOP. Within-byte timing uses first nine edges only. Configured 1 MHz timebase is uncalibrated."
+}

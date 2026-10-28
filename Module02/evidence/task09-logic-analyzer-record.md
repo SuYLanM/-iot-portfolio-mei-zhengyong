@@ -1,6 +1,6 @@
 # Task 9 A — Actual Capture and Class Record
 
-**Static CH0 LOW/HIGH and a real ESP8266-source PWM capture verified; I2C/calibrated timing/class decision Pending.** [Actual PWM results](task09-esp8266-pwm.md). [Preserved real files and verification](task09-logic-analyzer/README.md). The remaining tables below are blank future-work templates, not completed measurements. [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
+**Static CH0 LOW/HIGH and a real ESP8266-source PWM capture verified; I2C NACK-only capture verified; sensor ACK/calibrated timing/class decision Pending.** [Actual PWM results](task09-esp8266-pwm.md). [Preserved real files and verification](task09-logic-analyzer/README.md). The remaining tables below are blank future-work templates, not completed measurements. [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
 
 ## Completed Static Input Stage
 
@@ -33,6 +33,8 @@ The actual blue WeMos D1 mini source uses D1/GPIO5; [complete raw data, screensh
 Without an independent reference, repeated capture of the same configured PWM checks consistency only; it does not establish a calibrated absolute sample rate.
 
 ## I2C Decode
+
+[Real ESP8266 NACK-only capture, serial text and decoder screenshots](task09-esp8266-i2c.md) are available. The following blank table remains for future sensor ACK/data tests.
 
 Configured target: SDA21/SCL22, 100 kHz. Analyzer SDA=CH0/GPIO21, SCL=CH1/GPIO19. Record a real sensor only if physically identified; a configured/probed address is not device discovery.
 

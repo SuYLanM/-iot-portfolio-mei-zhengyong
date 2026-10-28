@@ -1,6 +1,6 @@
 # Task 9 — WeMos D1 mini ESP8266 I2C Capture Source
 
-**Prepared / Hardware test Pending.** [Sketch](task09_esp8266_i2c_source.ino) · [Task 9 report](../../scope-decision.md). This separate sketch replaces PWM only on the blue ESP8266 after wiring confirmation. Never flash the black ESP32 analyzer. Existing ESP32 source and Tasks 1–8 are unchanged.
+**Compile/upload and real NACK-only capture verified — 2026-10-28.** [Real evidence](../../evidence/task09-esp8266-i2c.md). Sensor ACK/data and calibrated timing remain Pending. [Sketch](task09_esp8266_i2c_source.ino) · [Task 9 report](../../scope-decision.md). This separate sketch replaces PWM only on the blue ESP8266 after wiring confirmation. Never flash the black ESP32 analyzer. Existing ESP32 source and Tasks 1–8 are unchanged.
 
 ## Board and software
 
@@ -33,4 +33,4 @@ No sensor is required for a NACK-only test with verified pull-ups. A real compat
 
 ## Software validation
 
-**Compile PASS — 2026-10-28:** installed ESP8266 Core 3.1.2, `esp8266:esp8266:d1_mini`; global RAM 29108 bytes, instruction RAM including reserved cache 60475 bytes, flash code 239172 bytes. Build artifacts remain outside the repository. Upload / serial scan / PulseView I2C decode: **Pending**.
+**Compile PASS — 2026-10-28:** installed ESP8266 Core 3.1.2, `esp8266:esp8266:d1_mini`; global RAM 29108 bytes, instruction RAM including reserved cache 60475 bytes, flash code 239172 bytes. Build artifacts remain outside the repository. Upload to **COM4** identified ESP8266EX / 4 MB flash and verified the hash. A real scan returned ACK=0 / NACK=112 / other_errors=0. PulseView captured 10,000 samples; 12 complete empty writes (0x08–0x13) were decoded with NACK. SCL sample-derived rate was approximately 74.53 kHz at configured 1 MHz, not a verified 100 kHz. See linked raw evidence and limitations.
