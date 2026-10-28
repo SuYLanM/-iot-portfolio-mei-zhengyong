@@ -2,7 +2,9 @@
 
 **Grounded PWM retest verified — 2026-10-28; independent timebase calibration Pending.** [Source and instructions](../code/task09_esp8266_pwm_generator/README.md) · [Task 9 report](../scope-decision.md). Preserved LOW/HIGH files and screenshots are unchanged.
 
-## Wiring Correction and Grounded Retest
+## Official PWM Result — Grounded Retest
+
+**This grounded retest supersedes the initial acquisition as the submitted PWM result.** Earlier raw files remain a historical audit trail, not a second validated wiring test. Published Git history is retained.
 
 After the initial acquisition, the user clarified that the **dedicated B GND→A GND wire had been missing**. The earlier statement that this wire was present was incorrect. The first `.sr`, screenshots and measurement JSON are retained unchanged as historical data; they do not establish the intended complete two-board wiring. A possible return through the USB system was not independently checked. No causal comparison or claim that ground alone fixed a particular capture error is made.
 

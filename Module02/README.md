@@ -30,6 +30,7 @@ The original required English output filenames are retained. Task 2 now uses **b
 
 ## Wiring, Code and Evidence
 
+- Task 9 next stage: [ESP8266 I2C source and two-board wiring](code/task09_esp8266_i2c_source/README.md), compile PASS; [blank capture record](evidence/task09-esp8266-i2c.md). Upload and hardware decoding remain Pending. The grounded retest is the official PWM result; the initial run is retained only as historical evidence.
 - [Detailed Chinese wiring / safety guide](wiring-zh.md).
 - [CAN wiring / module checks](can-wiring.md) · [Blank CAN hardware and classroom record](evidence/task02-can-test-record.md). Local self-test is separate from two-node physical CAN verification.
 - [Independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.

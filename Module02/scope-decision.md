@@ -97,6 +97,8 @@ Example: rise=288, fall=789, next rise=1288 gives 1000-point period, 501-point H
 
 ## I2C Protocol Decoding — Pending
 
+For the currently available **blue WeMos D1 mini / ESP8266**, use the new [ESP8266 source](code/task09_esp8266_i2c_source/README.md): **D2/GPIO4 SDA→analyzer GPIO21/CH0; D1/GPIO5 SCL→analyzer GPIO19/CH1**, dedicated common ground and unchanged analyzer-local GPIO22→GPIO23 jumper. It compiled with ESP8266 Core 3.1.2 on 2026-10-28; upload, pull-up/module verification, serial scan and capture are still Pending. It starts paused. Recheck the blue port before upload; only COM3 was detected during preparation. [Blank real-evidence record](evidence/task09-esp8266-i2c.md). The ESP32 target described below remains an alternative and must not be uploaded to the ESP8266.
+
 Target T instead runs the independent [Task 9 I2C capture source](code/task09_i2c_capture_source/README.md), with SDA21/SCL22 and configured 100 kHz; Task 5 code is preserved. Wire T21→A21/CH0, **T22→A19/CH1**, and common ground, retaining A22→A23. Use only verified target-side 3.3 V pull-ups. A sensor is optional for NACK traffic; a genuine ACK test requires a compatible real device.
 
 Enable CH0/CH1, request at least 1 MS/s, start with 16k samples and RLE off. A short capture may miss the scan interval: arm a supported LOW-level SCL trigger or request a scan with `s` on target T's separate 115200 console. Assign I2C decoder SDA=CH0, SCL=CH1; identify START, seven-bit address, write bit, ninth-clock ACK/NACK and STOP. Empty-write scans do not contain sensor measurements. Save actual serial results and original acquisition; no device address or decoded result is pre-filled.
