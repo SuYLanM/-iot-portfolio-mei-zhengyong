@@ -1,14 +1,14 @@
 # Task 9 A 类：ESP32 Logic Analyzer + PulseView 中文操作手册
 
-**阶段更新：CH0 LOW/HIGH 真实采集已核对，每次 10,000 样本。** [原始文件、真实回放截图与核验](evidence/task09-logic-analyzer/README.md)。以下保留原准备步骤；实测使用板上官方原固件，未由助手重新烧录或应用补丁。PWM、I2C、独立时基校准及课堂决定仍 Pending。[英文报告](scope-decision.md) · [构建核验](task09-analyzer-build.md) · [空白实验记录](evidence/task09-logic-analyzer-record.md)。
+**实测更新：CH0 LOW/HIGH、共地 PWM 重测、I²C NACK 捕获均已核验，各 10,000 样本。** [静态证据](evidence/task09-logic-analyzer/README.md) · [PWM 证据](evidence/task09-esp8266-pwm.md) · [I²C NACK 证据](evidence/task09-esp8266-i2c.md)。黑色 ESP32 保留已工作的官方原固件，不要为重现这些结果刷补丁；蓝色 WeMos D1 mini（ESP8266）分别运行独立信号源程序。传感器 ACK/数据、独立时基校准、安装耗时记录、课堂演示和决定仍 Pending。[英文报告与最终审核](scope-decision.md) · [历史构建核验](task09-analyzer-build.md)。
 
 ## 1. 准备两块板，分别运行固件
 
 | 角色 | 烧录的程序 | 串口用途 |
 |---|---|---|
-| 分析仪 A | 上游 `ESP32_LogicAnalyzer/ESP32_LogicAnalyzer.ino`，连同全部同目录源码及本项目时钟补丁 | UART0，**921600 / 8N1**，由 PulseView 独占 |
-| 信号源 T：先测 PWM | [task09_pwm_reference.ino](code/task09_pwm_reference/task09_pwm_reference.ino) | Serial Monitor **115200**，打印配置参数 |
-| 信号源 T：之后改测 I2C | [task09_i2c_capture_source.ino](code/task09_i2c_capture_source/task09_i2c_capture_source.ino) | Serial Monitor **115200**，打印扫描结果，接收 `s` |
+| 分析仪 A | 上游 `ESP32_LogicAnalyzer/ESP32_LogicAnalyzer.ino`，连同全部同目录原始源码；实测未刷本项目补丁 | UART0，**921600 / 8N1**，由 PulseView 独占 |
+| 信号源 T：先测 PWM | [ESP8266 PWM 程序](code/task09_esp8266_pwm_generator/task09_esp8266_pwm_generator.ino) | Serial Monitor **115200**，打印配置参数 |
+| 信号源 T：之后改测 I2C | [ESP8266 I²C 程序](code/task09_esp8266_i2c_source/task09_esp8266_i2c_source.ino) | Serial Monitor **115200**，初始暂停；`s` 单次、`c` 连续扫描、`p` 暂停 |
 
 T 每次只能运行一种固件。给 T 改烧 I2C 程序时，A 保持分析仪固件。不要合并三份程序，也不能仅凭一块板烧录成功就声称完成双板捕获。
 
@@ -22,9 +22,9 @@ T 每次只能运行一种固件。给 T 改烧 I2C 程序时，A 保持分析�
 
 可以下载[此提交的源码 ZIP](https://github.com/lmcapacho/ESP32_LogicAnalyzer/archive/5c4f2b9fd85ac09aca3e42596e6e7e0b640cdab3.zip)，解压到独立工具目录，保留整个 sketch 文件夹；不要只拷贝 `.ino`。无需下载 KiCad、PCB 工具或额外 Arduino 第三方库。Arduino IDE 内安装 `esp32 by Espressif Systems`。上游写明测试过 Core **3.3.7**，本机实际安装 **3.3.12**，本次已对后者做真实编译检查；这不是硬件兼容性认证。
 
-**Core 3 必须处理时钟重设问题：** 上游 `LogicAnalyzer.cpp` 的 `enable_out_clock()` 每次请求采样率都调用 `ledcAttach()`。Core 3.3.12 已绑定引脚会拒绝重复 attach，不能据此认为时钟已改变。应用本项目的 [Core 3 补丁](patches/task09-core3-clock-retune.patch)，它首次 attach、随后调用 `ledcChangeFrequency()`。补丁的源码依据和编译记录见[构建核验](task09-analyzer-build.md)。其运行、频率量化及误差仍 Pending。
+**Core 3 时钟重设的源码风险（当前不刷写）：** 上游 `LogicAnalyzer.cpp` 的 `enable_out_clock()` 每次请求采样率都调用 `ledcAttach()`。Core 3.3.12 已绑定引脚会拒绝重复 attach，不能据此认为时钟已改变。供后续独立验证的 [Core 3 补丁](patches/task09-core3-clock-retune.patch)采用首次 attach、随后调用 `ledcChangeFrequency()` 的方式。补丁的源码依据和编译记录见[构建核验](task09-analyzer-build.md)。其运行、频率量化及误差仍 Pending。
 
-如果使用 Git，在**上游仓库根目录**执行（把补丁路径替换为你的实际绝对路径）：
+以下仅保留可选补丁的准备说明，当前成功固件不执行这些步骤。将来独立验证补丁时，先备份原固件，并在**独立上游源码副本根目录**执行（把补丁路径替换为你的实际绝对路径）：
 
 ```powershell
 git checkout 5c4f2b9fd85ac09aca3e42596e6e7e0b640cdab3
@@ -36,7 +36,7 @@ git apply "<portfolio>\Module02\patches\task09-core3-clock-retune.patch"
 
 `ESP32_LogicAnalyzer/ESP32_LogicAnalyzer.ino`
 
-Arduino IDE 设置：**ESP32 Dev Module → Core 3.3.12 → Core Debug Level: None**，选择 A 对应的实际 COM 口，先 Verify，再由你检查硬件后 Upload。无需为了本方案降级全局 Core。烧录时可能需按实物板的 BOOT/EN 操作；不能把尚未执行的烧录写成通过。
+原分析仪实测为 **ESP32 Dev Module / Core 3.3.7 / Debug None**，后续已核验隔离环境编译。Core 3.3.12 也有独立编译记录，两者不要混为同一次构建。当前 A 固件保持不变。蓝色 T 选 **ESP8266 Community 3.1.2 / LOLIN(WEMOS) D1 R2 & mini / COM4（重新插拔后需核对）**；COM3 是黑色 A，不要烧错板。
 
 ## 3. 分析仪 A 的完整引脚表
 
@@ -75,15 +75,15 @@ Arduino IDE 设置：**ESP32 Dev Module → Core 3.3.12 → Core Debug Level: No
 |---|---|---|
 | **A GPIO22** | **A GPIO23** | 分析仪自身采样时钟跳线 |
 | T GND | A GND | 共地 |
-| **T GPIO25** | **A GPIO21 / CH0** | 1 kHz PWM 探测 |
+| **蓝色 T D1 / GPIO5** | **A GPIO21 / CH0** | 1 kHz PWM 探测 |
 
 两块板各自 USB 供电，不连接两块板的 3V3/5V 输出。所有被测输入只能是兼容 **3.3 V 逻辑**；裸 ESP32 没有 5 V 容忍，也不能测负电压或市电。上游有电平转换 PCB 设计，不代表你的裸板已有保护。
 
-在 T 的 Arduino IDE 中打开 PWM `.ino`、选 T 的 COM 口烧录，Serial Monitor 115200 确认实际输出的配置状态。目标是 GPIO25、1 kHz、50%，配置打印不是频率测量。A 的 Serial Monitor/Plotter 必须关闭，T 的 Monitor 可以使用另一个 COM 口。
+在 T 的 Arduino IDE 中打开 PWM `.ino`、选 T 的 COM 口烧录，Serial Monitor 115200 确认实际输出的配置状态。目标是 ESP8266 D1/GPIO5、1 kHz、约50%，配置打印不是频率测量。A 的 Serial Monitor/Plotter 必须关闭，T 的 Monitor 可以使用另一个 COM 口。
 
 ## 5. PulseView 连接与初次捕获
 
-本机已找到 64-bit PulseView，命令行自报 **0.5.0-git-e2fe9df**，支持 `ols`。这只确认程序能运行及驱动被列出，尚未连接 A。无需仅为本实验再次安装 PulseView。若另一台电脑缺失，使用 [sigrok 官方下载入口](https://sigrok.org/wiki/Downloads) 获取 Windows 64-bit 版本，并核对安装来源。
+本机已找到 64-bit PulseView，命令行自报 **0.5.0-git-e2fe9df**，支持 `ols`。后续已在 Windows 11 连接 COM3/921600 的真实 A 设备并完成静态、PWM 和 I²C NACK 捕获；这不保证所有采样率、通道和触发模式。无需仅为本实验再次安装 PulseView。若另一台电脑缺失，使用 [sigrok 官方下载入口](https://sigrok.org/wiki/Downloads) 获取 Windows 64-bit 版本，并核对安装来源。
 
 1. 在 Windows 设备管理器中分别插拔 A/T，识别实际 COM 口，记下 USB-UART 芯片和端口；不假定 A 是 COM3。缺驱动时按实物桥接芯片使用相应厂商驱动。**不要用 Zadig 随意替换 USB-UART 的 COM 驱动**。
 2. A 烧录完成并退出 Serial Monitor 后，打开 PulseView 的设备选择/Connect to Device 对话框。选择 **Openbench Logic Sniffer & SUMP compatibles (`ols`)**，不是 Demo、fx2lafw 或普通 UART 解码器。
@@ -96,8 +96,8 @@ Arduino IDE 设置：**ESP32 Dev Module → Core 3.3.12 → Core Debug Level: No
 
 这里安装路径对应本机，**COM7 只是占位示例**，必须替换为 A 的实际端口。正常连接不需要给 A 打开文字串口监视器。
 
-5. 初次选 CH0，采样率请求 **1 MS/s**、采样数 **16k**（若 UI 显示 16.384k，记录实际选项）、**RLE 关闭**、触发 None/无触发。先用短记录，避免超过设备实际接受的样本数。不要开启自测 pattern、外部时钟选项或把 20 MS/s 当作已验证值。A 的硬件时钟跳线仍然必须存在，PulseView 的 External Clock 选项与这个本地跳线不是一回事。
-6. Run 单次捕获，应等待采集和串口回传完成。1 MS/s × 16k 样本约为 16 ms 的理论捕获窗口；回传耗时不等于采样时间。无波形时先查接线和 GPIO，不要伪造图像。
+5. 初次选 CH0，采样率请求 **1 MS/s**、采样数 **10 k samples**（本次实测选项）、**RLE 关闭**、触发 None/无触发。先用短记录，避免超过设备实际接受的样本数。不要开启自测 pattern、外部时钟选项或把 20 MS/s 当作已验证值。A 的硬件时钟跳线仍然必须存在，PulseView 的 External Clock 选项与这个本地跳线不是一回事。
+6. Run 单次捕获，应等待采集和串口回传完成。10k 样本 ÷ 1 MS/s 约为 10 ms 的理论捕获窗口；回传耗时不等于采样时间。无波形时先查接线和 GPIO，不要伪造图像。
 7. 放大 CH0 两个相邻同方向边沿，用双游标读取周期 T，计算 `f=1/T`；测量高电平持续时间 `tH`，计算 `duty=tH/T×100%`。1 ms / 50% 是配置目标，实际数值由你填写。换数个周期和采样率重复比较，记录稳定性与漏边沿。
 8. 如需触发，先用 CH0=LOW 或 HIGH 的**单阶段电平触发**。已核对 ols 源码只列出 0/1 匹配，固件也只处理 stage 0；不要假定它支持硬件上升沿、多阶段、脉宽触发或精确预触发位置。若触发一直不结束，取消触发并重新捕获。
 
@@ -107,8 +107,8 @@ Arduino IDE 设置：**ESP32 Dev Module → Core 3.3.12 → Core Debug Level: No
 
 | 起点 | 终点 |
 |---|---|
-| T GPIO21 SDA | A GPIO21 / CH0 |
-| **T GPIO22 SCL** | **A GPIO19 / CH1** |
+| 蓝色 T D2/GPIO4 SDA | A GPIO21 / CH0 |
+| **蓝色 T D1/GPIO5 SCL** | **A GPIO19 / CH1** |
 | T GND | A GND |
 | A GPIO22 | A GPIO23，仅 A 本地 |
 | T SDA / SCL | 各自通过合适上拉到 T 3V3；先检查传感器板是否已有上拉 |
@@ -116,7 +116,7 @@ Arduino IDE 设置：**ESP32 Dev Module → Core 3.3.12 → Core Debug Level: No
 
 不要将 T SCL 接到 A GPIO22，这会与分析仪时钟输出冲突。4.7 kΩ/线可作为短线低速设计的起点，但须依据模块已有上拉、总线电容和允许灌电流核对，不是已验证阻值。
 
-PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 16k 样本、RLE 关。I2C 配置速率 100 kHz，教授建议至少 1 MS/s；不是本项目实测采样率。扫描间有约 3 秒空闲，短自由采集可能只得到 HIGH：可设 CH1/SCL=LOW 电平触发等下一次扫描，或先 Arm、再向 **T 的 115200 串口**发送 `s`。不要向 A 的 SUMP 串口发送文字。
+PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 10k 样本、RLE 关。I2C 配置速率 100 kHz，教授建议至少 1 MS/s；不是本项目实测采样率。ESP8266 程序默认暂停，发送 `c` 后各次扫描结束后空闲约 100 ms（不是原 ESP32 备选程序的 3 秒间隔），短自由采集可能只得到 HIGH：可设 CH1/SCL=LOW 电平触发等下一次扫描，或先 Arm、再向 **T 的 115200 串口**发送 `s`。不要向 A 的 SUMP 串口发送文字。
 
 添加 **I2C** 协议解码器，将 **SDA=CH0、SCL=CH1**，尽量选择 7-bit 地址显示。先显示原始两条数字线，再看解码注释。逐项检查：
 
@@ -139,8 +139,8 @@ PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 16k 样本、RLE 关。I2C
 |---|---|
 | 找不到设备 / COM 被占用 | 是否选 A 端口、921600/8N1、ols；关闭 A Monitor/Plotter、其他 PulseView 会话；等待复位完成后重试 |
 | 采集不结束 | A22→A23 时钟跳线、触发条件、目标是否有活动、样本数；先关触发/RLE，减少采样数 |
-| 切换采样率后频率明显改变 | 是否正确应用 Core 3 retune 补丁；记录实际时基并重新连接；不能把未经验证的显示当正确结果 |
-| PWM 平线 | T 是否仍运行 PWM 固件、目标25是否接 A21/CH0、是否共地、配置是否报错 |
+| 切换采样率后频率明显改变 | 检查 Core 3 retune 风险；先记录配置与实际估算并重新连接。当前固件不擅自刷补丁；不能把未经验证的显示当正确结果 |
+| PWM 平线 | T 是否仍运行 PWM 固件、蓝色 D1/GPIO5 是否接 A21/CH0（GPIO25 是原 ESP32 备选源）、是否共地、配置是否报错 |
 | I2C 只有 HIGH / 无解码 | 是否捕获到扫描窗口；触发/发送 s；上拉、电源、SDA/SCL 解码映射、两块板身份 |
 | 全部 NACK | 可能没有设备、地址/供电/接线不符；先观察真实第九时钟，不自动判分析仪故障或传感器成功 |
 | 地址翻倍 / 奇怪地址 | 7-bit 与 8-bit 显示、R/W 位、交换的 SDA/SCL、实际采样时基 |
@@ -149,4 +149,4 @@ PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 16k 样本、RLE 关。I2C
 
 ## 9. 尚待真实完成
 
-已验证一块分析仪的设备识别和 CH0 静态 LOW/HIGH 采集，并保存原始 .sr 与真实回放截图。断电换接或重新插 USB 后，应释放旧 COM 连接、复位并重新选择真实 ols 设备；本次没有更换驱动或重新烧录。两板动态测试、PWM 测量、I2C 解码、有效采样率与误差、课堂 demo 和最终 A/B 工具决定仍 Pending。
+已验证设备识别、静态 LOW/HIGH、共地 PWM 和 I²C NACK；原始采样与真实截图均已保存。PWM 平均周期约 0.999889 ms、平均占空比约50.0500%；I²C 请求100 kHz，但按配置1 MHz时基估算约74.53 kHz。两者均非独立校准值。传感器 ACK/数据、长期稳定性、漏边沿的独立验证、精确上拉阻值与接线照片、真实安装耗时、课堂演示、最终工具选择及说明负责人仍未完成。不要补造历史耗时或课堂结论。

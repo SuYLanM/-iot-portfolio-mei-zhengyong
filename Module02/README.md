@@ -28,6 +28,8 @@ Individual experimental/discussion contributions will be recorded only after the
 
 The original required English output filenames are retained. Task 2 now uses **bus-can.md** for the group's confirmed CAN selection; the [original generic profile](bus-profile-template.md), [pitch template](bus-pitch.md) and [candidate research](bus-survey-notes.md) remain available. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
 
+[Task 9 final integrity audit](scope-decision.md#final-integrity-audit--2026-10-28) · [Prepared short classroom explanation](scope-decision.md#short-classroom-explanation--prepared-not-yet-delivered). Actual classroom demo, setup duration and final class decision remain Pending.
+
 ## Wiring, Code and Evidence
 
 - Task 9 I2C stage: [ESP8266 I2C source and two-board wiring](code/task09_esp8266_i2c_source/README.md), compile/upload PASS; [real NACK capture record](evidence/task09-esp8266-i2c.md). Sensor ACK/data remain Pending. The grounded retest is the official PWM result; the initial run is retained only as historical evidence.

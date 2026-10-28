@@ -54,7 +54,7 @@ Completed one-board static test wiring:
 
 No potentiometer or generated PWM was involved. GPIO21 was never intentionally connected to GND and 3V3 simultaneously. Wiring is user-confirmed; no wiring photograph or DMM voltage measurement is supplied.
 
-Proposed two-board **future I2C** capture, only after board/pin/voltage verification:
+Alternative two-ESP32 I2C wiring (prepared, not the ESP8266 source actually used below):
 
 ```text
 Target board T (Task 9 scanner)        Analyzer board A (SUMP firmware)
@@ -64,7 +64,7 @@ T GND -------------------------------- A GND
                                         A GPIO22 output --> A GPIO23 clock input ONLY
 ```
 
-**Never connect T's SCL to A's GPIO22. Never run the default scanner and this analyzer on the same physical ESP32 with unchanged maps.** Reassigning one side requires source review and a new map; a second board is the simpler evaluation arrangement. Two power supplies need reviewed grounding; do not tie 3V3 outputs together. Actual board availability and physical wiring checks: Pending.
+**Never connect T's SCL to A's GPIO22. Never run the default scanner and this analyzer on the same physical ESP32 with unchanged maps.** Reassigning one side requires source review and a new map. Do not tie 3V3 outputs together. This alternative is not hardware tested; the actual two-board ESP8266/ESP32 mapping and its limits are recorded in the I2C result below.
 
 ## Build and Installation
 
@@ -173,3 +173,36 @@ Provisional research preference: A for bus decoding, B for slow analog explorati
 - Maintainers of install instructions: TODO; do not assign contributions to Mei/Felix without agreement.
 - Captures, actual performance, limitations and fallback decision: TODO.
 - If time is short: record an actual class decision and carry captures into portfolio time, as permitted by the course; no decision is fabricated here.
+
+## Evaluation — Advantages and Trade-offs
+
+The demonstrated advantages are reuse of an available ESP32, an open-source build with a recorded commit, Windows/PulseView integration, preservation of downloadable raw samples, and successful digital PWM and I2C NACK decoding. It is useful for examining digital protocol structure without a bench oscilloscope.
+
+The costs are a separate signal-source board, a mandatory local clock jumper, careful 3.3 V wiring, exclusive COM-port ownership, finite capture windows and slower serial transfer after acquisition. Only CH0 and CH1 have been exercised; 16-channel identification does not validate all inputs. It cannot measure analog amplitude or rise time. Maximum rate/depth, RLE, clock retuning, long-run stability and calibrated timing remain unverified. The 13–14-sample I2C clock periods and 999–1000-sample PWM periods describe these short records; they do not establish zero missed edges or absolute timing accuracy. Browser compatibility is not applicable to this native A-class host; the B-class browser candidate is still untested. A reference analyzer/scope comparison is conditional on availability, not a requirement to buy equipment.
+
+## Short Classroom Explanation — Prepared, Not Yet Delivered
+
+> We evaluated an ESP32 digital logic analyzer with PulseView on Windows 11. The black ESP32 keeps the official version 0.31 firmware. A blue WeMos D1 mini provides the test signals. We retained the analyzer's GPIO22-to-GPIO23 clock jumper and used a dedicated common ground.
+>
+> Our static LOW and HIGH records each contain ten thousand samples. The grounded PWM retest gives approximately one kilohertz and fifty percent duty, calculated using the configured one-megahertz timebase. For I2C, SDA is channel zero and SCL is channel one. We decoded twelve address probes with START, write, NACK and STOP. No sensor was connected, so these are requests, not discovered devices. The scanner requested one hundred kilohertz; the sampled clock estimate was about seventy-four point five kilohertz.
+>
+> Raw captures and screenshots are available in our portfolio. Timing is not independently calibrated, and long-term stability is untested. We propose evaluating this tool for digital bus debugging; the final class selection and instruction owners remain undecided.
+
+## Final Integrity Audit — 2026-10-28
+
+Rechecked against [official Task 9](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md). This is an evidence audit, not a new hardware run or instructor assessment.
+
+All **five remote .sr archives and eleven JPEGs** downloaded from GitHub main matched local files byte-for-byte. Every ZIP passed integrity checks; each raw record contains 20,000 logic bytes / 10,000 16-bit samples at the stored 1 MHz label. Four authoritative downloaded files (LOW, HIGH, grounded PWM, I2C) were opened successfully in PulseView during this audit. The old PWM file remains historical evidence of the run missing its dedicated ground wire; it is not the submitted wiring validation. Recalculated LOW/HIGH bits, PWM edges/duty and I2C START/address/RW/ninth-bit NACK/STOP match their measurement JSON and reports. Main replay/decoder screenshots visually agree. Source serial totals describe a separate full scan; the I2C raw record contains only twelve complete probes. GitHub may show no preview for `.sr`: download the raw file, then use PulseView Open; re-add the I2C decoder with SDA=CH0/SCL=CH1 if the decoder setup is absent.
+
+| Official Task 9 item | Evidence / audit outcome | Remaining work |
+|---|---|---|
+| Candidate role, repository and commit/version | A-role candidate and exact upstream commit recorded; B-role research retained | Final class selection is Pending; a B-role evaluation is a class-wide goal, not automatically this pod's second build |
+| Build and flash | Original analyzer build and user-confirmed IDE upload documented; blue ESP8266 compile/upload observed | Original IDE upload screenshot absent; not a separately named mandatory deliverable |
+| Known 1 kHz signal | Grounded PWM retest verified; ESP8266 source substitution for the suggested second ESP32 is explicit | No claim of using an ESP32 signal source or independently calibrated 1 kHz |
+| Scanner / I2C decoder | Requested 100 kHz, observed estimate 74.53 kHz; real address/NACK/STOP capture | Exact 100 kHz not verified. Sensor ACK/register data unverified; Task 9 explicitly permits scanner probes and ACK/NACK |
+| Rate/timebase, edge behavior, limits and compatibility | Configured rates, short-record variation, native Windows versions, voltage constraints and fault recovery recorded | No independent timebase, extended repeatability or proof of zero missed edges; do not infer maximum specifications |
+| Time installation and record total setup effort | Procedure and encountered failures documented | **Required effort measurement is missing**: elapsed install-to-first-capture time was not recorded; do not invent it retrospectively |
+| Short pod demonstration | Script above is Prepared | **Actual classroom demonstration Pending** |
+| Shared decision and instruction owners | Required `Module02/scope-decision.md` exists with build/flash/use instructions, pin map and captures | **Class agreement on 1–2 solutions, roles/reasons and actual instruction owners Pending** |
+
+No additional mandatory filename is specified by Task 9 beyond `Module02/scope-decision.md`. Optional OneWire, optional sigrok-cli and an available-reference comparison are not missing compulsory files. Wiring photographs, exact pull-up identification, original IDE screenshots and further repeatability/reference measurements would strengthen the evidence but are not separate named Task 9 submissions. No actual ACK, sensor reading, classroom contribution or class decision is inferred from this audit.
