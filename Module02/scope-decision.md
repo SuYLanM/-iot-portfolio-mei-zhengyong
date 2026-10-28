@@ -164,6 +164,27 @@ The actual PWM test used the [ESP8266 WeMos source](code/task09_esp8266_pwm_gene
 
 **Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Later PWM stage:** the WeMos source produced a real dynamic CH0 record with sample-derived period/duty as reported above. **Still not measured:** independent input voltage, calibrated effective sample rate/timebase, independently referenced edge timing/frequency, sensor ACK/register data, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. PWM and NACK-only I2C captures are now available; sensor ACK/data, calibration, class demo/decision and remaining Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
 
+## Time and Effort — Retrospective Estimate
+
+**Estimated hands-on time: approximately 90 minutes. The activity-level durations are retrospective estimates, not individually timed measurements.**
+
+The following breakdown was supplied by the student from overall recollection. It describes the experiment's estimated hands-on effort, with no allocation to individual group members. The 90-minute total is not a precisely timed installation-to-first-capture interval or a measured elapsed wall-clock duration. No per-member hours can be inferred from it.
+
+| Activity | Estimated time |
+|---|---|
+| Source code download and project preparation | 10 min |
+| Arduino IDE setup, compilation and firmware flashing | 15 min |
+| Troubleshooting compilation and PulseView capture issues | 20 min |
+| HIGH/LOW digital input validation | 10 min |
+| 1 kHz PWM generation and capture | 15 min |
+| I²C wiring, scanning and protocol decoding | 15 min |
+| Evidence organization and documentation | 5 min |
+| **Total** | **90 min** |
+
+The work used **Windows 11**, **Arduino IDE 2.3.10**, an **ESP32 Dev Module running ESP32 LogicAnalyzer v0.31**, and a **WeMos D1 mini (ESP8266)** as the dynamic test-signal source. **PulseView** was used for HIGH/LOW, PWM and I2C waveform acquisition and I2C protocol decoding.
+
+Implementation involved the missing-header error `LogicAnalyzer.h: No such file or directory`, resolved by preparing the complete upstream sketch with its required source files, and the later PulseView `Capture failed` problem. Successful static and dynamic acquisitions followed the documented serial/session recovery; the original capture-failure root cause was not uniquely established. These troubleshooting activities are included in the retrospective estimate above. Precisely timed installation-to-first-capture duration remains unrecorded. Classroom demonstration and the final class decision remain **Pending**.
+
 ## Class Decision and Conclusion — Pending
 
 Provisional research preference: A for bus decoding, B for slow analog exploration. This is **not a class adoption decision**.
@@ -201,7 +222,7 @@ All **five remote .sr archives and eleven JPEGs** downloaded from GitHub main ma
 | Known 1 kHz signal | Grounded PWM retest verified; ESP8266 source substitution for the suggested second ESP32 is explicit | No claim of using an ESP32 signal source or independently calibrated 1 kHz |
 | Scanner / I2C decoder | Requested 100 kHz, observed estimate 74.53 kHz; real address/NACK/STOP capture | Exact 100 kHz not verified. Sensor ACK/register data unverified; Task 9 explicitly permits scanner probes and ACK/NACK |
 | Rate/timebase, edge behavior, limits and compatibility | Configured rates, short-record variation, native Windows versions, voltage constraints and fault recovery recorded | No independent timebase, extended repeatability or proof of zero missed edges; do not infer maximum specifications |
-| Time installation and record total setup effort | Procedure and encountered failures documented | **Required effort measurement is missing**: elapsed install-to-first-capture time was not recorded; do not invent it retrospectively |
+| Time installation and record total setup effort | [Student-reported retrospective effort](#time-and-effort--retrospective-estimate): approximately 90 minutes, with an estimated activity breakdown and troubleshooting notes | Exact activity timings and installation-to-first-capture duration were not recorded; the estimate is not a stopwatch measurement or a per-member allocation |
 | Short pod demonstration | Script above is Prepared | **Actual classroom demonstration Pending** |
 | Shared decision and instruction owners | Required `Module02/scope-decision.md` exists with build/flash/use instructions, pin map and captures | **Class agreement on 1–2 solutions, roles/reasons and actual instruction owners Pending** |
 

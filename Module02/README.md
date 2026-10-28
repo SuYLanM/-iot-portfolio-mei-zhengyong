@@ -28,7 +28,7 @@ Individual experimental/discussion contributions will be recorded only after the
 
 The original required English output filenames are retained. Task 2 now uses **bus-can.md** for the group's confirmed CAN selection; the [original generic profile](bus-profile-template.md), [pitch template](bus-pitch.md) and [candidate research](bus-survey-notes.md) remain available. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
 
-[Task 9 final integrity audit](scope-decision.md#final-integrity-audit--2026-10-28) · [Prepared short classroom explanation](scope-decision.md#short-classroom-explanation--prepared-not-yet-delivered). Actual classroom demo, setup duration and final class decision remain Pending.
+[Task 9 final integrity audit](scope-decision.md#final-integrity-audit--2026-10-28) · [Prepared short classroom explanation](scope-decision.md#short-classroom-explanation--prepared-not-yet-delivered) · [Time and effort: approximately 90 minutes, retrospective estimate](scope-decision.md#time-and-effort--retrospective-estimate). Exact installation-to-first-capture timing is unrecorded; actual classroom demo and final class decision remain Pending.
 
 ## Wiring, Code and Evidence
 

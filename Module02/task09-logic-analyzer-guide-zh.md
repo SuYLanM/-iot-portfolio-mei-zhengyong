@@ -1,6 +1,6 @@
 # Task 9 A 类：ESP32 Logic Analyzer + PulseView 中文操作手册
 
-**实测更新：CH0 LOW/HIGH、共地 PWM 重测、I²C NACK 捕获均已核验，各 10,000 样本。** [静态证据](evidence/task09-logic-analyzer/README.md) · [PWM 证据](evidence/task09-esp8266-pwm.md) · [I²C NACK 证据](evidence/task09-esp8266-i2c.md)。黑色 ESP32 保留已工作的官方原固件，不要为重现这些结果刷补丁；蓝色 WeMos D1 mini（ESP8266）分别运行独立信号源程序。传感器 ACK/数据、独立时基校准、安装耗时记录、课堂演示和决定仍 Pending。[英文报告与最终审核](scope-decision.md) · [历史构建核验](task09-analyzer-build.md)。
+**实测更新：CH0 LOW/HIGH、共地 PWM 重测、I²C NACK 捕获均已核验，各 10,000 样本。** [静态证据](evidence/task09-logic-analyzer/README.md) · [PWM 证据](evidence/task09-esp8266-pwm.md) · [I²C NACK 证据](evidence/task09-esp8266-i2c.md)。黑色 ESP32 保留已工作的官方原固件，不要为重现这些结果刷补丁；蓝色 WeMos D1 mini（ESP8266）分别运行独立信号源程序。[约90分钟的实际投入回顾性估算](scope-decision.md#time-and-effort--retrospective-estimate)已由学生提供，不是逐项精确计时或两位组员各自的工时。传感器 ACK/数据、独立时基校准、课堂演示和决定仍 Pending；安装至首次采集的精确时长未记录。[英文报告与最终审核](scope-decision.md) · [历史构建核验](task09-analyzer-build.md)。
 
 ## 1. 准备两块板，分别运行固件
 
@@ -149,4 +149,4 @@ PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 10k 样本、RLE 关。I2C
 
 ## 9. 尚待真实完成
 
-已验证设备识别、静态 LOW/HIGH、共地 PWM 和 I²C NACK；原始采样与真实截图均已保存。PWM 平均周期约 0.999889 ms、平均占空比约50.0500%；I²C 请求100 kHz，但按配置1 MHz时基估算约74.53 kHz。两者均非独立校准值。传感器 ACK/数据、长期稳定性、漏边沿的独立验证、精确上拉阻值与接线照片、真实安装耗时、课堂演示、最终工具选择及说明负责人仍未完成。不要补造历史耗时或课堂结论。
+已验证设备识别、静态 LOW/HIGH、共地 PWM 和 I²C NACK；原始采样与真实截图均已保存。PWM 平均周期约 0.999889 ms、平均占空比约50.0500%；I²C 请求100 kHz，但按配置1 MHz时基估算约74.53 kHz。两者均非独立校准值。学生已提供总计约90分钟的回顾性投入估算及活动分配；安装至首次采集的精确计时仍未记录。传感器 ACK/数据、长期稳定性、漏边沿的独立验证、精确上拉阻值与接线照片、课堂演示、最终工具选择及说明负责人仍未完成。估算与精确测量应分开，不补造课堂结论。
