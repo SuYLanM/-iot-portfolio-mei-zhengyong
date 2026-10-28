@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-28",
+  "method": "Read unmodified sigrok ZIP archives; inspect metadata and bit 0 of each little-endian 16-bit sample.",
+  "results": [
+    {
+      "file": "pulseview-original-low-10000.sr",
+      "archive_sha256": "53f009914f607017fff600efdb31a2b1a06bc637be6623cb9b612c294a16f6cf",
+      "archive_bytes": 515,
+      "logic_member": "logic-1-1",
+      "logic_bytes": 20000,
+      "unitsize_bytes": 2,
+      "samples": 10000,
+      "stored_channels": 16,
+      "channel_checked": 0,
+      "gpio_checked": 21,
+      "ch0_low_samples": 10000,
+      "ch0_high_samples": 0,
+      "configured_samplerate": "1 MHz",
+      "independently_calibrated_samplerate": null
+    },
+    {
+      "file": "pulseview-original-high-10000.sr",
+      "archive_sha256": "a0a57b18c0b99e5f6310bf6d3aec07d482541cfb11145bb0450ebb0e1aafd2f7",
+      "archive_bytes": 515,
+      "logic_member": "logic-1-1",
+      "logic_bytes": 20000,
+      "unitsize_bytes": 2,
+      "samples": 10000,
+      "stored_channels": 16,
+      "channel_checked": 0,
+      "gpio_checked": 21,
+      "ch0_low_samples": 0,
+      "ch0_high_samples": 10000,
+      "configured_samplerate": "1 MHz",
+      "independently_calibrated_samplerate": null
+    }
+  ]
+}

@@ -26,7 +26,7 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 
 ## Module 02 — Buses and I2C Preparation
 
-[Module 02 guide and Task 1–10 checklist](Module02/README.md) covers pin/divider theory, bus research, I2C study, scanner/register/multi-device code and scope feasibility. **Task 2 — Pod 4: CAN Bus — Research Prepared:** [English CAN profile](Module02/bus-can.md), [classroom speech](Module02/can-pitch.md), [local self-test](Module02/code/task02_can_self_test/README.md) and [external CAN example](Module02/code/task02_can_external/README.md). **CAN Hardware Test Pending**; no discovered addresses, sensor values, instrument captures, delivered presentation or class decision are claimed. Task 10 is optional.
+[Module 02 guide and Task 1–10 checklist](Module02/README.md) covers pin/divider theory, bus research, I2C study, scanner/register/multi-device code and scope feasibility. **Task 2 — Pod 4: CAN Bus — Research Prepared:** [English CAN profile](Module02/bus-can.md), [classroom speech](Module02/can-pitch.md), [local self-test](Module02/code/task02_can_self_test/README.md) and [external CAN example](Module02/code/task02_can_external/README.md). **CAN Hardware Test Pending**; [Task 9 static CH0 LOW/HIGH captures](Module02/evidence/task09-logic-analyzer/README.md) are verified at 10,000 samples each. PWM/I2C capture, independent timebase calibration, presentations and class decision remain Pending. Task 10 is optional.
 
 ## Pre-study and Preparation
 
@@ -35,7 +35,7 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 - [Personal profile and Task Pod template](Module01/who-am-i.md): TODO personal answers and actual pod agreement.
 - [Task A / Task B study log](Module01/study-log.md): theory draft; actual student/pod verification and discussion remain TODO.
 - [Task 6 signal-chain draft](Module01/task06-chain.md): literature-based diagram, not a tested VL53L0X build.
-- [Module 02](Module02/README.md): theory and Arduino preparation available; Pod 4 CAN selected, research prepared; all hardware tests and classroom decisions remain Pending.
+- [Module 02](Module02/README.md): theory and Arduino preparation available; Pod 4 CAN selected, research prepared; Task 9 static LOW/HIGH evidence is available; other hardware tests and classroom decisions remain Pending.
 
 ## Learning Reflections
 

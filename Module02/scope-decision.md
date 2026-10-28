@@ -1,10 +1,10 @@
 # Task 9 — Scope / Logic Analyzer Decision Record
 
-**Prepared / Awaiting hardware validation. The A-class firmware and target sketches compile; no flashing, capture or class decision has occurred.** Proposed pairing for evaluation: digital SUMP analyzer plus browser analog scope. Final adoption and ownership of instructions must be agreed by the class, not inferred from this document. [Reference/source register](references.md#r11-instrument-candidates).
+**Stage verified: A-class CH0/GPIO21 static LOW and HIGH acquisition, 10,000 samples each. PWM, I2C captures, independent timebase calibration and class decision remain Pending.** The user reported successful IDE compilation/flashing; the assistant checked real serial transfers and PulseView acquisitions without reflashing. Proposed pairing remains digital SUMP plus browser analog scope; final adoption and instruction ownership require an actual class decision. [Original research sources](references.md#r11-instrument-candidates) · [Original captures, replay screenshots and verification](evidence/task09-logic-analyzer/README.md).
 
 ## Project Objective
 
-Prepare and evaluate a classic ESP32 digital analyzer for known PWM and I2C traffic with PulseView on Windows 11. The professor requires actual setup effort, captures and a class agreement on 1–2 instruments. This document separates completed source/build checks from Pending physical evidence. [Chinese step-by-step manual](task09-logic-analyzer-guide-zh.md) · [Build/source audit](task09-analyzer-build.md) · [Blank capture/class record](evidence/task09-logic-analyzer-record.md).
+Prepare and evaluate a classic ESP32 digital analyzer for known PWM and I2C traffic with PulseView on Windows 11. A one-board static LOW/HIGH check is now documented as an intermediate stage; it does not replace the required dynamic tests. The professor also requires actual setup effort and a class agreement on 1–2 instruments. [Chinese step-by-step manual](task09-logic-analyzer-guide-zh.md) · [Build/source audit](task09-analyzer-build.md) · [Further measurement/class record](evidence/task09-logic-analyzer-record.md).
 
 ## Candidate Comparison
 
@@ -19,13 +19,13 @@ Prepare and evaluate a classic ESP32 digital analyzer for known PWM and I2C traf
 | GPIO | Captured channels below; GPIO22/23 reserved for clock loop; LED2 and UART0 used | ADC1 GPIO34 input, GPIO25 1 kHz test output, Wi-Fi active |
 | Input limit | Bare GPIO: 3.3 V logic only, no negative or 5 V input; project PCB/level-shifter design is separate and under validation | Positive low-voltage ADC signal only, useful range depends on attenuation/nonlinearity; keep test amplitude comfortably below 3.0 V after verified conditioning |
 | Main limitations | Digital levels only; no calibrated analog rise-time/amplitude measurement; claimed maximum rate needs reference tests | Wi-Fi/analogRead timing jitter and ADC error; requested rate is not an independently measured rate; cannot resolve 100 kHz I2C with its claimed analog rates |
-| Current status | Unmodified and locally patched source compile on Core 3.3.12; Windows host startup checked; flash/PWM/I2C decode Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
+| Current status | Original source also compiled with Core 3.3.7; IDE flash user-confirmed; real CH0 LOW/HIGH captures verified; PWM/I2C/timebase Pending | Source inspected; compatibility choice/build/flash/analog validation Pending |
 
 These are project statements or code constants, **not our measured specifications**. The browser project's own README states its interface image uses a simulated capture and its timing figures are unvalidated design targets. No upstream image is imported as student evidence.
 
 ## Selected Analyzer and Repository Version — Provisional Evaluation
 
-A-class preparation uses lmcapacho/ESP32_LogicAnalyzer, fetched default-branch HEAD **5c4f2b9fd85ac09aca3e42596e6e7e0b640cdab3**, plus our [Core 3 clock-retuning patch](patches/task09-core3-clock-retune.patch). This is a source/build selection for evaluation, **not the final class decision**. Existing B-class research below is retained, not newly validated in this session. No personal experimental contributions are assigned.
+A-class evaluation uses lmcapacho/ESP32_LogicAnalyzer, fetched master commit **5c4f2b9fd85ac09aca3e42596e6e7e0b640cdab3**. The LOW/HIGH runs used the board's user-reported **official unmodified firmware**; no assistant reflash was performed. Our [Core 3 clock-retuning patch](patches/task09-core3-clock-retune.patch) and later local diagnostic fixes are prepared alternatives, **not the firmware credited with these captures**. This is an evaluation candidate, not the final class decision. Existing B-class research is retained, not newly validated. The user performed the reported wiring changes; no experiment or presentation contribution is invented for the other group member.
 
 ## GPIO Pin Mapping and Conflict Gate
 
@@ -44,7 +44,17 @@ Source checked: [LogicAnalyzerConfig.h](https://github.com/lmcapacho/ESP32_Logic
 
 **Reserved on analyzer board A: GPIO22 is CLK_OUT (LEDC output), GPIO23 is CLK_IN; upstream requires 22→23 loopback. They are not probe inputs.** GPIO2 is the capture LED; UART0 is the host transport. Some channels are strapping pins and can affect boot if externally driven; confirm the physical module before using them. The initial plan uses CH0/CH1 rather than those straps.
 
-Proposed two-board capture, only after board/pin/voltage verification:
+Completed one-board static test wiring:
+
+| Connection | LOW run | HIGH run |
+|---|---|---|
+| Analyzer GPIO22 → GPIO23 | Clock jumper retained | Clock jumper retained |
+| Analyzer GPIO21 / CH0 | Connected only to GND | Moved only to 3V3 after power-off |
+| Separate target board | Not used | Not used |
+
+No potentiometer or generated PWM was involved. GPIO21 was never intentionally connected to GND and 3V3 simultaneously. Wiring is user-confirmed; no wiring photograph or DMM voltage measurement is supplied.
+
+Proposed two-board **future I2C** capture, only after board/pin/voltage verification:
 
 ```text
 Target board T (Task 9 scanner)        Analyzer board A (SUMP firmware)
@@ -58,9 +68,9 @@ T GND -------------------------------- A GND
 
 ## Build and Installation
 
-1. Keep external source/builds outside this portfolio; checkout the pinned commit and apply the separately recorded Core 3 retune patch. No upstream firmware/binary is bundled here. Open the complete upstream ESP32_LogicAnalyzer/ESP32_LogicAnalyzer.ino folder in Arduino IDE; use ESP32 Dev Module, installed Core 3.3.12, Core Debug Level None and _DEBUG_MODE_ disabled. The patched build compiled; hardware flashing remains Pending.
+1. External firmware/builds stay outside this portfolio. The official complete sketch, headers and C++ files were prepared locally and checked against the pinned master source. The unchanged project compiled with **Core 3.3.7 / ESP32 Dev Module / Debug=None**; the user confirmed IDE compilation, upload and `Hash of data verified`. No original build/upload screenshot was supplied. No upstream firmware/binary is bundled here. Earlier Core 3.3.12 preparation and patches remain documented separately; do not infer that a compiled patch was flashed or needed to obtain these static captures.
 2. Digital candidate: install the compatible upstream board package/toolchain, build the original sketch/project and keep debug prints off UART0. Its README specifications have a **912600 typo**; config.h and the PulseView example use **921600**. Confirm that value in the firmware actually flashed. Close Serial Monitor before PulseView opens the same COM port. COM3 is a previous portfolio port, not necessarily the analyzer's current port.
-3. The existing Windows x64 PulseView executable starts and lists the ols driver: PulseView 0.5.0-git-e2fe9df, runtime libsigrok 0.6.0-git-883c2ac. Select **Openbench Logic Sniffer & SUMP compatibles (ols)** and override serial settings to **921600/8n1**, with the actual analyzer COM port. Device connection and capture on Windows 11 remain Pending. The sigrok website was unavailable to the research tool; local --version/--help and driver source were checked instead. See the build audit for exact limits.
+3. Windows x64 PulseView **0.5.0-git-e2fe9df**, runtime libsigrok **0.6.0-git-883c2ac**, identified **ESP32 Logic Analyzer v0.31 / 16 channels** through **Openbench Logic Sniffer & SUMP compatibles (ols)** on **COM3, Silicon Labs CP210x**, at **921600/8n1**. Real static LOW/HIGH acquisitions and saved-file reopening now work. This is limited compatibility evidence, not certification of every rate/feature. The sigrok website was unavailable during earlier research; local program/driver checks are recorded in the build audit.
 4. Analog candidate: upstream platformio.ini pins espressif32@6.10.0. src/main.cpp calls ledcSetup/ledcAttachPin, which were removed in Core 3. Choose a separately installed compatible environment or prepare/test a Core 3 port; neither has been done here. [Espressif migration note](https://docs.espressif.com/projects/arduino-esp32/en/latest/migration_guides/2.x_to_3.0.html).
 5. GPIO34 is ADC1, suitable for a candidate using Wi-Fi, but voltage calibration/nonlinearity remains unverified. For a proposed 3.3 V PWM source use a verified 10k/10k divider to approximately 1.65 V, check node voltage before connecting and evaluate loading/bandwidth. Do not blindly copy the upstream high-voltage/biased input drawing or treat a 0–3.3 V rail test as calibrated amplitude. Viewing an AP-hosted page differs from Web Serial flashing; record browser/OS and actual route used.
 6. The web sampler uses a micros()-paced loop; capture metadata is calculated from requested period, not measured timestamps for every ADC conversion. Its main.cpp header mentions a hardware timer, while sampler.cpp implements the polling loop. Inspect working code and measure real timing rather than trusting either label.
@@ -83,7 +93,28 @@ An important Core 3 issue was found: repeated ledcAttach calls reject an attache
 
 ## Windows 11 / PulseView Compatibility
 
-User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Local software evidence confirms installed Core 3.3.12 and an executable x64 PulseView with ols plus I2C decoder files. GUI discovery, USB-UART driver/actual COM identification, SUMP exchange and decoding with physical hardware remain **Pending**. Do not replace a working COM driver with Zadig for this UART-based firmware. The analyzer port is exclusive to PulseView; target T may use Serial Monitor on its different port.
+User environment: Windows 11, Arduino IDE 2.3.10, classic ESP32. Exact Core 3.3.7 compilation was checked separately from the earlier Core 3.3.12 preparation. COM3 CP210x transport, SUMP identification, PulseView static capture and saved-file reopening were observed. I2C decoding and dynamic timing remain **Pending**. The successful transfers provide no basis for declaring the CP210x driver generally incompatible; no driver replacement or baud downgrade was performed. The analyzer port is exclusive to PulseView; close conflicting monitors and reconnect/rescan after a USB power cycle. Do not use Zadig to replace the working UART driver.
+
+## Actual Static LOW/HIGH Captures — Verified Stage
+
+Date: **2026-10-28**. One ESP32 only, CH0=GPIO21, GPIO22→GPIO23 clock jumper. Requested settings: **1 MHz, 10 k samples, no trigger**; RLE off, External Clock off, Pattern=None. The `.sr` metadata independently records 16 probes, 2 bytes/sample and the 1 MHz label; the remaining settings come from the actual session and user confirmation.
+
+| Run | Input connection | Original data | Verified CH0 result |
+|---|---|---|---|
+| LOW | GPIO21 → GND | [Original LOW `.sr`](evidence/task09-logic-analyzer/pulseview-original-low-10000.sr), 20,000 logic bytes / 10,000 samples | 10,000 LOW; 0 HIGH |
+| HIGH | GPIO21 → 3V3 | [Original HIGH `.sr`](evidence/task09-logic-analyzer/pulseview-original-high-10000.sr), 20,000 logic bytes / 10,000 samples | 0 LOW; 10,000 HIGH |
+
+ZIP integrity and every CH0 bit were rechecked; archive SHA-256 values and the exact method are in the [evidence index](evidence/task09-logic-analyzer/README.md) and [verification JSON](evidence/task09-logic-analyzer/capture-verification.json). Both original files were copied without modification and reopened in PulseView. Only CH0 was electrically controlled; the other 15 stored channels are not validated.
+
+### Fault Investigation and Recovery
+
+1. The user reported `Capture failed — generic/unspecified error` despite successful device identification. Identification alone did not establish a working acquisition.
+2. COM3 initially opened without a SUMP response, then temporarily disappeared. After the USB connection was restored and a controlled ESP32 reset performed, it returned the real SUMP ID `1ALS`.
+3. Direct SUMP tests on the original running firmware returned 2048 bytes for 1024 LOW samples and then 20,000 bytes for 10,000 LOW samples at the requested 1 MHz setting. PulseView subsequently captured/saved the LOW run.
+4. Following the user's power-off wiring change to 3V3, the old PulseView connection yielded no savable logic data and COM3 access was denied to another process. Releasing that connection, resetting and reselecting the **real ESP32 ols device** restored transfer. No Demo acquisition was performed or used as evidence. Direct SUMP and PulseView then returned/saved 10,000 HIGH samples.
+5. External Clock and RLE were checked off, Pattern=None. No CP210x driver change or assistant reflash was used. The observations support a transient USB/serial/firmware-session state problem; they do **not uniquely identify the original fault**, prove every previous failure had the same cause, or establish that firmware patches fixed it.
+
+Code review did identify repeated Core 3 LEDC attachment, unchecked fixed-delay SUMP parameter reads, unbounded DMA completion waiting, missing allocation/init checks and per-sample serial flushing as robustness concerns. Local reversible fixes were compiled with Core 3.3.7 but **not flashed**. Their effectiveness is not an experimental result here. The untouched official local backup was preserved; this evidence commit does not add those untested local fixes or change firmware.
 
 ## Capture Test Plan
 
@@ -101,11 +132,15 @@ Use [our Core 3 PWM reference](code/task09_pwm_reference/README.md) on the separ
 
 ## Evidence and Screenshots
 
-[Software build/host record](task09-analyzer-build.md) documents completed checks; [blank hardware record](evidence/task09-logic-analyzer-record.md) lists expected screenshots and .sr captures. No screenshot or raw sample file exists for this experiment yet. Save original sigrok acquisition, settings, wiring, serial log and decoder screenshots after real tests; session settings alone do not replace samples.
+[Original raw files, hashes and genuine replay screenshots](evidence/task09-logic-analyzer/README.md) are available. No saved student screenshot from the original acquisition instant was found; the following unedited images were taken from PulseView displaying the preserved real captures during this organization session. They are **replay screenshots**, not new hardware tests or upstream example images. No wiring/upload screenshot is supplied. [Further hardware/class record](evidence/task09-logic-analyzer-record.md).
 
-## Experimental Results — Pending
+![Genuine PulseView replay of the real CH0 LOW capture](evidence/task09-logic-analyzer/pulseview-low-replay.jpg)
 
-No PWM frequency/duty, effective sample rate, I2C ACK/NACK capture, actual addresses, installation-to-first-capture time or hardware pass is claimed. Program compilation and host startup are the completed software results; they are not physical measurements. Keep the original blank comparison table above for future observations.
+![Genuine PulseView replay of the real CH0 HIGH capture](evidence/task09-logic-analyzer/pulseview-high-replay.jpg)
+
+## Experimental Results and Limits
+
+**Verified:** acquisition/USB transfer/storage of 10,000 CH0 LOW samples and 10,000 CH0 HIGH samples under the stated settings. This is stronger than identification alone, but only a static input check. **Not measured:** independent input voltage, effective sample rate/timebase, edge timing, PWM frequency/duty, I2C ACK/NACK, throughput/rate limits, setup-to-first-capture duration or reliability over extended repetition. The 1 MHz label and nominal 10 ms record are configuration-derived; static levels cannot calibrate timing. The requested PWM/I2C captures and final Task 9 learning goals remain incomplete. Keep the blank dynamic comparison table above for future observations.
 
 ## Class Decision and Conclusion — Pending
 

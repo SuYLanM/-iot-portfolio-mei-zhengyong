@@ -1,6 +1,6 @@
 # Module 02 — Hardware Evidence Register
 
-**No Module 02 hardware photos, scans, captures or measurements supplied yet.** This file is an English report framework, not a completed lab report. [Task checklist](../task-checklist.md).
+**Task 9 static CH0 LOW/HIGH captures are now verified:** [original files, replay screenshots and checks](task09-logic-analyzer/README.md). Other rows remain at their existing status; this register is not a declaration that all labs are complete. [Task checklist](../task-checklist.md).
 
 For each actual experiment record: date, board/module markings, sketch/settings, source/library version, wiring/power/pull-ups, operators and their actual roles, raw observations, calculations, uncertainty/limitations, conclusions and remaining work. Put original pictures in [pictures](../pictures/README.md) and use valid relative links only after files exist.
 
@@ -14,7 +14,7 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 | 6 | Library value and raw register reconstruction under matched settings | Pending |
 | 7 | A-only/B-only/both scans and actual readings of both devices | Pending |
 | 8 | Conflict/fix evidence if hardware available; otherwise explicitly theoretical | Theory prepared; physical experiment Pending |
-| 9 | Install/version/pins, PWM/I2C captures, measured timebase and class decision | Pending |
+| 9 | Install/version/pins, PWM/I2C captures, measured timebase and class decision | [CH0 LOW/HIGH verified](task09-logic-analyzer/README.md), 10,000 samples each; PWM/I2C/timebase/class decision Pending |
 | 10 | Optional decoded transaction and measured SCL | Optional / not tested |
 
 ## Scanner Report — Pending

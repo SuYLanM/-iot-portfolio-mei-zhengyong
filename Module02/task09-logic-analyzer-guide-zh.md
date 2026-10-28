@@ -1,6 +1,6 @@
 # Task 9 A 类：ESP32 Logic Analyzer + PulseView 中文操作手册
 
-**Software Prepared / Hardware Validation Pending。** 本手册没有实测波形、成功烧录或课堂决定。[英文报告](scope-decision.md) · [构建核验](task09-analyzer-build.md) · [空白实验记录](evidence/task09-logic-analyzer-record.md)。
+**阶段更新：CH0 LOW/HIGH 真实采集已核对，每次 10,000 样本。** [原始文件、真实回放截图与核验](evidence/task09-logic-analyzer/README.md)。以下保留原准备步骤；实测使用板上官方原固件，未由助手重新烧录或应用补丁。PWM、I2C、独立时基校准及课堂决定仍 Pending。[英文报告](scope-decision.md) · [构建核验](task09-analyzer-build.md) · [空白实验记录](evidence/task09-logic-analyzer-record.md)。
 
 ## 1. 准备两块板，分别运行固件
 
@@ -149,4 +149,4 @@ PulseView 开 CH0/CH1，请求 1 MS/s 或以上，先 16k 样本、RLE 关。I2C
 
 ## 9. 尚待真实完成
 
-两板烧录、设备识别、PWM 捕获/测量、I2C ACK/NACK 解码、有效采样率与误差、截图/原始文件、课堂 demo 和最终 A/B 工具决定均 Pending。报告中的候选选择是准备阶段建议，不能替代全班决定。
+已验证一块分析仪的设备识别和 CH0 静态 LOW/HIGH 采集，并保存原始 .sr 与真实回放截图。断电换接或重新插 USB 后，应释放旧 COM 连接、复位并重新选择真实 ols 设备；本次没有更换驱动或重新烧录。两板动态测试、PWM 测量、I2C 解码、有效采样率与误差、课堂 demo 和最终 A/B 工具决定仍 Pending。

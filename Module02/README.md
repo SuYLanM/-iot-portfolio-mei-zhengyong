@@ -1,6 +1,6 @@
 # Module 02 — Buses, I2C and Sensor Addressing
 
-**Preparation status: theory and compile-checked code prepared; all Module 02 hardware experiments Pending.** No scanned device addresses, physical readings, captures, classroom decisions or completed presentations are claimed.
+**Task 9 A stage verified: real CH0 LOW/HIGH captures, 10,000 samples each.** [Original .sr files, replay screenshots and checks](evidence/task09-logic-analyzer/README.md). PWM, I2C capture and the class decision remain Pending; other Module 02 hardware tasks retain their existing status.
 
 [Portfolio home](../README.md) · [Official Module 2](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md) · [Requirements checklist](task-checklist.md) · [Sources / verification](references.md)
 
@@ -23,7 +23,7 @@ Individual experimental/discussion contributions will be recorded only after the
 | 6 Library versus register | [Comparison / decoding checklist](register-reading.md) | [Library template](code/task06_library_template/README.md), [register template](code/task06_register_template/README.md) | Disabled scaffolds Prepared; sensor/adapters/tests Pending |
 | 7 Two devices | [Address table / dual-device report](two-devices.md) | [Framework](code/task07_two_devices/README.md) | Prepared; actual models/addresses/readings Pending |
 | 8 Address conflict | [address-conflict.md](address-conflict.md) | [Mux template](code/task08_mux_template/README.md) | Theory Prepared; no physical conflict/fix or simulation claimed |
-| 9 A-class instrument preparation | [English decision report](scope-decision.md), [Chinese operation manual](task09-logic-analyzer-guide-zh.md), [build/source audit](task09-analyzer-build.md), [blank evidence](evidence/task09-logic-analyzer-record.md) | [PWM target](code/task09_pwm_reference/README.md), [I2C capture target](code/task09_i2c_capture_source/README.md), [upstream Core 3 patch](patches/task09-core3-clock-retune.patch) | Analyzer and target code compile-checked; **Prepared / hardware captures and class decision Pending** |
+| 9 A-class instrument preparation | [English decision report](scope-decision.md), [Chinese operation manual](task09-logic-analyzer-guide-zh.md), [build/source audit](task09-analyzer-build.md), [verified LOW/HIGH evidence](evidence/task09-logic-analyzer/README.md), [further records](evidence/task09-logic-analyzer-record.md) | [PWM target](code/task09_pwm_reference/README.md), [I2C capture target](code/task09_i2c_capture_source/README.md), [upstream Core 3 patch](patches/task09-core3-clock-retune.patch) | **Static CH0 LOW/HIGH verified, 10,000 samples each**; 1 MHz configured, not calibrated; PWM/I2C/class decision Pending |
 | 10 Decode waveform | [Optional guide](i2c-decode-guide.md) | Use a verified Task 9 instrument later | **Optional / Not yet tested** |
 
 The original required English output filenames are retained. Task 2 now uses **bus-can.md** for the group's confirmed CAN selection; the [original generic profile](bus-profile-template.md), [pitch template](bus-pitch.md) and [candidate research](bus-survey-notes.md) remain available. Tasks 1–9 are core activities below the official draft boundary; Task 10 is a stretcher. Prepared documents or compiled stubs do not demonstrate hardware learning goals or instructor grading.
@@ -34,8 +34,8 @@ The original required English output filenames are retained. Task 2 now uses **b
 - [CAN wiring / module checks](can-wiring.md) · [Blank CAN hardware and classroom record](evidence/task02-can-test-record.md). Local self-test is separate from two-node physical CAN verification.
 - [Independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
 - Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
-- [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). No Module 02 photos/logs are supplied yet; create links only after actual files exist.
-- [Original software validation](validation.md) · [Task 9 follow-up build/host validation](task09-analyzer-build.md). The A-class analyzer now compiles with Core 3.3.12, including a separate clock-retuning patch; no flashing or capture occurred. GPIO22/23 conflicts and pending runtime timing checks remain explicit in the scope record. B-class research is unchanged.
+- [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). Task 9 original LOW/HIGH acquisitions and genuine replay screenshots are now [available](evidence/task09-logic-analyzer/README.md); wiring photos and dynamic captures are still Pending.
+- [Original software validation](validation.md) · [Task 9 follow-up build/host validation](task09-analyzer-build.md). Earlier Core 3.3.12 preparation is retained; original firmware also compiled with Core 3.3.7. The user confirmed IDE flashing, and original-firmware LOW/HIGH acquisition was verified without an assistant reflash or applied patch. GPIO22/23 conflicts and pending runtime timing checks remain explicit in the scope record. B-class research is unchanged.
 
 ## Next Actual Session
 

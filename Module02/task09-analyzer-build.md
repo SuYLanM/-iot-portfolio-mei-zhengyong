@@ -1,6 +1,6 @@
 # Task 9 A — Source and Software Validation Record
 
-**Prepared / no flashing or hardware capture.** [Chinese manual](task09-logic-analyzer-guide-zh.md) · [English decision record](scope-decision.md).
+**Software preparation record, now supplemented by a real static acquisition stage.** [LOW/HIGH originals, replay screenshots and checks](evidence/task09-logic-analyzer/README.md) document subsequent tests; PWM/I2C/timebase/class decision remain Pending. [Chinese manual](task09-logic-analyzer-guide-zh.md) · [English decision record](scope-decision.md).
 
 ## Version and Dependencies
 
@@ -48,3 +48,9 @@ The source advertises 20 MS/s, 128000 capture samples and RLE; all are upstream 
 Trigger configuration comments specify only mask/value stage 0; advanced trigger configuration and many flags are ignored. RLE is off for the baseline because compression and flag interactions require separate tests. Transfer over 921600 baud is much slower than acquisition and is not continuous 20 MS/s streaming. The 100 MHz SUMP divider calculation programs a requested LEDC clock; independently compare timebase after any change. Do not interpret digital transitions as a calibrated analog amplitude or rise-time measurement.
 
 Official course Task 9 was re-read at Git blob **4a473d222df687c66bb69b376958517c0dcf24e8**. It still requires actual build/flash, PWM/I2C captures, setup effort and a real class agreement on 1–2 tools; this software preparation alone does not complete it.
+
+## Follow-up: Core 3.3.7 and Actual Static Acquisition
+
+The complete original sketch was also compiled using an isolated Core **3.3.7**, classic Dev Module, Debug=None: **PASS**, 298391 bytes flash / 118440 bytes global RAM. The user confirmed successful Arduino IDE compilation/upload and `Hash of data verified`; an original upload screenshot was not supplied. The board's firmware was user-reported as official/unmodified, identity ESP32 Logic Analyzer v0.31. No assistant reflash occurred during recovery or LOW/HIGH acquisition.
+
+COM3 CP210x / 921600 baud SUMP transfers and real PulseView captures now verified static CH0 LOW/HIGH with 10,000 samples each. Both .sr files were preserved unchanged and reopened. The earlier Pending host-connection statements above describe the software-only preparation phase; [the stage report](scope-decision.md) supersedes them for this specific static test, not for I2C decoding or timebase calibration. Later local robustness fixes compiled under Core 3.3.7 (299227 bytes flash / 118448 bytes global RAM) but were not flashed or used for the captured results, and are not included in this evidence commit.

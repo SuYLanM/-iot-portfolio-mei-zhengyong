@@ -1,6 +1,6 @@
 # Module 02 — Arduino Preparation
 
-Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. No Module 02 hardware test has occurred. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Open each same-name .ino folder separately; no third-party sensor library has been selected.
+Every sketch compiles for classic ESP32 Dev Module with Core 3.3.12. The external analyzer has a [verified static CH0 LOW/HIGH stage](../evidence/task09-logic-analyzer/README.md); this does not hardware-validate the PWM/I2C target sketches or other tasks. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Open each same-name .ino folder separately; no third-party sensor library has been selected.
 
 | Task | Sketch and English instructions | Default behavior |
 |---|---|---|

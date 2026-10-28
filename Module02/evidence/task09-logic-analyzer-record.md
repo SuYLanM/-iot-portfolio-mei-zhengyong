@@ -1,8 +1,14 @@
 # Task 9 A — Actual Capture and Class Record
 
-**Blank / Pending.** [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
+**Static CH0 LOW/HIGH stage verified; dynamic measurements/class decision Pending.** [Preserved real files and verification](task09-logic-analyzer/README.md). The remaining tables below are blank future-work templates, not completed measurements. [English report](../scope-decision.md) · [Chinese manual](../task09-logic-analyzer-guide-zh.md) · [Completed software checks](../task09-analyzer-build.md).
 
-## Setup Metadata
+## Completed Static Input Stage
+
+On 2026-10-28, one classic ESP32 with GPIO22→GPIO23 captured GPIO21/CH0 connected to GND, then to 3V3 after power-off. PulseView ols, COM3 CP210x, 921600/8N1, requested 1 MHz, 10 k samples, no trigger, RLE off and External Clock off. Each preserved .sr contains 20,000 logic bytes / 10,000 16-bit samples: LOW run all CH0=0; HIGH run all CH0=1. Only CH0 is validated. Original-firmware capture succeeded without an assistant reflash; optional local fixes were not used. Actual timebase, independent voltage, wiring/upload screenshots and setup elapsed time remain unmeasured/unprovided.
+
+[LOW original](task09-logic-analyzer/pulseview-original-low-10000.sr) · [HIGH original](task09-logic-analyzer/pulseview-original-high-10000.sr) · [Genuine replay screenshots / provenance](task09-logic-analyzer/README.md).
+
+## Further Setup Metadata — Pending
 
 | Date / actual operators | Analyzer A board / COM | Target T board / COM | IDE / Core / firmware commit + patch | Windows / PulseView / libsigrok | Setup start / first usable capture / elapsed |
 |---|---|---|---|---|---|
@@ -57,4 +63,4 @@ Choose a consistent repository evidence location after files exist; link real pa
 - Mei Zhengyong's actual contribution:
 - Felix's actual contribution:
 
-No final adoption, personal contribution, screenshot or hardware pass is pre-filled.
+No final adoption or individual group contribution is pre-filled. The verified static stage above does not fill the PWM/I2C/class-decision templates.
