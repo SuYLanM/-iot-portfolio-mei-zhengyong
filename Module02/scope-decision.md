@@ -75,25 +75,25 @@ T GND -------------------------------- A GND
 5. GPIO34 is ADC1, suitable for a candidate using Wi-Fi, but voltage calibration/nonlinearity remains unverified. For a proposed 3.3 V PWM source use a verified 10k/10k divider to approximately 1.65 V, check node voltage before connecting and evaluate loading/bandwidth. Do not blindly copy the upstream high-voltage/biased input drawing or treat a 0–3.3 V rail test as calibrated amplitude. Viewing an AP-hosted page differs from Web Serial flashing; record browser/OS and actual route used.
 6. The web sampler uses a micros()-paced loop; capture metadata is calculated from requested period, not measured timestamps for every ADC conversion. Its main.cpp header mentions a hardware timer, while sampler.cpp implements the polling loop. Inspect working code and measure real timing rather than trusting either label.
 
-## PWM Capture — Verified ESP8266 Source, Uncalibrated Timebase
+## PWM Capture — Grounded ESP8266 Retest, Uncalibrated Timebase
 
-On 2026-10-28 the actual source was **blue WeMos D1 mini / ESP8266**, not another ESP32. Its independent [ESP8266 sketch](code/task09_esp8266_pwm_generator/task09_esp8266_pwm_generator.ino) uses D1=GPIO5, analogWriteRange(1023), analogWriteFreq(1000), duty code 512 and Serial 115200. ESP8266 Community **3.1.2** / `esp8266:esp8266:d1_mini` compiled successfully. After user confirmation of **COM4 (CH340)**, common GND and removal of the former static input tie, upload identified ESP8266EX and returned `Hash of data verified`. Startup settings were read from COM4. Black analyzer **COM3 retained its official firmware**; it was not reflashed or patched.
+On 2026-10-28 the source was **blue WeMos D1 mini / ESP8266**, running the [independent ESP8266 sketch](code/task09_esp8266_pwm_generator/task09_esp8266_pwm_generator.ino): D1=GPIO5, range 1023, frequency request 1000 Hz, duty code 512, Serial 115200. ESP8266 Community 3.1.2 / `esp8266:esp8266:d1_mini` compiled successfully; upload to user-confirmed **COM4 / CH340** identified ESP8266EX and verified the flash hash. Black analyzer **COM3 retained its official firmware** throughout.
 
-Actual connections: **B D1/GPIO5→A GPIO21/CH0**, B GND→A GND, analyzer-local A GPIO22→GPIO23. Each board was separately USB powered; no 3V3/5V rails were joined. Wiring is user-confirmed; a wiring photograph/continuity test is not supplied.
+**Correction:** the user subsequently reported that the dedicated common-ground wire had been missing during the first PWM acquisition. Its original files remain unchanged as historical evidence; the earlier claim of complete ground wiring was incorrect. An indirect USB return path was not verified. After the user confirmed **B D1→A GPIO21/CH0, B GND→A GND, and A GPIO22→A GPIO23**, a new real PulseView acquisition was saved and reopened. The old static tie was removed; USB power rails were not interconnected. Wiring is user-confirmed, without a supplied photograph/continuity measurement. No firmware upload was needed for this retest.
 
-PulseView real ESP32 ols device / COM3 / 921600 baud captured **1 MHz requested, 10 k samples, no trigger**, RLE off, External Clock off and Pattern=None. CH0 was enabled; the saved archive stores 16 channels but only CH0 was driven/validated. The [original .sr, live/replay screenshots and complete measurements](evidence/task09-esp8266-pwm.md) are preserved.
+PulseView used the real ESP32 ols device, COM3 / 921600 baud, **1 MHz requested, 10 k samples, no trigger**. The [grounded retest and retained initial-run evidence](evidence/task09-esp8266-pwm.md) include original `.sr` files, real screenshots and separate calculations. The new archive contains 20,000 logic bytes / 10,000 16-bit samples; only CH0 is validated.
 
-| Actual sample-derived result | Observation |
+| Grounded retest result | Observation |
 |---|---|
-| Complete rising-to-rising cycles | 9, in a 10,000-sample record |
-| Period | 999–1000 samples ≈ 0.999–1.000 ms at configured rate |
-| HIGH duration | 500–501 samples ≈ 0.500–0.501 ms at configured rate |
-| Per-cycle duty | 50.000–50.100%; mean 50.0445% |
-| Inverse mean period | Approximately 1000.22 Hz, conditional on configured analyzer timebase |
+| Complete cycles | 9 |
+| Period | 999–1000 samples; mean 999.8889, nominal 0.999889 ms |
+| HIGH duration | 500–501 samples |
+| Duty | 50.000–50.100%; mean per-cycle ratio 50.0500% |
+| Inverse mean period | Approximately 1000.11 Hz at configured analyzer timebase |
 
-Example: indices rise=729, fall=1229, next rise=1729 give 1000-point period and 500-point HIGH. Values are calculated from actual raw samples, not invented cursor readings. A nominal 1 µs/sample quantization, source software PWM and analyzer timing can contribute to variation. No independent timebase reference, long-term jitter bound or absence of missed edges was established. The existing [ESP32 GPIO25 reference](code/task09_pwm_reference/README.md) remains an untested alternative; it was not uploaded to the WeMos or analyzer.
+Example: rise=288, fall=789, next rise=1288 gives 1000-point period, 501-point HIGH and 50.1% duty. These are raw-sample calculations, not claimed cursor readings. The configured timebase remains uncalibrated; this short record does not establish absolute frequency accuracy, long-term jitter bounds or zero missed edges. The [ESP32 GPIO25 source](code/task09_pwm_reference/README.md) remains an untested alternative.
 
-![Genuine live PulseView capture of ESP8266 PWM](evidence/task09-esp8266-pwm/pwm-live-overview.jpg)
+![Genuine replay of the grounded PWM retest](evidence/task09-esp8266-pwm/pwm-grounded-retest-01-replay.jpg)
 
 ## I2C Protocol Decoding — Pending
 

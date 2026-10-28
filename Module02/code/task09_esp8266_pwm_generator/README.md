@@ -19,7 +19,7 @@ Power off before changing connections. **Remove GPIO21's former static GND/3V3 t
 | Connection | Required state |
 |---|---|
 | Blue B D1 / GPIO5 → black A GPIO21 / CH0 | PWM output to analyzer input only |
-| Blue B GND → black A GND | Shared reference; User confirmed shared-ground wire before upload |
+| Blue B GND → black A GND | Shared reference; confirmed for grounded retest; initial run was later reported to lack this wire |
 | Black A GPIO22 → A GPIO23 | Keep existing analyzer-local clock jumper |
 | Both USB cables | Separate board power; do not join 5V/3V3 outputs |
 
@@ -34,11 +34,13 @@ All logic is compatible 3.3 V. No direct 5 V or negative input. Black A keeps it
 5. Measure multiple adjacent rising edges: period `T`, frequency `1/T`; measure HIGH duration `tH`, duty `100*tH/T`. Target values are approximately **1 ms period**, **0.5 ms HIGH** and **50% duty**, not pre-filled observations. The nominal 10 ms record should contain about ten target cycles if the timebase is correct; the analyzer's configured rate is not independent calibration.
 6. Save an original `.sr`, a genuine waveform/cursor screenshot, a real two-board wiring photo and B's startup Serial Monitor output. Keep actual settings and observed variation. Do not label captures completed until genuine data exists.
 
-## Actual PWM Record — Verified Capture, Uncalibrated Timebase
+## Actual PWM Record — Grounded Retest, Uncalibrated Timebase
+
+The user later clarified that the initial run lacked its dedicated common-ground wire. Original evidence is preserved. After all three wires were confirmed, a new capture was saved: mean period 999.8889 samples (nominal 0.999889 ms), inverse mean period approximately 1000.11 Hz, mean per-cycle duty 50.0500%. Neither board was reflashed for the retest.
 
 | Blue-board COM / package / upload evidence | Common GND / static tie removed | Requested capture rate / samples | Observed period(s) | HIGH time / duty | Evidence |
 |---|---|---|---|---|---|
-| COM4, ESP8266 Core 3.1.2; ESP8266EX identified, upload hash verified | User confirmed | 1 MHz / 10,000 samples | 999–1000 samples ≈ 0.999–1.000 ms | HIGH 500–501 samples; duty 50.00–50.10% | [Original capture / analysis](../../evidence/task09-esp8266-pwm.md) |
+| COM4, ESP8266 Core 3.1.2; ESP8266EX identified, upload hash verified | Confirmed for grounded retest | 1 MHz / 10,000 samples | 999–1000 samples ≈ 0.999–1.000 ms | HIGH 500–501 samples; duty 50.00–50.10% | [Grounded retest / retained first run](../../evidence/task09-esp8266-pwm.md) |
 
 ## Software Validation
 

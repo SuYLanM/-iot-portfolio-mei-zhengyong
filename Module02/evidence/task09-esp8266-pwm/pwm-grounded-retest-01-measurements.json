@@ -1,0 +1,138 @@
+{
+  "file": "pulseview-pwm-esp8266-grounded-retest-01.sr",
+  "sha256": "ec3f908c0e24304da397b9b3aad66c1bae8168b71be98cba6dee0dcf68c4cbf3",
+  "wiring_status": "User confirmed dedicated common ground connected for this retest; no continuity measurement or photograph",
+  "configured_samplerate_hz": 1000000,
+  "independent_timebase_calibration": null,
+  "logic_bytes": 20000,
+  "samples": 10000,
+  "channel": 0,
+  "rising_indices": [
+    288,
+    1288,
+    2288,
+    3288,
+    4288,
+    5288,
+    6287,
+    7287,
+    8287,
+    9287
+  ],
+  "falling_indices": [
+    789,
+    1789,
+    2788,
+    3788,
+    4788,
+    5788,
+    6788,
+    7788,
+    8787,
+    9787
+  ],
+  "complete_cycles": [
+    {
+      "rise_start": 288,
+      "fall": 789,
+      "rise_end": 1288,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 1288,
+      "fall": 1789,
+      "rise_end": 2288,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 2288,
+      "fall": 2788,
+      "rise_end": 3288,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 3288,
+      "fall": 3788,
+      "rise_end": 4288,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 4288,
+      "fall": 4788,
+      "rise_end": 5288,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    },
+    {
+      "rise_start": 5288,
+      "fall": 5788,
+      "rise_end": 6287,
+      "period_samples": 999,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 999,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1001.001001001001,
+      "duty_percent": 50.050050050050054
+    },
+    {
+      "rise_start": 6287,
+      "fall": 6788,
+      "rise_end": 7287,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 7287,
+      "fall": 7788,
+      "rise_end": 8287,
+      "period_samples": 1000,
+      "high_samples": 501,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 501,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.1
+    },
+    {
+      "rise_start": 8287,
+      "fall": 8787,
+      "rise_end": 9287,
+      "period_samples": 1000,
+      "high_samples": 500,
+      "period_us_at_configured_rate": 1000,
+      "high_us_at_configured_rate": 500,
+      "frequency_hz_at_configured_rate": 1000.0,
+      "duty_percent": 50.0
+    }
+  ],
+  "mean_period_samples": 999.8888888888889,
+  "mean_high_samples": 500.44444444444446,
+  "mean_duty_percent": 50.05000556111667
+}

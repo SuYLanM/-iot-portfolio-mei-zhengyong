@@ -1,8 +1,40 @@
 # Task 9 A — ESP8266 PWM Dynamic Capture Record
 
-**Real PWM capture verified — 2026-10-28; independent timebase calibration Pending.** [Source and instructions](../code/task09_esp8266_pwm_generator/README.md) · [Task 9 report](../scope-decision.md). Preserved LOW/HIGH files and screenshots are unchanged.
+**Grounded PWM retest verified — 2026-10-28; independent timebase calibration Pending.** [Source and instructions](../code/task09_esp8266_pwm_generator/README.md) · [Task 9 report](../scope-decision.md). Preserved LOW/HIGH files and screenshots are unchanged.
 
-## Setup
+## Wiring Correction and Grounded Retest
+
+After the initial acquisition, the user clarified that the **dedicated B GND→A GND wire had been missing**. The earlier statement that this wire was present was incorrect. The first `.sr`, screenshots and measurement JSON are retained unchanged as historical data; they do not establish the intended complete two-board wiring. A possible return through the USB system was not independently checked. No causal comparison or claim that ground alone fixed a particular capture error is made.
+
+The user then confirmed all three connections: B D1/GPIO5→A GPIO21, B GND→A GND, and analyzer A GPIO22→A GPIO23; the former CH0 static tie was removed. With that confirmed setup, a **new real acquisition** was made in PulseView, saved separately and reopened successfully. Neither board was reflashed for the retest.
+
+| Grounded retest parameter / result | Actual record |
+|---|---|
+| Device / transport | Real ESP32 Logic Analyzer v0.31, COM3 / 921600 baud |
+| Requested capture | 1 MHz, 10 k samples, no trigger; CH0 analyzed |
+| Archive validation | ZIP integrity passed; 16 probes, 2 bytes/sample, 20,000 logic bytes / 10,000 samples |
+| Complete cycles | 9 rising-to-rising intervals; boundary partial cycles excluded |
+| Period | 999–1000 samples, nominal 0.999–1.000 ms |
+| Mean period | 999.8889 samples, nominal 0.999889 ms |
+| Inverse mean period | Approximately 1000.11 Hz at configured timebase |
+| HIGH duration | 500–501 samples, nominal 0.500–0.501 ms |
+| Mean per-cycle duty | 50.0500%; per-cycle range 50.000–50.100% |
+
+[New original grounded retest `.sr`](task09-esp8266-pwm/pulseview-pwm-esp8266-grounded-retest-01.sr) · [Full sample indices and calculations](task09-esp8266-pwm/pwm-grounded-retest-01-measurements.json).
+
+Rising indices: **288, 1288, 2288, 3288, 4288, 5288, 6287, 7287, 8287, 9287**. For example, rise=288, fall=789, next rise=1288 gives a 1000-sample period and 501-sample HIGH (50.1%). The mean of per-cycle duty ratios is reported; time/frequency conversions depend on the uncalibrated configured 1 MHz rate. No independent wiring photo, continuity or voltage measurement is supplied.
+
+Archive SHA-256: `ec3f908c0e24304da397b9b3aad66c1bae8168b71be98cba6dee0dcf68c4cbf3`.
+
+Actual live acquisition screenshot (real device, sample count and configured rate visible):
+
+![Real grounded PWM retest live capture](task09-esp8266-pwm/pwm-grounded-retest-01-live.jpg)
+
+Replay of this new original file, not another capture:
+
+![Real grounded PWM retest replay](task09-esp8266-pwm/pwm-grounded-retest-01-replay.jpg)
+
+## Setup — Grounded Retest
 
 | Item | Configuration / evidence status |
 |---|---|
@@ -12,12 +44,12 @@
 | Source output | D1 / GPIO5, range 0–1023, code 512, requested 1000 Hz and approximately 50% duty |
 | Source console | 115200 baud, separate from analyzer transport |
 | Wiring | B D1→A GPIO21/CH0; B GND→A GND; A GPIO22→A GPIO23 clock jumper retained |
-| Safety / confirmation | User confirmed common ground and removal of former GPIO21 static GND/3V3 tie; separate USB power, no supply-rail interconnection |
+| Safety / confirmation | User confirmed common ground for the retest and removal of former GPIO21 static GND/3V3 tie; separate USB power, no supply-rail interconnection |
 | Capture request | 1 MHz, 10 k samples, CH0, no trigger, RLE off, External Clock off, Pattern=None |
 
 Pin wiring/common ground are user-confirmed, not independently photographed or continuity-meter verified. Target parameters are not measured results. No analyzer firmware upload is authorized or required for this experiment.
 
-## Build / Upload / Capture — Actual Evidence
+## Initial Build / Upload / Capture — Historical Evidence (Ground Wire Missing)
 
 - **Compile PASS:** installed ESP8266 Community 3.1.2, `esp8266:esp8266:d1_mini`; 28392 bytes global RAM, 61183 bytes instruction RAM including reserved cache, 237892 bytes flash code.
 - **Upload PASS, blue board COM4 only:** the user explicitly confirmed COM4 and wiring before upload. esptool identified ESP8266EX / 4 MB flash, wrote the binary and reported `Hash of data verified`. No upload or firmware change was made to black analyzer A / COM3.
@@ -36,7 +68,7 @@ Example independently recountable within the original file: rising index 729, fa
 
 Archive SHA-256: `94cdc3d80c2f904140df032849705de47dfa47da1441f5b6f7dc0026c5ab0526`. [Full edge indices and per-cycle calculations](task09-esp8266-pwm/pwm-measurements.json).
 
-## Genuine Screenshots
+## Initial Acquisition Screenshots — Ground Wire Missing
 
 Live PulseView acquisition with the real ESP32 device selected, 1 MHz and 10 k samples visible:
 
@@ -52,4 +84,4 @@ For a genuine capture, use multiple adjacent rising edges: `period=(next_index-i
 
 ## Conclusion and Remaining Work
 
-Under the stated setup, the ESP8266 source produced a repeated signal captured by the unchanged ESP32 analyzer, with sample-derived period and duty consistent with the approximately 1 kHz / 50% target. This verifies one dynamic PWM acquisition, not absolute timing calibration or all analyzer channels/rates. I2C capture, long-term repeatability, independent reference comparison, wiring photography and final class decision remain Pending.
+With the dedicated ground wire confirmed for the retest, the ESP8266 source produced a repeated signal captured by the unchanged ESP32 analyzer, with sample-derived period and duty consistent with the approximately 1 kHz / 50% target. This verifies one dynamic PWM acquisition, not absolute timing calibration or all analyzer channels/rates. I2C capture, long-term repeatability, independent reference comparison, wiring photography and final class decision remain Pending.

@@ -1,6 +1,6 @@
 # Module 02 — Buses, I2C and Sensor Addressing
 
-**Task 9 A stages verified: real CH0 LOW/HIGH and ESP8266-source PWM captures, 10,000 samples each.** [Original .sr files, replay screenshots and checks](evidence/task09-logic-analyzer/README.md). [PWM record and sample-derived measurements](evidence/task09-esp8266-pwm.md) are available; I2C capture, independent timebase calibration and the class decision remain Pending; other Module 02 hardware tasks retain their existing status.
+**Task 9 A stages verified: real CH0 LOW/HIGH and ESP8266-source PWM captures, 10,000 samples each.** [Original .sr files, replay screenshots and checks](evidence/task09-logic-analyzer/README.md). [PWM record and sample-derived measurements](evidence/task09-esp8266-pwm.md) include a new grounded retest; the initial run lacked its dedicated ground wire and is retained as historical evidence; I2C capture, independent timebase calibration and the class decision remain Pending; other Module 02 hardware tasks retain their existing status.
 
 [Portfolio home](../README.md) · [Official Module 2](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md) · [Requirements checklist](task-checklist.md) · [Sources / verification](references.md)
 
