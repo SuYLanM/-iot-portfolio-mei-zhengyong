@@ -15,7 +15,7 @@ Individual experimental/discussion contributions will be recorded only after the
 
 | Task | English document / report framework | Arduino preparation | Current status |
 |---|---|---|---|
-| 1 Pins, PWM, UART, divider | [pins-and-dividers.md](pins-and-dividers.md) | [UART loopback](code/task01_uart_loopback/README.md) | Theory/code Prepared; DMM/UART measurements Pending |
+| 1 Pins, PWM, UART, divider | [pins-and-dividers.md](pins-and-dividers.md) | [UART loopback](code/task01_uart_loopback/README.md), [GPIO35 divider](code/task01_voltage_divider/README.md) | Prepared / Awaiting hardware validation; 3.3 V baseline and original 5 V measurement Pending |
 | 2 Bus systems survey | [Research notes](bus-survey-notes.md), [bus profile template](bus-profile-template.md), [pitch](bus-pitch.md) | No bus-specific driver assumed | Prepared research; final bus-<name>.md awaits assignment |
 | 3 Class bus comparison | [bus-comparison.md](bus-comparison.md) | — | Research draft Prepared; actual class merge/discussion Pending |
 | 4 / 4a / 4b I2C study | [study-log.md](study-log.md) | [Code index](code/README.md) | Theory Prepared; student/pod validation and sharing Pending |
@@ -31,7 +31,7 @@ The original required English output filenames are retained. A final bus-<name>.
 ## Wiring, Code and Evidence
 
 - [Detailed Chinese wiring / safety guide](wiring-zh.md).
-- [Seven independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
+- [Independent Arduino sketches and English instructions](code/README.md), target classic ESP32 Dev Module / Core 3.3.12. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
 - Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
 - [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). No Module 02 photos/logs are supplied yet; create links only after actual files exist.
 - [Software validation](validation.md). External instrument firmware was researched, not installed or compiled here. GPIO22/23 conflict and Core 2/3 compatibility are explicit in the scope record.
