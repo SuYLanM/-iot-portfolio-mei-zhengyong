@@ -1,0 +1,22 @@
+SESSION_BEGIN TASK7_HARDWARE local_slave_enabled=0 protocol_armed=0
+MASTER init_ok=1 SDA=21 SCL=22 requested_hz=100000 timeout_ms=50
+SCAN_BEGIN round=1 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+SCAN_END round=1 probed=112 ack=1 nack=111 errors=0
+TEST_TARGET status=NOT_ACKNOWLEDGED address=0x42; no fabricated response
+LCD_INIT address=0x27 status=0
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=1 B:missin" data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=1 lcd_ack=1 lcd_comm=1 test_ack=0 test_comm=0 both_address_and_comm_pass=0
+SCAN_BEGIN round=2 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+SCAN_END round=2 probed=112 ack=1 nack=111 errors=0
+TEST_TARGET status=NOT_ACKNOWLEDGED address=0x42; no fabricated response
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=2 B:missin" data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=2 lcd_ack=1 lcd_comm=1 test_ack=0 test_comm=0 both_address_and_comm_pass=0
+SCAN_BEGIN round=3 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+SCAN_END round=3 probed=112 ack=1 nack=111 errors=0
+TEST_TARGET status=NOT_ACKNOWLEDGED address=0x42; no fabricated response
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=3 B:missin" data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=3 lcd_ack=1 lcd_comm=1 test_ack=0 test_comm=0 both_address_and_comm_pass=0
+SESSION_END no automatic retries; no claim of two physical sensors

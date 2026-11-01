@@ -1,0 +1,7 @@
+Name                    Installed Available   Location Description
+Adafruit BME280 Library 2.3.0     -           user     -
+Adafruit BusIO          1.17.4    -           user     -
+Adafruit Unified Sensor 1.1.15    -           user     -
+hd44780                 1.3.2     -           user     -
+Rtc by Makuna           2.5.0     -           user     -
+

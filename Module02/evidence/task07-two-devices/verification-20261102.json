@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3 CP210x",
+  "serial_baud": 115200,
+  "hardware_baseline": {
+    "rounds": 3,
+    "address_set": [
+      "0x27"
+    ],
+    "per_round": {
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    },
+    "lcd_ddram_matches": 3,
+    "address_0x42": "not acknowledged",
+    "local_slave_started": false,
+    "test_protocol_commands_sent": false,
+    "two_devices_pass": false
+  },
+  "compile": {
+    "esp32_core": "3.3.12",
+    "esp32_flash_bytes": 301376,
+    "esp32_ram_bytes": 23596,
+    "esp8266_core": "3.1.2",
+    "esp8266_flash_code_bytes": 240112,
+    "esp8266_global_ram_bytes": 29040,
+    "esp8266_instruction_ram_bytes": 61671
+  },
+  "simulation": {
+    "tests_passed": 8,
+    "addresses": [
+      "0x27",
+      "0x42"
+    ],
+    "synthetic_uptime_fixture": 123456,
+    "hardware_access": false
+  },
+  "core_source_sha256": {
+    "C:\\Users\\ROG\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src\\Wire.h": "1c40bc33f95f3feb118b22376b41394b8c7abdd96dbfaf8a517bec8f86f5fcbc",
+    "C:\\Users\\ROG\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32\\esp32-hal-i2c-slave.c": "2faece0328f224326c9c6664760a21977811f3e2c9ed8f7bf615c1e8c645abae",
+    "C:\\Users\\ROG\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\libraries\\Wire\\Wire.cpp": "63a5d063e73a92890ca2b3d7504148baffc5ec3d98f43ad111b410aef3345528",
+    "C:\\Users\\ROG\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\cores\\esp8266\\core_esp8266_si2c.cpp": "1b7849a753bf738444b3238ebc6bc4c777a40d1de1409f8f91b155b145c6be0c"
+  },
+  "sha256": {
+    "compile-esp32-20261102.txt": "ee4040981a6dbfb924f8c755d3bc24af09a88da54548a96278cb52b04d82eddc",
+    "compile-esp8266-20261102.txt": "6b82428cb3dff78ad8b52d84283d14b34256fff243c8ca9889e28388d6a5e859",
+    "library-versions-20261102.txt": "9cbca8941e062cb40e45beb60407adb4660596a0e681d8bd5eb7cfb9cd950915",
+    "master-baseline-serial-20261102.txt": "9cad740704c3086f01d438b2332884c6e35c258a135c3efe3f59e66797958e7f",
+    "simulation-results-20261102.txt": "0e71d18872056281d59c4c21dea34a04d114a7e518ab2aa2cfed07999351cc6f",
+    "upload-esp32-20261102.txt": "e6bdb9817a321109badf8df7e6ddf90a53b750a06c593576e1d81f8f7bbe1897"
+  }
+}

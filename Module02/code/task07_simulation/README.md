@@ -1,0 +1,5 @@
+# Task 7 — Simulation Only: Address Routing and Packet Validation
+
+Run `python -X utf8 test_address_routing.py`. **No serial port or physical I2C is accessed.** [Actual output](../../evidence/task07-two-devices/simulation-results-20261102.txt): eight unittest cases passed. Test inputs/expected results are in [the source](test_address_routing.py) and [English report](../../two-devices.md#software-simulation--separate-evidence).
+
+The model registers synthetic targets at 0x27/0x42 on one logical SDA/SCL pair and verifies isolated callback routing, packet framing/little-endian reconstruction, stale/short/corrupt rejection, missing-address NACK modeling and duplicate-configuration rejection. Uptime 123456 and counter 7 are synthetic fixtures, not measured values. This model does not execute the Arduino firmware and cannot validate electrical levels, timing, arbitration, open-drain collisions or real hardware bus sharing. Its two modeled addresses must never be copied into actual-scan columns.

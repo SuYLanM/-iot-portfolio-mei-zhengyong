@@ -1,0 +1,14 @@
+SIMULATION ONLY - synthetic 0x27/0x42 responses; no physical I2C, COM port or sensor readings
+test_corruption_is_rejected (__main__.RoutingSimulation.test_corruption_is_rejected) ... ok
+test_duplicate_configuration_is_rejected (__main__.RoutingSimulation.test_duplicate_configuration_is_rejected) ... ok
+test_missing_device_and_isolation (__main__.RoutingSimulation.test_missing_device_and_isolation) ... ok
+test_protocol_packet_and_little_endian_fixture (__main__.RoutingSimulation.test_protocol_packet_and_little_endian_fixture) ... ok
+test_routing_does_not_call_other_target (__main__.RoutingSimulation.test_routing_does_not_call_other_target) ... ok
+test_short_response_is_rejected (__main__.RoutingSimulation.test_short_response_is_rejected) ... ok
+test_stale_sequence_is_rejected (__main__.RoutingSimulation.test_stale_sequence_is_rejected) ... ok
+test_two_addresses_one_logical_pair (__main__.RoutingSimulation.test_two_addresses_one_logical_pair) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.000s
+
+OK

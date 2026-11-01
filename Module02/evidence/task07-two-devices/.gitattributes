@@ -1,0 +1,2 @@
+# Preserve real CLI/serial/simulation output separately, including whitespace.
+*.txt -text -whitespace
