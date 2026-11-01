@@ -1,0 +1,99 @@
+DIAG_BEGIN task05-passive-v1; no voltage measurement
+LEVEL phase=INPUT_NO_PULL samples=100 SDA_HIGH=0 SDA_LOW=100 SCL_HIGH=0 SCL_LOW=100
+================IO DUMP Start================
+IO[21] -
+  Pullup: 0, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+IO[22] -
+  Pullup: 0, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+=================IO DUMP End=================
+LEVEL phase=SDA_PULLUP_ONLY samples=100 SDA_HIGH=0 SDA_LOW=100 SCL_HIGH=0 SCL_LOW=100
+================IO DUMP Start================
+IO[21] -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+IO[22] -
+  Pullup: 0, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+=================IO DUMP End=================
+LEVEL phase=BOTH_INTERNAL_PULLUP samples=100 SDA_HIGH=0 SDA_LOW=100 SCL_HIGH=0 SCL_LOW=100
+================IO DUMP Start================
+IO[21] -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+IO[22] -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: 0, OpenDrain: 0
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 257
+  GPIO Matrix SigIn ID: (simple GPIO input)
+  SleepSelEn: 0
+
+=================IO DUMP End=================
+WIRE_BEGIN ok=1 clock_hz=100000
+LEVEL phase=AFTER_WIRE_BEGIN samples=100 SDA_HIGH=0 SDA_LOW=100 SCL_HIGH=0 SCL_LOW=100
+================IO DUMP Start================
+IO[21] **RESERVED** -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: [periph_sig_ctrl], OpenDrain: 1
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 30
+  GPIO Matrix SigIn ID: 30
+  SleepSelEn: 0
+
+IO[22] **RESERVED** -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: [periph_sig_ctrl], OpenDrain: 1
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 29
+  GPIO Matrix SigIn ID: 29
+  SleepSelEn: 0
+
+=================IO DUMP End=================
+INPUT_ENABLE sda_status=0 scl_status=0
+LEVEL phase=AFTER_INPUT_ENABLE samples=100 SDA_HIGH=0 SDA_LOW=100 SCL_HIGH=0 SCL_LOW=100
+================IO DUMP Start================
+IO[21] **RESERVED** -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: [periph_sig_ctrl], OpenDrain: 1
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 30
+  GPIO Matrix SigIn ID: 30
+  SleepSelEn: 0
+
+IO[22] **RESERVED** -
+  Pullup: 1, Pulldown: 0, DriveCap: 2
+  InputEn: 1, OutputEn: [periph_sig_ctrl], OpenDrain: 1
+  FuncSel: 2 (GPIO)
+  GPIO Matrix SigOut ID: 29
+  GPIO Matrix SigIn ID: 29
+  SleepSelEn: 0
+
+=================IO DUMP End=================
+DIAG_END weak_pullup_both_high=0; scan not performed; internal pullups are not a qualified external I2C pullup solution

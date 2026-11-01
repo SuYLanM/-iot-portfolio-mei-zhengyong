@@ -1,0 +1,145 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3",
+  "baud": 115200,
+  "source": "Module02/code/task05_gpio_diagnostic/task05_gpio_diagnostic.ino",
+  "result": "Both inputs remain LOW, including input-only and internal-pull-up phases",
+  "active_probes_performed": false,
+  "bus_recovery_pulses_performed": false,
+  "records": [
+    {
+      "file": "lcd-passive-gpio-diagnostic-20261102.txt",
+      "sha256": "22aee68013f1e4b29a18c0545284657d36e079a1bc3910a5fc9a3bf420e3fc91",
+      "complete_diagnostics": 1,
+      "levels": [
+        {
+          "phase": "INPUT_NO_PULL",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "SDA_PULLUP_ONLY",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "BOTH_INTERNAL_PULLUP",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_WIRE_BEGIN",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_INPUT_ENABLE",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        }
+      ]
+    },
+    {
+      "file": "lcd-passive-gpio-repeat-20261102.txt",
+      "sha256": "fb0331dcf513407769b61299ba877dec8f714fc5e9e75d9c0d312c06047f56c9",
+      "complete_diagnostics": 2,
+      "levels": [
+        {
+          "phase": "INPUT_NO_PULL",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "SDA_PULLUP_ONLY",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "BOTH_INTERNAL_PULLUP",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_WIRE_BEGIN",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_INPUT_ENABLE",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "INPUT_NO_PULL",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "SDA_PULLUP_ONLY",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "BOTH_INTERNAL_PULLUP",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_WIRE_BEGIN",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        },
+        {
+          "phase": "AFTER_INPUT_ENABLE",
+          "samples": "100",
+          "sda_high": "0",
+          "sda_low": "100",
+          "scl_high": "0",
+          "scl_low": "100"
+        }
+      ]
+    }
+  ]
+}

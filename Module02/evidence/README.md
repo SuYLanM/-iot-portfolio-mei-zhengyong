@@ -108,6 +108,26 @@ The screenshot was captured later from live Arduino Serial Monitor and shows att
 
 No definite short, 5 V input or particular failed component was proven. Testing was not extended to active recovery or forced probing. Remaining hardware checks are consolidated above; a real wiring photo and, when available, VCC/SDA/SCL voltage measurements would help establish the cause.
 
+### Passive GPIO Diagnostic Follow-up — 2026-11-02
+
+To test whether the earlier LOW reports were a software artefact, a [separate passive diagnostic sketch](../code/task05_gpio_diagnostic/README.md) was compiled and uploaded to the same COM3 ESP32. It waits for serial commands, uses no GPIO push-pull outputs, and performs no explicit bus recovery pulses. Three complete diagnostics were actually run: [first original serial capture](task05-i2c-scanning/lcd-passive-gpio-diagnostic-20261102.txt), [two repeated diagnostics](task05-i2c-scanning/lcd-passive-gpio-repeat-20261102.txt), [SHA-256 / parsed verification](task05-i2c-scanning/lcd-passive-gpio-verification-20261102.json).
+
+| Phase | Actual result in each of three runs |
+|---|---|
+| GPIO INPUT, no pull-up/pull-down | SDA LOW 100/100, SCL LOW 100/100; InputEn=1, OutputEn=0 |
+| GPIO21 internal weak pull-up only | Both LOW 100/100; SDA Pullup=1 |
+| Both internal weak pull-ups | Both LOW 100/100; Pullup=1, Pulldown=0 for both |
+| Wire.begin(21,22,100000) | Returned true; configured clock=100000; both LOW 100/100; I2C routing, open-drain and input enabled |
+| Explicit gpio_input_enable on both pins | Both calls ESP_OK; still both LOW 100/100 |
+
+Compilation PASS (Core 3.3.12, 298152 flash bytes / 23500 global RAM bytes); upload Hash of data verified. An initial build lacked a temporary partitions.csv and failed at partition generation; copying the installed default partition CSV to the temporary build directory and recompiling resolved that build issue. This did not require a Core downgrade or a course partition change.
+
+The installed Core warns that digitalRead on peripheral-owned pins may be inconsistent; the [GPIO API](https://docs.espressif.com/projects/esp-idf/en/v5.5.3/esp32/api-reference/peripherals/gpio.html) requires input enable. The measured configuration and input-only tests here exclude a disabled input path or Wire-only GPIO reading problem as the explanation for these runs. Weak pull-ups were enabled in configuration but could not raise either input; this does not prove a particular short or component failure. Internal pull-ups are not a substitute for qualified external I2C pull-ups.
+
+**Not performed:** address probes, ACK/NACK measurements, bus-clear pulses, removal comparison, RTC/LCD display. The manual scan command was not sent because the bus remained LOW. The board now holds the command-driven diagnostic firmware, not the repeating scanner; no periodic bus transactions are running. Existing scanner source and all Task 9 materials remain unchanged by this follow-up.
+
+**Next physical isolation:** disconnect USB, then detach only signal wiring attached to ESP32 GPIO21 and GPIO22 (also detach an obsolete GPIO22→GPIO23 branch if present). Leave LCD 3V3/GND and unrelated circuits intact. Reconnect USB for a passive weak-pull-up test of the isolated inputs. This physical step is not yet performed. Likely causes to distinguish are a grounding/mislanding/old static-test lead on either signal, an external module loading the lines because of power/ground/wiring or a module fault, and less likely an ESP32 input/board problem. Simply missing external pull-ups is insufficient to explain the inability of enabled weak pull-ups to raise either input without some additional load/fault. No unique cause, actual bus voltage or 5 V exposure was established.
+
 ### Evidence
 
 | Artefact | Status |
