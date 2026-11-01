@@ -109,7 +109,17 @@ The log includes SESSION_BEGIN, all ROUND_BEGIN/ROUND_END records and SESSION_EN
 
 [Original serial log](evidence/task06-library-vs-register/current-hardware-serial-20261102.txt) · [Upload log](evidence/task06-library-vs-register/upload-current-hardware-20261102.txt) · [Compile logs and dependencies](evidence/task06-library-vs-register/) · [SHA-256 and result verification](evidence/task06-library-vs-register/verification-20261102.json) · [Chinese operation guide](wiring-zh.md#task-6库读取与直接寄存器读取).
 
-No new wiring photo, sensor screenshot or synthetic measurement image was produced. Task 5 and Task 9 originals remain unchanged.
+The original Task 6 diagnostic run did not produce a wiring photo or sensor screenshot. A subsequently supplied original RTC/LCD photograph is included below as a separate additional demonstration; no synthetic measurement image was generated. Task 5 and Task 9 originals remain unchanged.
+
+## Additional Hardware Demonstration
+
+![Original photograph of ESP32, DS1302 RTC and LCD1602 displaying 2026-11-01 and 23:47:56](evidence/task06-library-vs-register/task06_ds1302_lcd_clock.jpg)
+
+*Physical demonstration of DS1302 three-wire RTC communication and LCD1602 I²C display output.*
+
+The original user-supplied photograph visibly shows the assembled ESP32/DS1302/LCD1602 setup and LCD date **2026-11-01**, time **23:47:56**. It is archived here at original quality, without cropping, recompression or display-content editing. The photo's displayed time is a separate visual observation; it is not inserted into the earlier serial log or treated as a synchronized screenshot of an identical logged sample. [Related real RTC/LCD extension report and logs](evidence/ds1302-lcd-extension/README.md).
+
+**This is not verification evidence for the Task 6 I²C sensor library-versus-register comparison.** DS1302 uses a three-wire interface, not I2C; PCF8574 drives the LCD and is not the BME280 sensor. The photograph does not validate sensor register reads, compensation or library/direct agreement. All original Task 6 diagnostic measurements, empty comparison results and unverified sensor-comparison status remain unchanged.
 
 ## Completion Status
 

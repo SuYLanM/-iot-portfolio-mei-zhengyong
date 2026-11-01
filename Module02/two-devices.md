@@ -119,11 +119,21 @@ Both controllers reported init_ok=1. Wire master uses GPIO21/22 and Wire1 slave 
 
 **Observed stale-response behavior:** every first read returned 12 bytes with the previous sequence (0, then 1, then 2). Its signature/XOR were valid, but it did not echo the current command and was correctly rejected (valid=0). The second read in each round returned 12 bytes with the current sequence and valid signature/version/flags/XOR (valid=1). Thus there were **three rejected stale frames and three valid current frames**, not six first-try successes. All command writes reported wire_status=0; no short reads occurred. This is the classic ESP32 preloaded-response behavior handled by the existing maximum-three-read bound, not a hidden fabricated replacement value. The raw file retains both attempts.
 
-Example actual accepted round-1 packet: `54,37,01,01,DA,07,00,00,01,00,00,BF`; it decodes to sequence 1, target uptime 2010 ms and accepted-command counter 1. This is MCU runtime/test telemetry, **not environmental sensor data**. LCD initialization returned status=0 and actual readback matched `Task7 LCD 0x27  ` / `round=1 B:PASS  ` (and the corresponding round 2/3 messages). This verifies LCD controller-memory exchange; physical screen visibility is not independently observed.
+Example actual accepted round-1 packet: `54,37,01,01,DA,07,00,00,01,00,00,BF`; it decodes to sequence 1, target uptime 2010 ms and accepted-command counter 1. This is MCU runtime/test telemetry, **not environmental sensor data**. LCD initialization returned status=0 and actual readback matched `Task7 LCD 0x27  ` / `round=1 B:PASS  ` (and the corresponding round 2/3 messages). This serial-only check verifies LCD controller-memory exchange. The subsequently supplied original photograph in Hardware Evidence below separately confirms visible third-round LCD output; it does not replace the 0x42 protocol logs.
 
 [Independent parsing / packet checks / SHA-256 verification](evidence/task07-two-devices/dual-wired-verification-20261102.json) confirms the three full BEGIN/END scans, both address ACKs, all six packet checksums, the expected rejected/current sequences, decoded counters/uptimes and all three final pass flags. Requested bus speed remains **100 kHz**, not a measured waveform rate. The host port was closed after capture; the program is left waiting for another command and performs no automatic session retry.
 
 **Scope:** this is real electrical I2C traffic over physically connected ESP32 pads, not the Python software model and not automatic internal routing. The second addressed target is an MCU-controlled emulated endpoint on the same ESP32, not a separate sensor. The original two-genuine-sensor requirement remains unsatisfied despite this successful bus-sharing demonstration.
+
+## Hardware Evidence — Original Photograph
+
+![Original Task 7 physical wiring and LCD displaying Task7 LCD 0x27 and round=3 B:PASS](evidence/task07-two-devices/task07_lcd_dual_address_demo.jpg)
+
+*Physical LCD output during the third round of the ESP32 dual-address I²C bus-sharing demonstration.*
+
+The original user-supplied photograph visibly shows **Task7 LCD 0x27** and **round=3 B:PASS**, together with the physical ESP32/LCD wiring. It is preserved at original quality with no cropping, recompression or display-content editing. It supports the visible output and physical-demonstration record, not a new run or an electrical verification of every connection.
+
+**The real 0x42 ACK and data-check evidence remains the [original wired serial log](evidence/task07-two-devices/dual-wired-serial-20261102.txt)**: all three scans found 0x27/0x42; the third round records both ACKs, LCD DDRAM match, and the current-sequence/checksum-validated MCU response. [Existing parsed verification](evidence/task07-two-devices/dual-wired-verification-20261102.json). The LCD's B:PASS label alone is not independent proof of an I2C ACK or a sensor measurement. The second endpoint remains the ESP32 Wire1 MCU-emulated slave, not a genuine sensor. No scan log, packet, simulated result or course-completion claim was changed by adding this photograph.
 
 ## Software Simulation — Separate Evidence
 
