@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3 CP210x",
+  "serial_baud": 115200,
+  "physical_change": "Student reports power-off disconnection of LCD SDA at ESP32 GPIO21 only; LCD SCL/VCC/GND retained",
+  "before": {
+    "file": "Module02/evidence/ds1302-lcd-extension/scanner-serial-20261102.txt",
+    "sha256": "ea1eb7cd695af6952b7ded9847b8da270ff172230bad08241f023c91476b1a7a",
+    "rounds": [
+      {
+        "scan": 3,
+        "t_ms": 6244,
+        "requested_hz": 100000,
+        "ack_addresses": [
+          "0x27"
+        ],
+        "probed": 112,
+        "detected": 1,
+        "nacks": 111,
+        "errors": 0
+      },
+      {
+        "scan": 4,
+        "t_ms": 9356,
+        "requested_hz": 100000,
+        "ack_addresses": [
+          "0x27"
+        ],
+        "probed": 112,
+        "detected": 1,
+        "nacks": 111,
+        "errors": 0
+      },
+      {
+        "scan": 5,
+        "t_ms": 12468,
+        "requested_hz": 100000,
+        "ack_addresses": [
+          "0x27"
+        ],
+        "probed": 112,
+        "detected": 1,
+        "nacks": 111,
+        "errors": 0
+      },
+      {
+        "scan": 6,
+        "t_ms": 15580,
+        "requested_hz": 100000,
+        "ack_addresses": [
+          "0x27"
+        ],
+        "probed": 112,
+        "detected": 1,
+        "nacks": 111,
+        "errors": 0
+      },
+      {
+        "scan": 7,
+        "t_ms": 18692,
+        "requested_hz": 100000,
+        "ack_addresses": [
+          "0x27"
+        ],
+        "probed": 112,
+        "detected": 1,
+        "nacks": 111,
+        "errors": 0
+      }
+    ]
+  },
+  "after": {
+    "file": "Module02/evidence/task05-i2c-scanning/sda-disconnect/serial-20261102.txt",
+    "sha256": "affd0089e627fb6fd5c09cb2bf248ae94fcfd50f496ff0cfdf47d0edfa1347b3",
+    "rounds": [
+      {
+        "scan": 2,
+        "t_ms": 3143,
+        "requested_hz": 100000,
+        "ack_addresses": [],
+        "probed": 112,
+        "detected": 0,
+        "nacks": 112,
+        "errors": 0
+      },
+      {
+        "scan": 3,
+        "t_ms": 6266,
+        "requested_hz": 100000,
+        "ack_addresses": [],
+        "probed": 112,
+        "detected": 0,
+        "nacks": 112,
+        "errors": 0
+      },
+      {
+        "scan": 4,
+        "t_ms": 9389,
+        "requested_hz": 100000,
+        "ack_addresses": [],
+        "probed": 112,
+        "detected": 0,
+        "nacks": 112,
+        "errors": 0
+      },
+      {
+        "scan": 5,
+        "t_ms": 12512,
+        "requested_hz": 100000,
+        "ack_addresses": [],
+        "probed": 112,
+        "detected": 0,
+        "nacks": 112,
+        "errors": 0
+      }
+    ]
+  },
+  "disappeared_addresses": [
+    "0x27"
+  ],
+  "idle_check": "Both HIGH at each pre-scan check, inferred from unchanged scanner guard and full sweep execution; no voltage measurement",
+  "restoration_test": "not performed",
+  "full_module_removal": "not performed",
+  "status_scope": "Completed: LCD address scanning and SDA-disconnection disappearance comparison",
+  "scanner_source_sha256": "41c74072afdbe74a3b8f5659ad072439bd2547084c379feb775cff4529639625",
+  "sha256": {
+    "compile-20261102.txt": "bb8328821599c5b8d4ecde1faa4f329fc682235020988f51b695dd936fa1757e",
+    "serial-20261102.txt": "affd0089e627fb6fd5c09cb2bf248ae94fcfd50f496ff0cfdf47d0edfa1347b3",
+    "upload-20261102.txt": "847f9392f1c0a389c5cf4bd85915ef3cd0065e3d1db14755bea9123307559083"
+  }
+}

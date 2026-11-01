@@ -1,0 +1,16 @@
+SCAN_BEGIN scan=2 t_ms=3143 clock_config_hz=100000
+No I2C devices found
+SCAN_END scan=2 probed=112 detected_addresses=0 nacks=112 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=3 t_ms=6266 clock_config_hz=100000
+No I2C devices found
+SCAN_END scan=3 probed=112 detected_addresses=0 nacks=112 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=4 t_ms=9389 clock_config_hz=100000
+No I2C devices found
+SCAN_END scan=4 probed=112 detected_addresses=0 nacks=112 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=5 t_ms=12512 clock_config_hz=100000
+No I2C devices found
+SCAN_END scan=5 probed=112 detected_addresses=0 nacks=112 errors=0
+ACK is not device identity or a count of physical devices.

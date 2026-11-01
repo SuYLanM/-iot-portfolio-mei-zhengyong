@@ -10,7 +10,7 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 | 2 | Actual assigned bus profile, pitch notes and real shared artefact | Pending assignment/discussion |
 | 3 | Shared class table and actual discussion/personal note | [Pod 4 CAN row and research answers](../bus-comparison.md) Prepared; classroom artefact and personal confirmation Pending |
 | 4a/4b | Student study/verification, neighbouring-pod agreement and Discord post | Pending |
-| 5 | First scan, changed connection scan, address-to-module identification | [Latest rewired scan](#latest-scan-after-rewiring--2026-11-02): five complete sweeps, LCD address 0x27, 1 ACK / 111 NACK / 0 errors each; removal comparison Pending; earlier LOW diagnostics preserved |
+| 5 | First scan, changed connection scan, address-to-module identification | [Before/after comparison](#sda-disconnection-comparison--2026-11-02): **Completed — LCD scanning and SDA-disconnection comparison**; 0x27 disappears in four full error-free scans; full module removal/restoration not performed |
 | 6 | Library value and raw register reconstruction under matched settings | [Report / empty result table](../register-reading.md) Prepared; sensor/library/configuration/readings Pending |
 | 7 | A-only/B-only/both scans and actual readings of both devices | [Report / address table](../two-devices.md) Prepared; actual two-device tests Pending |
 | 8 | Conflict/fix evidence if hardware available; otherwise explicitly theoretical | Theory prepared; physical experiment Pending |
@@ -19,7 +19,24 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 
 ## Scanner Report — Task 5 Partial Baseline
 
-**Latest result: LCD address 0x27 verified after student rewiring; removal comparison Pending.** Earlier blocked-bus/pause records below are historical and do not describe the restored current bus.
+**Completed — LCD I²C scanning and SDA-disconnection address-disappearance comparison.** Completion applies to this documented single-LCD variant. Only SDA was disconnected; full module removal, restoration, a sensor-specific exercise and independent voltage measurements are not claimed. This is not an instructor grading/acceptance statement. Earlier blocked-bus/pause records below are historical.
+
+### SDA Disconnection Comparison — 2026-11-02
+
+The student reports powering off, disconnecting **only LCD SDA from ESP32 GPIO21**, leaving LCD VCC=3V3, GND and SCL=GPIO22 connected, then restoring USB. No remote physical manipulation was performed. COM3 remained the CP210x ESP32. The existing Scanner source was unchanged: [fresh compile](task05-i2c-scanning/sda-disconnect/compile-20261102.txt) PASS (294644 flash / 23508 RAM bytes); [upload](task05-i2c-scanning/sda-disconnect/upload-20261102.txt) succeeded with Hash of data verified. The board now runs Scanner, replacing the extension firmware on-board; all stored extension and other task files remain unchanged.
+
+| Configuration / original log | Complete sweeps | Address set in every sweep | Per-sweep probes | ACK | NACK | Other errors |
+|---|---:|---|---:|---:|---:|---:|
+| [Before: LCD SDA connected](ds1302-lcd-extension/scanner-serial-20261102.txt) | 5 (scan 3–7) | {0x27} | 112 | 1 | 111 | 0 |
+| [After: LCD SDA disconnected](task05-i2c-scanning/sda-disconnect/serial-20261102.txt) | 4 (scan 2–5) | {} | 112 | 0 | 112 | 0 |
+
+All four new sweeps print **No I2C devices found** and end normally. No BUS_NOT_IDLE or bus-error record occurs. The unchanged scanner only enters its address loop when both sampled inputs are HIGH, so these complete sweeps demonstrate **SDA/SCL HIGH at each pre-scan idle check**. The log does not print the HIGH values separately, and no voltage or continuous waveform measurement is claimed. The internal SDA pull-up may maintain the now-isolated ESP32 input; this does not validate an external resistor value or qualify the pull-up network for arbitrary hardware.
+
+`disappeared = {0x27} − {} = {0x27}`. This reproduces the expected address disappearance when the LCD's data connection is broken, strengthening the address-to-LCD association. It does **not** mean the LCD was unpowered, all its wires were removed, DS1302 became an I2C device, or no physical peripheral remains attached to SCL. A power-off SDA-only disconnection was sufficient to make the LCD unable to ACK on the controller's data line.
+
+The new serial file preserves received bytes from a bounded 13-second read at 115200 8N1; capture starts after boot, so scan 1 is not included. All four counted BEGIN/END pairs were validated for 112 probes, zero detected ACKs, 112 NACKs and zero errors. [Verification and SHA-256 record](task05-i2c-scanning/sda-disconnect/verification-20261102.json) compares both originals. No screenshot, reconnection, further physical change or full-removal result was fabricated. Task 6 and Task 9 files were not changed.
+
+**Completion scope:** the requested LCD scan and SDA-disconnection comparison is **Completed**. The professor's original step says to unplug a sensor and rescan; this LCD/SDA-only adaptation is explicitly documented rather than presented as an exact full-sensor-removal test. Instructor acceptance of the adaptation is not assumed; a literal full-sensor removal/restoration or sensor-specific test remains unperformed. No additional physical test is requested here.
 
 ### Latest Scan After Rewiring — 2026-11-02
 
@@ -27,7 +44,7 @@ The student reported LCD VCC→3V3, GND→GND, SDA→GPIO21, SCL→GPIO22, and m
 
 The [new original Scanner serial log](ds1302-lcd-extension/scanner-serial-20261102.txt) contains **five complete sweeps, scan 3–7**. Every sweep returned **ACK 0x27**, **112 probed / 1 detected address / 111 NACKs / 0 errors**. The extension later measured **20/20 HIGH on each input**, re-ACKed 0x27 and successfully initialized/read back the LCD controller memory. Together with the known I2C-only LCD topology, these associate 0x27 with the LCD backpack assembly. An ACK alone is not a chip-identification transaction.
 
-The earlier persistent LOW state was absent from these samples. Requested clock remains 100 kHz, not independently measured; no actual bus-voltage measurement or unique root-cause proof was obtained. The changed physical wiring preceded the improvement; no forced recovery pulses were used. **No power-off module-removal/address-disappearance comparison has been performed**, so Task 5 is not declared fully complete. [DS1302 + LCD extension report](ds1302-lcd-extension/README.md) is separate from the unchanged Task 6 sensor report.
+The earlier persistent LOW state was absent from these samples. Requested clock remains 100 kHz, not independently measured; no actual bus-voltage measurement or unique root-cause proof was obtained. The changed physical wiring preceded the improvement; no forced recovery pulses were used. At this earlier connected-only stage, no disconnection comparison had been performed. The later SDA-only comparison above now verifies address disappearance; full module removal/restoration remain unperformed. [DS1302 + LCD extension report](ds1302-lcd-extension/README.md) is separate from the unchanged Task 6 sensor report.
 
 ### Historical Blocked Attempt and Pause
 
@@ -105,7 +122,9 @@ The screenshot was captured later from live Arduino Serial Monitor and shows att
 
 ### Device Removal Test
 
-**Pending.** After the bus is idle and at least three full LCD-connected scans show a stable address set, the student must power off, remove the LCD's bus/power connections, and restore ESP32 USB power. Capture at least three complete scans again and compare `disappeared = connected_ACK_set − disconnected_ACK_set`. Check idle pull-ups after removing the backpack; a stuck/floating empty bus is not a valid zero-device scan. No physical disconnection or address disappearance was performed here.
+**Completed for the SDA-disconnection variant:** see the [actual Before/After comparison](#sda-disconnection-comparison--2026-11-02). The following earlier full-module removal/restoration plan remains unperformed; it is not the physical procedure used for the successful SDA-only test.
+
+**Earlier full-removal plan — not performed.** After the bus is idle and at least three full LCD-connected scans show a stable address set, the student must power off, remove the LCD's bus/power connections, and restore ESP32 USB power. Capture at least three complete scans again and compare `disappeared = connected_ACK_set − disconnected_ACK_set`. Check idle pull-ups after removing the backpack; a stuck/floating empty bus is not a valid zero-device scan. No physical disconnection or address disappearance was performed here.
 
 ### RTC and LCD Communication
 
@@ -155,6 +174,6 @@ The installed Core warns that digitalRead on peripheral-owned pins may be incons
 | Actual LCD ACK address and three full scans | Blocked by both input lines LOW |
 | Power-off LCD removal / address disappearance | Pending |
 
-**Conclusion:** the software was compiled, uploaded and exercised on the real ESP32. The LCD-address test is blocked by a reproducible non-idle bus and Task 5 is not complete. No successful ACK, address, removal result or RTC reading is invented.
+**Historical blocked-attempt conclusion:** the software was compiled, uploaded and exercised on the real ESP32, but at that earlier stage the LCD-address test was blocked and Task 5 was not complete. The later connected scan and SDA-disconnection comparison above supersede that status within their stated scope. No historical log was overwritten.
 
 Sources: [TI PCF8574](https://www.ti.com/lit/ds/symlink/pcf8574.pdf), [ADI DS1302](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1302.pdf), [ADI DS3231](https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231.pdf), [NXP PCA9306](https://www.nxp.com/docs/en/data-sheet/PCA9306.pdf).

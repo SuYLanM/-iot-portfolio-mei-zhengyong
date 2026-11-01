@@ -1,0 +1,2 @@
+# Original terminal/serial output; preserve all received/captured whitespace.
+*.txt -text -whitespace
