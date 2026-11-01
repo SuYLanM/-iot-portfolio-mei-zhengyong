@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-02",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.12",
+  "port": "COM3",
+  "serial_baud": 115200,
+  "diagnostic_rounds": 3,
+  "address_probes": 0,
+  "ack_nack": "not measured",
+  "sensor_comparison": "not run: bus blocked and BME280 not provided",
+  "compile": {
+    "current_hardware": {
+      "flash_bytes": 295276,
+      "ram_bytes": 23500,
+      "passed": true
+    },
+    "library_vs_register": {
+      "flash_bytes": 304116,
+      "ram_bytes": 23700,
+      "passed": true
+    }
+  },
+  "sha256": {
+    "compile-current-hardware-20261102.txt": "4bc495342ec68407e7e1a995c605e9ef4fa1d97ef1aa4e8a2a813028faf68bb4",
+    "compile-library-vs-register-20261102.txt": "34dbe694397968a1fe25444f1fd0b7597e84e9fc92466561d13d710d37708b6a",
+    "current-hardware-serial-20261102.txt": "a5173c52c31a189f9b7834ce5d6ebaf5b6c3ec745e90c0af9b33386d4443a08c",
+    "library-versions-20261102.txt": "4d6886bf7d7e7a14f0482642a47c717e4268027a6ab4cb49ea0277d4326b7877",
+    "upload-current-hardware-20261102.txt": "3ddb4a74b6493eb294c57a9b1a36d5186973d865d6428b98f08c14c51b5c3763"
+  }
+}

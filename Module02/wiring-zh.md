@@ -90,12 +90,18 @@ PCF8574 芯片支持 2.5–6 V，DS3231 芯片支持 2.3–5.5 V；芯片允许3
 
 ## Task 6：库读取与直接寄存器读取
 
-1. 先提供真实传感器的**型号、模块正反面丝印、供电/上拉条件**；仅凭一次地址 ACK 不足以确认型号。至少先完成 Task 5 的设备扫描和数据手册地址映射。
-2. 打开 [库模板](code/task06_library_template/task06_library_template.ino)，根据真实库的文档选择准确版本，添加 include/实例，并实现 beginSensorLibrary()、readSensorLibrary()。填写 DEVICE_ADDRESS、VALUE_UNIT 和实际模式，核对后才将 SENSOR_CONFIGURATION_VERIFIED 改为 true。当前函数返回 false；仅改开关不会让它变成真实驱动。
-3. 打开 [寄存器模板](code/task06_register_template/task06_register_template.ino)，按数据手册设置 -1 占位的设备地址/寄存器指针，以及指针宽度、读取字节数、Repeated START/STOP。传感器复位、量程、等待转换完成等初始化也要按该型号补充。不要假设换程序后前一个程序的配置仍然有效。
-4. 先保存真实原始字节。只有核对字节序、有效位、补码位宽、缩放和单位后才启用 DECODING_VERIFIED。线性解码器并不适合所有传感器；需要补偿系数、校验或命令流程的型号应单独实现。
-5. 在相同稳定条件和相同模式下分别运行库与直接读取，记录独立时间戳、实际字节、转换公式、单位和差值。失败不得填零；不要预填一致或成功。默认模板只会打印 PENDING_CONFIG。
-6. 填写 [英文报告原有对照表](register-reading.md)，附真实日志、照片、数据手册页码和错误分析。编译后未来修改了库/配置，还需重新编译和真实验证。
+### 本次真实执行状态（2026-11-02）
+
+本次保持现有电路不变。黑色 ESP32/COM3 已运行 Task 6 诊断程序，三轮均为 GPIO21/SDA、GPIO22/SCL 各 50/50 LOW，输出 BUS_BLOCKED；未初始化 Wire、未探测地址、未发送恢复脉冲。串口 115200 正常。结束后 GPIO 恢复普通输入并等待命令，不会自动重试。不要求本阶段拔线、换线或继续 Task 5。
+
+1. 当前诊断程序：[task06_current_hardware_diagnostic.ino](code/task06_current_hardware_diagnostic/task06_current_hardware_diagnostic.ino)。Arduino IDE 已打开该 Sketch；选择 ESP32 Dev Module / Core 3.3.12 / COM3。已由 CLI 实际编译、上传并验证 Hash。串口发送 `g` 才运行固定三轮，LOW 时只输出故障，不强行扫描；内部弱上拉仅供诊断，不代替正式外部 I²C 上拉。
+2. 传感器示例：[task06_library_vs_register.ino](code/task06_library_vs_register/task06_library_vs_register.ino)。已编译，**未上传、未实测**。需要额外的真实 BME280 模块；现有 PCF8574 是 LCD I/O 扩展器，DS1302 是三线 RTC，均不能当作该温度传感器。当前约束下不运行这份程序。
+3. 库已安装：Adafruit BME280 Library 2.3.0、Adafruit BusIO 1.17.4、Adafruit Unified Sensor 1.1.15。以后也可在 Library Manager 按名称/作者选择版本；不要将编译通过解释成硬件通信成功。
+4. BME280 示例检查候选 0x76/0x77 的芯片 ID 0x60；这不是已扫描到的地址。总线正常但无匹配器件时打印 SENSOR_NOT_FOUND；总线 LOW 则打印 BUS_BLOCKED、设备存在性未测试，两种状态不能混为一谈。
+5. 后续如选择进行新硬件实验，应先确认真实 BME280 模块电压/上拉/地址及正常总线。再上传示例，保存芯片 ID、校准系数和真实原始字节。程序比较温度 x1 强制转换同一已完成样本：库 readTemperature 与直接读取 0xFA–0xFC，通过真实 0x88–0x8D 校准系数补偿，输出两种 °C 值与差值。此步骤本次未执行。
+6. [英文报告](register-reading.md)记录字节序、补码、公式、编译日志、上传日志和三轮原始串口。表格保持空白，不预填数值或一致结论。库内部初始化存在无整体超时的状态轮询；我们自己的转换轮询 100 ms 上限不等于整个库调用有超时保证，未来仍需实物验证。
+
+原有[库适配模板](code/task06_library_template/README.md)和[直接寄存器通用模板](code/task06_register_template/README.md)保持原样，适用于将来选择其他传感器；不要只打开配置开关而不实现实际驱动。
 
 ## Task 7：两只不同地址传感器共用总线
 

@@ -1,0 +1,3 @@
+# Preserve original CLI/serial bytes, including progress-line spaces and blank lines.
+# Whitespace lint remains enabled for source and Markdown, not captured terminal output.
+*.txt -text -whitespace

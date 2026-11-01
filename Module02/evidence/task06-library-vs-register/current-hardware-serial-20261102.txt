@@ -1,0 +1,14 @@
+SESSION_BEGIN ESP32 SDA=21 SCL=22 requested_hz=100000 serial=115200
+ROUND_BEGIN round=1 firmware=task06-current-v1
+IDLE samples=50 SDA_HIGH=0 SDA_LOW=50 SCL_HIGH=0 SCL_LOW=50 input_pullup=1
+BUS_BLOCKED: SDA/SCL not stably HIGH; no I2C transaction or recovery attempted
+ROUND_END round=1 status=BUS_BLOCKED probed=0 ack=NA nack=NA
+ROUND_BEGIN round=2 firmware=task06-current-v1
+IDLE samples=50 SDA_HIGH=0 SDA_LOW=50 SCL_HIGH=0 SCL_LOW=50 input_pullup=1
+BUS_BLOCKED: SDA/SCL not stably HIGH; no I2C transaction or recovery attempted
+ROUND_END round=2 status=BUS_BLOCKED probed=0 ack=NA nack=NA
+ROUND_BEGIN round=3 firmware=task06-current-v1
+IDLE samples=50 SDA_HIGH=0 SDA_LOW=50 SCL_HIGH=0 SCL_LOW=50 input_pullup=1
+BUS_BLOCKED: SDA/SCL not stably HIGH; no I2C transaction or recovery attempted
+ROUND_END round=3 status=BUS_BLOCKED probed=0 ack=NA nack=NA
+SESSION_END: no automatic retry; GPIO inputs, no recovery pulses; sensor comparison NOT_RUN
