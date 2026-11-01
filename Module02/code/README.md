@@ -23,3 +23,7 @@ Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; t
 Task 9 uses a **separate analyzer board**. Actual static and WeMos PWM captures used its unchanged official SUMP firmware; the [Core 3 retune patch](../patches/task09-core3-clock-retune.patch) remains prepared and was not flashed for those results. Do not combine firmware. [Chinese operation manual](../task09-logic-analyzer-guide-zh.md) · [Actual software build checks](../task09-analyzer-build.md). The [ESP8266 PWM capture](../evidence/task09-esp8266-pwm.md) is now documented; [I2C NACK-only capture](../evidence/task09-esp8266-i2c.md) is verified; sensor ACK/data and independently calibrated timing remain Pending.
 
 [Chinese wiring guide](../wiring-zh.md) · [Validation](../validation.md). Final pins must follow actual board/module documentation. Source compilation does not satisfy Tasks 5–9 hardware evidence.
+
+## Separate Hardware Extension
+
+[DS1302 + LCD1602](ds1302_lcd_extension/README.md): COM3 upload verified, real read-only RTC samples advance by one second, LCD 0x27 initializes and DDRAM readback matches. Not an I2C sensor comparison and not a replacement for Task 6.

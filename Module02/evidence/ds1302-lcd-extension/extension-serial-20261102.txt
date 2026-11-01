@@ -1,0 +1,67 @@
+SESSION_BEGIN DS1302_EXTENSION v1 DAT=25 CLK=26 CE=27 serial=115200
+READ_ONLY_RTC: no date/time, halt, write-protect or charger setting is changed
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_ADDRESS_CHECK address=0x27 status=0
+LCD_INIT status=0 ready=1 visible_text=NOT_VISUALLY_VERIFIED
+RTC_RAW sample=1 bytes=40,47,23,01,11,07,26,00
+RTC_READ sample=1 t_ms=6461 date=2026-11-01 time=23:47:40 valid=1 running=1 write_protected=0 delta_seconds=NA progression=FIRST_VALID_SAMPLE
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=2 bytes=41,47,23,01,11,07,26,00
+RTC_READ sample=2 t_ms=7461 date=2026-11-01 time=23:47:41 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=3 bytes=42,47,23,01,11,07,26,00
+RTC_READ sample=3 t_ms=8461 date=2026-11-01 time=23:47:42 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=4 bytes=43,47,23,01,11,07,26,00
+RTC_READ sample=4 t_ms=9461 date=2026-11-01 time=23:47:43 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=5 bytes=44,47,23,01,11,07,26,00
+RTC_READ sample=5 t_ms=10461 date=2026-11-01 time=23:47:44 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=6 bytes=45,47,23,01,11,07,26,00
+RTC_READ sample=6 t_ms=11461 date=2026-11-01 time=23:47:45 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=7 bytes=46,47,23,01,11,07,26,00
+RTC_READ sample=7 t_ms=12461 date=2026-11-01 time=23:47:46 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=8 bytes=47,47,23,01,11,07,26,00
+RTC_READ sample=8 t_ms=13461 date=2026-11-01 time=23:47:47 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=9 bytes=48,47,23,01,11,07,26,00
+RTC_READ sample=9 t_ms=14461 date=2026-11-01 time=23:47:48 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=10 bytes=49,47,23,01,11,07,26,00
+RTC_READ sample=10 t_ms=15461 date=2026-11-01 time=23:47:49 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=11 bytes=50,47,23,01,11,07,26,00
+RTC_READ sample=11 t_ms=16461 date=2026-11-01 time=23:47:50 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=12 bytes=51,47,23,01,11,07,26,00
+RTC_READ sample=12 t_ms=17461 date=2026-11-01 time=23:47:51 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=13 bytes=52,47,23,01,11,07,26,00
+RTC_READ sample=13 t_ms=18461 date=2026-11-01 time=23:47:52 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=14 bytes=53,47,23,01,11,07,26,00
+RTC_READ sample=14 t_ms=19461 date=2026-11-01 time=23:47:53 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+RTC_RAW sample=15 bytes=54,47,23,01,11,07,26,00
+RTC_READ sample=15 t_ms=20461 date=2026-11-01 time=23:47:54 valid=1 running=1 write_protected=0 delta_seconds=1 progression=ADVANCING
+I2C_IDLE samples=20 SDA_HIGH=20 SCL_HIGH=20
+LCD_WRITE_ATTEMPTED: visible content requires real observation
+R

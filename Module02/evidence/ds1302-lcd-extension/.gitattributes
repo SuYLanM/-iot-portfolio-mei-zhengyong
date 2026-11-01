@@ -1,0 +1,2 @@
+# Preserve original CLI/serial output, including terminal whitespace.
+*.txt -text -whitespace

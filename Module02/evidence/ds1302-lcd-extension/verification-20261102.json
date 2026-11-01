@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3",
+  "baud": 115200,
+  "scanner_rounds": [
+    {
+      "scan": 3,
+      "address": "0x27",
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    },
+    {
+      "scan": 4,
+      "address": "0x27",
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    },
+    {
+      "scan": 5,
+      "address": "0x27",
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    },
+    {
+      "scan": 6,
+      "address": "0x27",
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    },
+    {
+      "scan": 7,
+      "address": "0x27",
+      "probed": 112,
+      "acks": 1,
+      "nacks": 111,
+      "errors": 0
+    }
+  ],
+  "rtc_runs": [
+    {
+      "file": "extension-serial-20261102.txt",
+      "valid_samples": 15,
+      "first": "2026-11-01T23:47:40",
+      "last": "2026-11-01T23:47:54",
+      "all_adjacent_deltas_seconds": 1,
+      "rtc_set_calls": 0
+    },
+    {
+      "file": "extension-readback-serial-20261102.txt",
+      "valid_samples": 10,
+      "first": "2026-11-01T23:48:59",
+      "last": "2026-11-01T23:49:08",
+      "all_adjacent_deltas_seconds": 1,
+      "rtc_set_calls": 0
+    }
+  ],
+  "lcd_init_status": 0,
+  "lcd_ddram_readback_match": true,
+  "visible_lcd_text": "not independently observed",
+  "task6_sensor_comparison": "not performed; extension only",
+  "sha256": {
+    "extension-compile-20261102.txt": "258f5e967adba491493cbe311d61903c157b9c2520f0f1986f14c2854b3a46a6",
+    "extension-readback-compile-20261102.txt": "2f0745558c0da194128260fc6623377b2cff288ba4c8691742bd2e432fa40d91",
+    "extension-readback-serial-20261102.txt": "10eced8d605d104b84c343076b6f8da133e37263110394bc527db05a42deb6fb",
+    "extension-readback-upload-20261102.txt": "30a1c5cc6d88d3d3d66538195e2fe158a48eae76939d7b90b208bd9a0cceaf3e",
+    "extension-serial-20261102.txt": "7730df8c17c246f305bbdb0f7b6cfd59b8c97ea8701ce3eb7384c2f966ebb8bb",
+    "extension-upload-20261102.txt": "79bff6275819fe5c6bd1aaea1a97abd05bf354f35e57423c7c932316a833dc26",
+    "library-versions-20261102.txt": "9cbca8941e062cb40e45beb60407adb4660596a0e681d8bd5eb7cfb9cd950915",
+    "scanner-compile-20261102.txt": "bb8328821599c5b8d4ecde1faa4f329fc682235020988f51b695dd936fa1757e",
+    "scanner-serial-20261102.txt": "ea1eb7cd695af6952b7ded9847b8da270ff172230bad08241f023c91476b1a7a",
+    "scanner-upload-20261102.txt": "6d881588ed22300dd54743b68d00df5cc1c0d0c4f01480089b14b6a90aeeab50",
+    "scanner-upload-usb-restored-20261102.txt": "3b5c67dc20fbb18114c476f8e9f32ac049bade1cf629241b46edc14c37de94d4"
+  }
+}

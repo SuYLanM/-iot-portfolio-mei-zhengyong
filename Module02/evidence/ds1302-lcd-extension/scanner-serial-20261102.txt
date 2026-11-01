@@ -1,0 +1,20 @@
+SCAN_BEGIN scan=3 t_ms=6244 clock_config_hz=100000
+ACK address_7bit=0x27
+SCAN_END scan=3 probed=112 detected_addresses=1 nacks=111 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=4 t_ms=9356 clock_config_hz=100000
+ACK address_7bit=0x27
+SCAN_END scan=4 probed=112 detected_addresses=1 nacks=111 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=5 t_ms=12468 clock_config_hz=100000
+ACK address_7bit=0x27
+SCAN_END scan=5 probed=112 detected_addresses=1 nacks=111 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=6 t_ms=15580 clock_config_hz=100000
+ACK address_7bit=0x27
+SCAN_END scan=6 probed=112 detected_addresses=1 nacks=111 errors=0
+ACK is not device identity or a count of physical devices.
+SCAN_BEGIN scan=7 t_ms=18692 clock_config_hz=100000
+ACK address_7bit=0x27
+SCAN_END scan=7 probed=112 detected_addresses=1 nacks=111 errors=0
+ACK is not device identity or a count of physical devices.

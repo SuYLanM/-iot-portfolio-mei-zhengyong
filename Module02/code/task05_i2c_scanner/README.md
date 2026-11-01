@@ -1,6 +1,6 @@
 # Task 5 — Repeating I2C Scanner
 
-**ESP32 compile/upload and serial diagnostics Completed; LCD address discovery Blocked; removal comparison Pending.** See the [real Task 5 report and logs](../../evidence/README.md#scanner-report--task-5-partial-baseline). The student now identifies the RTC as **DS1302**, not DS3231; it is not an I2C device and is excluded. This run only targets the LCD1602 PCF8574 backpack.
+**Latest: five real complete scans found LCD address 0x27; removal comparison Pending.** After student rewiring on 2026-11-02, each sweep returned 1 ACK / 111 NACK / 0 errors. [New raw log](../../evidence/ds1302-lcd-extension/scanner-serial-20261102.txt) · [Latest report](../../evidence/README.md#latest-scan-after-rewiring--2026-11-02). Earlier blocked attempts below are retained as history. See the [real Task 5 report and logs](../../evidence/README.md#scanner-report--task-5-partial-baseline). The student now identifies the RTC as **DS1302**, not DS3231; it is not an I2C device and is excluded. This run only targets the LCD1602 PCF8574 backpack.
 
 ## Open and Build
 
@@ -23,7 +23,7 @@ Before correcting wiring, disconnect USB/all power. Trace only these LCD wires, 
 
 On ESP32 the sketch calls `Wire.begin(21,22)`, requests 100000 Hz and sets a 50 ms operation timeout. It samples idle SDA/SCL once per scan attempt; if either is LOW it prints both states and skips address probes. This is a digital check, not a voltage measurement or pull-up validation. Otherwise it scans 0x08–0x77 (112 ordinary 7-bit addresses), prints ACK addresses, NACK/error counts and `SCAN_END`. No ACK prints **No I2C devices found**; errors must still be checked. It repeats about three seconds after each attempt; sending `s` requests an attempt. A scan error/skip is not evidence of an empty bus. An ACK is not independent chip identification.
 
-## Actual Result and Remaining Procedure
+## Earlier Blocked Result and Remaining Removal Procedure
 
 The original capture contains five BUS_NOT_IDLE attempt records. The diagnostic capture contains four records with **SDA_GPIO21=LOW SCL_GPIO22=LOW** each time. No addresses were probed, no full sweep completed and ACK/NACK counts are unavailable. The LCD's actual address remains unknown. Both files, a live IDE screenshot and a verification JSON are linked in the report.
 

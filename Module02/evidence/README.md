@@ -10,7 +10,7 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 | 2 | Actual assigned bus profile, pitch notes and real shared artefact | Pending assignment/discussion |
 | 3 | Shared class table and actual discussion/personal note | [Pod 4 CAN row and research answers](../bus-comparison.md) Prepared; classroom artefact and personal confirmation Pending |
 | 4a/4b | Student study/verification, neighbouring-pod agreement and Discord post | Pending |
-| 5 | First scan, changed connection scan, address-to-module identification | [Real LCD-only attempt and line diagnostics](#scanner-report--task-5-partial-baseline): compile/upload Completed; bus not idle (SDA/SCL LOW); ACK/address/removal Pending |
+| 5 | First scan, changed connection scan, address-to-module identification | [Latest rewired scan](#latest-scan-after-rewiring--2026-11-02): five complete sweeps, LCD address 0x27, 1 ACK / 111 NACK / 0 errors each; removal comparison Pending; earlier LOW diagnostics preserved |
 | 6 | Library value and raw register reconstruction under matched settings | [Report / empty result table](../register-reading.md) Prepared; sensor/library/configuration/readings Pending |
 | 7 | A-only/B-only/both scans and actual readings of both devices | [Report / address table](../two-devices.md) Prepared; actual two-device tests Pending |
 | 8 | Conflict/fix evidence if hardware available; otherwise explicitly theoretical | Theory prepared; physical experiment Pending |
@@ -19,9 +19,21 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 
 ## Scanner Report — Task 5 Partial Baseline
 
+**Latest result: LCD address 0x27 verified after student rewiring; removal comparison Pending.** Earlier blocked-bus/pause records below are historical and do not describe the restored current bus.
+
+### Latest Scan After Rewiring — 2026-11-02
+
+The student reported LCD VCC→3V3, GND→GND, SDA→GPIO21, SCL→GPIO22, and moved the now-confirmed DS1302 to DAT25/CLK26/CE27 (three-wire, not I2C). No remote physical changes were made. The unchanged Scanner compiled (294644 flash / 23508 RAM bytes), then successfully uploaded to COM3 after USB was restored. The initial port-not-found failure is preserved alongside success logs in the [extension evidence folder](ds1302-lcd-extension/README.md).
+
+The [new original Scanner serial log](ds1302-lcd-extension/scanner-serial-20261102.txt) contains **five complete sweeps, scan 3–7**. Every sweep returned **ACK 0x27**, **112 probed / 1 detected address / 111 NACKs / 0 errors**. The extension later measured **20/20 HIGH on each input**, re-ACKed 0x27 and successfully initialized/read back the LCD controller memory. Together with the known I2C-only LCD topology, these associate 0x27 with the LCD backpack assembly. An ACK alone is not a chip-identification transaction.
+
+The earlier persistent LOW state was absent from these samples. Requested clock remains 100 kHz, not independently measured; no actual bus-voltage measurement or unique root-cause proof was obtained. The changed physical wiring preceded the improvement; no forced recovery pulses were used. **No power-off module-removal/address-disappearance comparison has been performed**, so Task 5 is not declared fully complete. [DS1302 + LCD extension report](ds1302-lcd-extension/README.md) is separate from the unchanged Task 6 sensor report.
+
+### Historical Blocked Attempt and Pause
+
 **Attempted — Hardware I²C bus blocked (SDA/SCL LOW).**
 
-Hardware testing is paused at the student's request on 2026-11-02. The existing circuit is being retained; no further rewiring, upload, recovery or scan is planned for this stage. The isolation instructions below are a possible future diagnostic step, not an action performed or currently requested. All authentic logs, screenshots and software-diagnostic results are preserved. The LCD address, ACK and device-removal comparison remain unverified.
+At the earlier checkpoint, hardware testing was paused at the student's request on 2026-11-02; the later rewired run above supersedes that pause. The existing circuit is being retained; no further rewiring, upload, recovery or scan is planned for this stage. The isolation instructions below are a possible future diagnostic step, not an action performed or currently requested. All authentic logs, screenshots and software-diagnostic results are preserved. The LCD address, ACK and device-removal comparison remain unverified.
 
 **Compile/upload/serial diagnostics Completed; LCD address discovery Blocked; removal comparison Pending.** The actual 2026-11-02 run found both configured bus inputs LOW before any address probe. This is not a successful scan, a NACK result, or evidence that no LCD is present. [Scanner source and instructions](../code/task05_i2c_scanner/README.md) · [Chinese wiring guide](../wiring-zh.md).
 
