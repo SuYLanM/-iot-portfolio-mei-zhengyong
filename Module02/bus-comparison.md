@@ -1,6 +1,6 @@
 # Task 3 — Bus Comparison (Research Draft)
 
-**Prepared comparison; not the merged class table.** The assigned bus, other pods' pitches, class discussion and personal surprises remain Pending. See [survey notes](bus-survey-notes.md) for history and source verification. Signal counts exclude ground/power; differential systems also need managed common-mode/reference paths.
+**Prepared comparison; not the merged class table.** Our confirmed assignment is **Pod 4 — CAN**. Other pods' pitches, the shared class table and actual classroom conclusions remain Pending. See [survey notes](bus-survey-notes.md) for history and source verification. Signal counts exclude ground/power; differential systems also need managed common-mode/reference paths.
 
 | Bus / layer | Wires and connectors | Signaling / drive | Topology and addressing | Speed / distance qualification | Use / possible kit example | Debug tool |
 |---|---|---|---|---|---|---|
@@ -9,7 +9,7 @@
 | RS-485 electrical | One twisted pair half-duplex or two pairs full-duplex; reference strategy | Differential, tri-statable drivers | Multi-drop; one enabled driver at a time in ordinary half-duplex; no inherent addresses/arbitration | Rate decreases with cable length; do not combine 10 Mb/s and 1200 m as one guarantee | Industrial nodes; transceiver Pending | Differential probe / compatible receiver + UART decoder |
 | Modbus RTU protocol | Commonly RS-485, also possible over other serial electrical layers | Inherits physical layer, not a new voltage standard | Controller/client polls addressed devices; function codes/register model | Device baud/parity/turnaround and RTU timing must match; distance inherited | Industrial meter; actual register map Pending | Protocol-aware serial capture, CRC/frame checking |
 | Classical high-speed CAN | CAN_H/CAN_L pair + reference strategy | Differential dominant/recessive; transceiver required | Multi-controller broadcast; arbitration/message identifiers, not sensor slave addresses | Up to 1 Mb/s in classical CAN; attainable distance is bit-timing/transceiver/cable dependent | Motor-control network; actual motor controller Pending | CAN adapter/decoder, differential scope |
-| I2C | SDA/SCL + GND, no universal connector | Open-drain with compatible pull-ups, wired-low sharing | Addressed multi-target; multi-controller arbitration possible | Start at 100 kHz; 400 kHz if every component/rise time permits; capacitance-limited board wiring | Sensor/OLED; none scanned yet | Scanner + digital decoder; analog scope for rise time |
+| I2C | SDA/SCL + GND, no universal connector | Open-drain with compatible pull-ups, wired-low sharing | Addressed multi-target; multi-controller arbitration possible | Start at 100 kHz; 400 kHz if every component/rise time permits; capacitance-limited board wiring | Sensor/OLED; Task 9 no-target scan observed NACK only, no device identified | Scanner + digital decoder; analog scope for rise time |
 | I3C | SDA/SCL + GND | Mixed open-drain/push-pull phases, device-defined voltage | Dynamic addressing, controller coordination; legacy coexistence conditional | SDR clock up to 12.5 MHz; short interconnect, not a cable bus promise | Modern sensors, none confirmed; classic ESP32 Wire is not I3C | I3C-capable analyzer/controller |
 | SPI | SCK/MOSI/MISO + CS per target; variants exist | Normally push-pull; inactive target must release shared MISO | Controller/targets selected by CS; no universal in-band addressing | MHz-class common; device timing/routing set actual rate and length, no universal limit | SD/ADC/flash; exact kit example Pending | Logic analyzer incl. CS, CPOL/CPHA checks |
 | OneWire / 1-Wire | DQ + GND; power often separate | Shared open-drain, pull-up; parasite power may need strong pull-up | One controller, ROM-ID-selected devices | Time-slot/device-specific; network cable limits depend on topology/power/load | DS18B20 documented example, not confirmed inventory | 1-Wire decoder + rise-time/power checks |
@@ -43,10 +43,28 @@ Connector/pin voltage must be measured and compared with each actual part. No ta
 7. **Motor driver:** use PWM/direction with a suitable power driver for a local simple motor, or CAN for a networked drive already supporting CAN/CANopen. Never connect the motor winding to a logic pin. The driver's interface and safety requirements decide; a bus cannot replace a power stage.
 8. **Oldest named interface:** TI dates RS-232 to 1962, earlier than the other specifically dated standards here; UART's underlying asynchronous-serial concept is older, but no single UART invention date is established by this research. RS-232's modem DTE/DCE heritage remains visible in handshake and connector conventions.
 
-## Class Contributions — Pending
+## Pod 4 CAN Row — Prepared Contribution, Not the Shared Class Result
 
-| Actual discussion date / participating pods | Shared table / artefact link | Changes after pitches | 3–5 jointly agreed points |
-|---|---|---|---|
-| TODO | TODO | TODO | TODO |
+This row follows all nine suggested course columns. The existing [CAN profile](bus-can.md) covers wires/connectors, electrical signaling and drive, topology/IDs, conditional speed/length, applications and kit example; its troubleshooting section supplies the debug approach. The only format gap was that those facts were spread over the profile rather than assembled in the exact class-table layout. No CAN hardware result is added by this formatting.
 
-Personal “what surprised me” note: TODO, to be written after actual study/discussion. The proposed application choices above are AI-assisted research, not a class vote or an invented personal discovery.
+| Bus | Wires | Signaling | Drive style | Topology / addressing | Speed / length | Typical use | Kit example | Debug tool |
+|---|---|---|---|---|---|---|---|---|
+| Classical high-speed CAN | CANH/CANL twisted pair plus reference strategy; terminate physical ends, normally 120 ohm across pair at each end | Differential CANH−CANL; MCU logic and cable voltages are separate | CAN transceiver asserts dominant 0 or releases recessive 1; simultaneous transmitters arbitrate bitwise | Multi-controller broadcast on a trunk with short stubs; 11-/29-bit message IDs express priority/content, not I2C-style device addresses | Classical CAN up to 1 Mbit/s; portfolio example requests 500 kbit/s; length depends on bit timing, cable/stubs/transceivers, not a measured setup limit | ECUs, networked drives, industrial sensors/actuators | Proposed ESP32 TWAI + 3.3 V SN65HVD230 transceiver; not hardware validated; classic ESP32 is not CAN FD | Active compatible CAN peer/analyzer, TWAI alerts/error counters; differential scope for physical faults; two-end termination check |
+
+[Verified CAN sources and qualifications](can-technical-notes.md). A passive/listen-only peer does not supply normal CAN ACK. No motor controller, CAN cable performance or classroom test is claimed.
+
+## What Surprised Me — Proposed English Reflection for Student Review
+
+**Draft wording only:** the following is an AI-assisted reflection prepared at the student's request. Review and personalize it before presenting it as a personal learning experience; it is not evidence that a discussion has occurred.
+
+> What surprised me is that differential wiring alone does not determine how a bus is shared. RS-485 needs a higher-level rule to decide who may transmit, whereas CAN includes priority arbitration. I also found the distinction between a CAN message identifier and an I2C device address useful: they solve different problems. This makes me want to check both the physical layer and the protocol before choosing a bus for a sensor or motor-control system.
+
+## Class Contributions — Pending Classroom Activity
+
+The numbered answers above are prepared research responses for all six discussion themes, not a record of a class vote. Take the CAN row to class, compare it against the actual shared artefact and revise it only using real feedback.
+
+| Actual discussion date / participating pods | Shared table / artefact link | Actual Pod 4 row/contribution | Changes after pitches | Actual agreed points |
+|---|---|---|---|---|
+| Pending | Pending | Pending classroom contribution; prepared row above | Pending | Pending |
+
+Completed preparation: CAN row, comparison research and proposed discussion answers. Still required: actual shared table/link or screenshot, actual Pod 4 contribution, and a student-confirmed personal surprise note. No class outcome or individual contribution is fabricated.

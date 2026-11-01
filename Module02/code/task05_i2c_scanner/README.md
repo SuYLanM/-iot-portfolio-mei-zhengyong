@@ -1,17 +1,31 @@
 # Task 5 — Repeating I2C Scanner
 
-## Parts / Pins / Wiring
+**Prepared / Awaiting real sensor ACK and unplug comparison.** The existing [Task 9 no-target baseline](../../evidence/task09-esp8266-i2c.md) is reusable evidence, not a new run of this revised sketch. [Task 5 report and blank hardware record](../../evidence/README.md#scanner-report--task-5-partial-baseline) · [Chinese guide](../../wiring-zh.md).
 
-ESP32, USB data cable, a datasheet-identified compatible I2C module, breadboard/jumpers and reviewed pull-ups if needed. Default **SDA GPIO21, SCL GPIO22**, plus GND and module-specific supply. Verify physical board pins first. Modules powered at 5 V can have 5 V pull-ups: do not connect those lines to ESP32. Use compatible 3.3 V logic and inspect existing pull-ups before adding more. Never treat arbitrary VIN/VCC labels as equivalent.
+## Supported Boards and Wiring
 
-## Operation / Output
+| Board selection | Core checked | SDA | SCL |
+|---|---|---|---|
+| ESP32 Dev Module, classic target | Espressif 3.3.12 | GPIO21 | GPIO22 |
+| LOLIN(WEMOS) D1 R2 & mini | ESP8266 Community 3.1.2 | D2 / GPIO4 | D1 / GPIO5 |
 
-Scan starts after setup, repeats about every three seconds after the previous scan, and can be requested with lowercase `s`. Only ordinary 7-bit address range **0x08–0x77** is probed; reserved groups are deliberately skipped, unlike the course's broader introductory loop. Probe timing is blocking for the duration of a scan and may be much longer with timeout/errors.
+Select the actual board and port; blue WeMos previously used COM4. **Do not overwrite the black ESP32 analyzer on COM3.** This sketch can use the blue ESP8266 as the controller. If separately probing its bus, SDA goes to black CH0/GPIO21 and SCL to black CH1/GPIO19; retain analyzer-local GPIO22→GPIO23 and common ground.
 
-Runtime output includes SCAN_BEGIN, configured clock, actual ACK address_7bit, non-address-NACK Wire statuses and a final summary. No address output is prefilled here. Zero ACKs is not proof of a broken sensor, and one ACK can represent colliding targets; scanning is not a model identifier. Address probing can affect unusual devices: read the actual datasheet before using this generic scanner.
+Required: a positively identified I2C module for ACK, datasheet-approved supply, common ground, short SDA/SCL wires and reviewed pull-ups to compatible 3.3 V. A module VIN label does not prove the pull-up rail. Do not join two regulator outputs or attach 5 V pull-ups. Confirm breakout schematic and address pin state before wiring. Scan probes may affect unusual devices; inspect the actual device specification first.
 
-Record module identity, address convention, pins, supply/pull-ups, actual port and scan log. Power off, disconnect one device, restore power and rescan; compare actual changes without unsafe hot-plugging. Save one-/two-device configurations and map every observed address to the relevant datasheet. [Blank scan report](../../evidence/README.md) · [Study log](../../study-log.md). No hardware scan has been performed.
+## Program and Output
 
-## Run and Status
+Open [task05_i2c_scanner.ino](task05_i2c_scanner.ino) in Arduino IDE 2.3.10. Console is 115200 baud. The same sketch uses ESP8266 `Wire.begin(SDA,SCL)` plus `setClock(100000)` or ESP32 `Wire.begin(SDA,SCL,100000)` with platform-appropriate timeout APIs. It requests 100 kHz, not a verified physical clock. ESP8266 begin is void; that branch returning ready does not prove target presence.
 
-Prepared and compile-checked for **ESP32 Dev Module / Espressif Core 3.3.12**, Arduino IDE 2.3.10. Open the same-name `.ino` in this folder, select the actual board/port and verify. After inspecting actual hardware, power off to wire, reconnect and upload yourself; no upload was performed during preparation. Open Serial Monitor at **115200 baud**. Compilation is not hardware testing. [Chinese wiring guide](../../wiring-zh.md) · [Evidence register](../../evidence/README.md).
+A scan starts after setup, repeats roughly three seconds after each scan, and can be requested with `s`. Reserved addresses are excluded: 0x08–0x77 are probes, not found devices. Output includes actual ACK addresses, NACK/error totals and a low-idle-line warning. ACK does not identify a model or count colliding devices. Blocking scan duration can increase with errors; an idle-level check cannot prove electrical compliance.
+
+## Required Real Procedure
+
+1. Power off, identify controller/module, verify supply, common ground and pull-ups; wire according to the selected row. Upload only to the intended controller.
+2. Save the actual module-connected scan, map ACK addresses to the known module's datasheet, and record core/port/pins/clock request.
+3. Power off, remove one identified sensor, power on and scan again. Record the actual vanished address; reconnect only with power off and verify restoration.
+4. Save logs, actual board/module pictures and a reasoned conclusion. With no sensor, report the NACK baseline only. Do not populate Pending addresses from examples.
+
+## Evidence Reuse and Validation
+
+The preserved Task 9 full serial scan returned 0 ACK / 112 NACK / 0 other errors; its short raw capture shows twelve NACK requests, not twelve devices. Sensor identification and unplug/reconnect observations remain Pending. The revised Task 5 code has not been uploaded or hardware-tested. Compilation checks for both installed cores are recorded in [preparation validation](../../validation.md#follow-up-preparation-checks--2026-11-02).

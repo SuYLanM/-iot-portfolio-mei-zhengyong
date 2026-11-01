@@ -41,3 +41,20 @@ Run full Markdown file/fragment checks and git diff --check, review staged paths
 ## Not Tested / Not Completed
 
 No Module 02 UART success, divider measurement, I2C discovery, sensor read, physical address conflict, PWM/instrument capture, actual class adoption, assigned bus, presentation, neighbouring-pod discussion, personal learning statement or Discord post has been recorded. All such evidence remains Pending; Task 10 remains Optional.
+
+## Follow-up Preparation Checks — 2026-11-02
+
+Scope: Task 1 photo import; Task 3 CAN/class preparation; Task 5–7 scanner/scaffold and report preparation. Prior Task 9 reports, raw data, images and code remain unchanged. User's existing UART working-tree change and README_IMPORT.txt are excluded.
+
+Two original Task 1 JPEGs were safely extracted and inspected; repository copies are byte-identical to the ZIP entries, with hashes in their [evidence index](evidence/task01-voltage-divider/README.md). Photo A visibly shows approximately 3.307 V; Photo B is partly obscured and its approximately 2.7 V value remains a student estimate pending confirmation. No probe nodes or resistor values were invented.
+
+| Existing sketch | ESP32 Dev Module / Core 3.3.12 | WeMos d1_mini / ESP8266 Core 3.1.2 | Hardware status |
+|---|---|---|---|
+| task05_i2c_scanner | Compile PASS | Compile PASS | Revised sketch not uploaded; original Task 9 NACK evidence reused separately |
+| task06_library_template | Compile PASS | Compile PASS | Disabled scaffold; actual library/model/adapter Pending |
+| task06_register_template | Compile PASS | Compile PASS | Disabled transport/linear-decoder scaffold; actual sensor/mode/register configuration Pending |
+| task07_two_devices | Compile PASS | Compile PASS | Disabled scaffold; two sensor adapters and real reads Pending |
+
+Eight Arduino CLI builds exited 0, using --jobs 4 and temporary build directories outside the repository. No third-party sensor library was installed, and no board was flashed or queried in this preparation. The source library hooks deliberately return false; blank units and invalid addresses prevent fabricated readings. A future device adapter/configuration needs a fresh compile and real hardware validation.
+
+The existing CAN report was checked against all nine suggested Task 3 columns; the exact prepared row and an explicitly labelled reflection draft are in [bus-comparison.md](bus-comparison.md). The actual shared class table remains Pending. Scanner/report navigation reuses the existing evidence register and links to preserved Task 9 baseline files without duplicating or modifying them.

@@ -1,6 +1,6 @@
 # Task 1 — Simple Pins, PWM, UART and Voltage Dividers
 
-**Prepared / Awaiting hardware validation. All Module 02 voltage/current/UART measurements remain Pending.** Sources: [ESP32 electrical limits](references.md#r2-esp32-electrical), [Wire/UART APIs](references.md#r3-arduino-wire-and-uart).
+**Theory/code Prepared; two real voltage photographs documented. Exact measurement nodes, fixed-divider validation and the original 5 V experiment remain Pending.** Sources: [ESP32 electrical limits](references.md#r2-esp32-electrical), [Wire/UART APIs](references.md#r3-arduino-wire-and-uart).
 
 ## Baseline Comparison
 
@@ -24,7 +24,24 @@ Classify GPIO, PWM, analog and UART connections; prepare an ADC voltage-divider 
 | A — preliminary baseline | 3.3 V supply, fixed R1=10 kΩ / R2=10 kΩ, calculated Vout=1.650 V | Prepared / Awaiting hardware validation |
 | B — original course task | 5 V signal, proposed conservative R1=10 kΩ / R2=12 kΩ (1%), calculated Vout=2.727 V | Pending suitable resistors, bounded 5 V source and multimeter; not performed |
 
-A does not satisfy or replace B. No new serial capture, wiring photo or measurement has been supplied for either divider experiment.
+A does not satisfy or replace B. Two actual ESP32/potentiometer/DMM photos are now available below, but their electrical nodes and resistance values are unconfirmed; they cannot be assigned as verified results of either fixed-resistor design. No new ADC serial evidence has been supplied.
+
+## New Real Photo Evidence — Partial Observation, Not Divider Verification
+
+[Original photographs and integrity record](evidence/task01-voltage-divider/README.md). The photographs show an ESP32, potentiometer, breadboard and multimeter, rather than proving the fixed-resistor topology proposed in A or B.
+
+| Evidence | Recorded observation | Interpretation / TODO |
+|---|---|---|
+| Photo A | Main display approximately **3.307 V DC**, readable in photograph | Probe nodes and whether it measures a supply rail are unconfirmed |
+| Photo B | Approximately **2.7 V as reported by the student**; display partly obscured | Exact displayed digits and both measurement nodes Pending; no more precise value is asserted |
+
+![Real Photo A, approximately 3.307 V display; exact nodes unconfirmed](evidence/task01-voltage-divider/Task1_photo_A_multimeter_3V3.jpg)
+
+![Real Photo B, student-estimated approximately 2.7 V; glare prevents exact verification](evidence/task01-voltage-divider/Task1_photo_B_potentiometer_output.jpg)
+
+These support that a physical low-voltage measurement setup was photographed. They do **not** establish Vin=5 V, a resistor pair, a verified wiper connection, GPIO35 connectivity, a measured divider ratio, or ADC accuracy. Do not derive a ratio from separately photographed readings with unknown nodes. Potentiometer resistance and position cannot be inferred from appearance. The nominal 2.727 V calculation in B remains a design example, not confirmation of the approximately 2.7 V photo.
+
+To complete the original task, identify a known bounded 5 V input, record actual R1/R2 (or clearly defined potentiometer segments), label Vin/Vout/GND and probe locations, measure paired Vin and Vout, calculate from measured components and compare uncertainty. Verify Vout is safe before attaching the ADC. Exact measurement nodes, date, meter settings and a clearer second display are still needed. The existing empty A/B tables below remain empty until those runs are identified and measured.
 
 ## A — 3.3 V Fixed-Resistor Baseline
 
@@ -56,7 +73,7 @@ Each round takes **32 `analogRead()` conversions and 32 separate `analogReadMill
 
 **Expected (calculated only):** Vout approximately 1.650 V for the nominal circuit. A raw midpoint of exactly 2048 is not an accuracy requirement. ADC range, reference/calibration and nonlinearity mean that `raw × 3.3 / 4095` must not be described as an accurate physical voltage. The program instead averages API millivolts and explicitly labels the result an **API voltage estimate**.
 
-**Actual:** Pending. No ADC means, measured voltages, successful upload, photographs or test pass are claimed. Three displayed decimals are a formatting choice, not evidence of millivolt accuracy. Averaging can reduce some random noise; it cannot remove systematic gain/offset errors, supply drift or resistor error.
+**Actual:** Pending. No ADC means, fixed-baseline DMM result or successful upload/test pass is claimed; the newly supplied potentiometer photographs are not verified measurements of this fixed-resistor baseline. Three displayed decimals are a formatting choice, not evidence of millivolt accuracy. Averaging can reduce some random noise; it cannot remove systematic gain/offset errors, supply drift or resistor error.
 
 ### Measurement Method, Comparison and Limitations
 
@@ -110,7 +127,7 @@ For a 20 m multi-drop run, an **RS-485 transceiver adds a differential electrica
 
 Dividers also convert resistive sensors to voltage and scale references; their error/loading and lack of isolation matter.
 
-## Actual Results — Pending
+## Fixed-Resistor A/B Results — Pending
 
 Populate these tables only after real measurements. Leave unknown fields blank; attach evidence links only after the genuine files exist. Record operator/date, board, IDE/core/port, resistor markings/tolerances, DMM model/range/uncertainty and measurement conditions with each run. All values below are intentionally blank.
 
@@ -134,9 +151,11 @@ The existing general voltage/current and UART record templates remain available:
 |---|---|---|---|---|
 | | | | | |
 
-No physical voltage, current, UART success or group roles are inferred from prepared code.
+The photo observations above are genuine evidence with unconfirmed nodes; no fixed-divider voltage, current, UART success or group role is inferred from prepared code.
 
 ## Remaining Task 1 TODO
+
+- [ ] Identify both probe nodes and the exact second display; confirm the actual source, potentiometer connections/values and whether either photo belongs to the required 5 V experiment.
 
 - [ ] Hardware-test A using the two real 10 kΩ resistors, GPIO35 and an independent DMM; record real observations and evidence.
 - [ ] Obtain/check the proposed 1% 10 kΩ / 12 kΩ resistors, a known 5 V signal/source and its worst-case voltage (assumed 4.75–5.25 V here), and a multimeter for B.

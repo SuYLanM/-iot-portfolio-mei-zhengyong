@@ -1,6 +1,6 @@
 # Module 02 — Arduino Preparation
 
-Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; the separate WeMos PWM sketch compiles for **ESP8266 / d1_mini / Core 3.1.2**. The external analyzer has a [verified static CH0 LOW/HIGH stage](../evidence/task09-logic-analyzer/README.md); the later [ESP8266 PWM source and capture](../evidence/task09-esp8266-pwm.md) are also verified. The ESP32 PWM/I2C target sketches and other tasks retain their existing status. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Open each same-name .ino folder separately; no third-party sensor library has been selected.
+Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; the separate WeMos PWM sketch compiles for **ESP8266 / d1_mini / Core 3.1.2**. The external analyzer has a [verified static CH0 LOW/HIGH stage](../evidence/task09-logic-analyzer/README.md); the later [ESP8266 PWM source and capture](../evidence/task09-esp8266-pwm.md) are also verified. The ESP32 PWM/I2C target sketches and other tasks retain their existing status. Sensor-dependent sketches deliberately remain disabled until actual hardware configuration and adapter implementation. Tasks 5–7 were updated in place for both ESP32 and WeMos ESP8266; [eight compile checks](../validation.md#follow-up-preparation-checks--2026-11-02) passed. No new hardware run is claimed. Open each same-name .ino folder separately; no third-party sensor library has been selected.
 
 | Task | Sketch and English instructions | Default behavior |
 |---|---|---|
@@ -8,7 +8,7 @@ Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; t
 | 1 | [Fixed-resistor voltage divider](task01_voltage_divider/README.md) | GPIO35, 32 raw + 32 API-mV samples; Prepared / Awaiting hardware validation |
 | 2 Pod 4 | [CAN A — local self-test](task02_can_self_test/README.md) | 500 kbit/s, same unconnected GPIO5 TX/RX feedback; no physical CAN validation |
 | 2 Pod 4 | [CAN B — external communication](task02_can_external/README.md) | 500 kbit/s, GPIO5 TX / GPIO4 RX, SN65HVD230 and active peer required; hardware Pending |
-| 5 | [I2C scanner](task05_i2c_scanner/README.md) | Repeating probes, SDA21/SCL22, 100 kHz |
+| 5 | [I2C scanner](task05_i2c_scanner/README.md) | ESP32 SDA21/SCL22 or ESP8266 D2/D1; requested 100 kHz; ACK/NACK/errors; sensor test Pending |
 | 6 | [Library adapter](task06_library_template/README.md) | PENDING_CONFIG; stubs do not invent readings |
 | 6 | [Direct register adapter](task06_register_template/README.md) | PENDING_CONFIG; no guessed address/register |
 | 7 | [Two-device framework](task07_two_devices/README.md) | PENDING_CONFIG; actual addresses/read adapters needed |
