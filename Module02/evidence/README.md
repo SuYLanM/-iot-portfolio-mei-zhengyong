@@ -19,6 +19,10 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 
 ## Scanner Report — Task 5 Partial Baseline
 
+**Attempted — Hardware I²C bus blocked (SDA/SCL LOW).**
+
+Hardware testing is paused at the student's request on 2026-11-02. The existing circuit is being retained; no further rewiring, upload, recovery or scan is planned for this stage. The isolation instructions below are a possible future diagnostic step, not an action performed or currently requested. All authentic logs, screenshots and software-diagnostic results are preserved. The LCD address, ACK and device-removal comparison remain unverified.
+
 **Compile/upload/serial diagnostics Completed; LCD address discovery Blocked; removal comparison Pending.** The actual 2026-11-02 run found both configured bus inputs LOW before any address probe. This is not a successful scan, a NACK result, or evidence that no LCD is present. [Scanner source and instructions](../code/task05_i2c_scanner/README.md) · [Chinese wiring guide](../wiring-zh.md).
 
 ### Objective
