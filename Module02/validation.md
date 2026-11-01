@@ -58,3 +58,18 @@ Two original Task 1 JPEGs were safely extracted and inspected; repository copies
 Eight Arduino CLI builds exited 0, using --jobs 4 and temporary build directories outside the repository. No third-party sensor library was installed, and no board was flashed or queried in this preparation. The source library hooks deliberately return false; blank units and invalid addresses prevent fabricated readings. A future device adapter/configuration needs a fresh compile and real hardware validation.
 
 The existing CAN report was checked against all nine suggested Task 3 columns; the exact prepared row and an explicitly labelled reflection draft are in [bus-comparison.md](bus-comparison.md). The actual shared class table remains Pending. Scanner/report navigation reuses the existing evidence register and links to preserved Task 9 baseline files without duplicating or modifying them.
+
+## Task 5 DS3231/LCD Preparation — 2026-11-02
+
+The student confirms a PCF8574 LCD1602 backpack and DS3231 module supporting 3.3 V, with all devices intended to use 3.3 V and no 5 V connection. This is recorded as user-confirmed hardware information; actual idle SDA/SCL voltages, wiring, addresses and scans remain Pending. No upload, GPIO connection, serial query or new acquisition was performed.
+
+The existing `task05_i2c_scanner` was updated in place: ESP32 uses Wire.begin(21,22), then sets 100000 Hz; ordinary addresses 0x08–0x77 are probed, actual response/probe totals are printed, and no-ACK scans print No I2C devices found with separate bus-error context. The original ESP8266 compatibility branch is retained. Both builds below exited 0; temporary output remains outside the repository.
+
+| Target / installed core | Compile | Flash / code bytes | Global RAM bytes |
+|---|---|---|---|
+| ESP32 Dev Module / 3.3.12 | PASS | 294564 | 23508 |
+| ESP8266 d1_mini / 3.1.2 | PASS | 239220 | 29120 |
+
+The English report reuses the existing [Task 5 section](evidence/README.md#scanner-report--task-5-partial-baseline), with Objective, Hardware, Wiring, I2C Addresses, Scanner Results, Device Removal Test, RTC and LCD Communication, Troubleshooting and Evidence. The [Chinese guide](wiring-zh.md) provides per-module idle-voltage checks, the confirmed all-3.3 V connection plan and a conditional mixed-voltage translation alternative.
+
+Library metadata/source reviewed: RTClib by Adafruit 2.1.4 (depends on Adafruit BusIO), hd44780 by Bill Perry 1.3.2, including hd44780_I2Cexp's explicit-address constructor. The second sketch is deferred until measured electrical conditions and actual address mapping are supplied, as requested. These libraries/the combined application were not installed, compiled, uploaded or hardware-tested here; no default RTC time or LCD address is claimed. All Task 9 firmware/source/data/reports, other experiment evidence and unrelated working-tree modifications are preserved.
