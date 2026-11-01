@@ -1,0 +1,10 @@
+SCAN_BEGIN scan=3 t_ms=6031 clock_config_hz=100000
+BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=4 t_ms=9031 clock_config_hz=100000
+BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=5 t_ms=12031 clock_config_hz=100000
+BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=6 t_ms=15031 clock_config_hz=100000
+BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=7 t_ms=18031 clock_config_hz=100000
+BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed

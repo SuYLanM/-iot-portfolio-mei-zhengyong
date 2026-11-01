@@ -1,0 +1,9 @@
+SCAN_BEGIN scan=3 t_ms=6042 clock_config_hz=100000
+BUS_NOT_IDLE: SDA_GPIO21=LOW SCL_GPIO22=LOW; check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=4 t_ms=9053 clock_config_hz=100000
+BUS_NOT_IDLE: SDA_GPIO21=LOW SCL_GPIO22=LOW; check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=5 t_ms=12064 clock_config_hz=100000
+BUS_NOT_IDLE: SDA_GPIO21=LOW SCL_GPIO22=LOW; check wiring/pull-ups; no addresses probed
+SCAN_BEGIN scan=6 t_ms=15075 clock_config_hz=100000
+BUS_NOT_IDLE: SDA_GPIO21=LOW SCL_GPIO22=LOW; check wiring/pull-ups; no addresses probed
+S

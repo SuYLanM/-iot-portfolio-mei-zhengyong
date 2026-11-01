@@ -1,0 +1,2 @@
+# Preserve received serial bytes, including the firmware mixed LF/CRLF endings.
+lcd-*-serial-20261102.txt -text whitespace=cr-at-eol

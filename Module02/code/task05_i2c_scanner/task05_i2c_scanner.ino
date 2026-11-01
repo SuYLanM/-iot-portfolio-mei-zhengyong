@@ -36,8 +36,12 @@ void scanBus() {
   Serial.printf("SCAN_BEGIN scan=%lu t_ms=%lu clock_config_hz=%lu\n",
                 (unsigned long)scanNumber, (unsigned long)millis(),
                 (unsigned long)BUS_HZ);
-  if (digitalRead(SDA_PIN) == LOW || digitalRead(SCL_PIN) == LOW) {
-    Serial.println("BUS_NOT_IDLE: check wiring/pull-ups; no addresses probed");
+  const int sdaLevel = digitalRead(SDA_PIN);
+  const int sclLevel = digitalRead(SCL_PIN);
+  if (sdaLevel == LOW || sclLevel == LOW) {
+    Serial.printf("BUS_NOT_IDLE: SDA_GPIO%d=%s SCL_GPIO%d=%s; check wiring/pull-ups; no addresses probed\n",
+                  SDA_PIN, sdaLevel == HIGH ? "HIGH" : "LOW",
+                  SCL_PIN, sclLevel == HIGH ? "HIGH" : "LOW");
     return;
   }
   // 只扫描普通 7-bit 地址 0x08–0x77，跳过保留地址。

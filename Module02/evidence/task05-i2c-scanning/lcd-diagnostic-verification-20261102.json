@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3",
+  "baud": 115200,
+  "requested_i2c_hz": 100000,
+  "result": "Blocked: bus not idle; no address probes, ACK/NACK unavailable",
+  "records": [
+    {
+      "file": "lcd-precheck-serial-20261102.txt",
+      "sha256": "011ada147dfb95ae061adfd75c37fe0a1f68301ef608a5945385d9185841d72a",
+      "scan_attempt_numbers": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "bus_not_idle_count": 5,
+      "complete_address_sweeps": 0,
+      "ack_lines": [],
+      "nack_counts_available": false,
+      "raw_tail_may_be_partial": true
+    },
+    {
+      "file": "lcd-line-diagnostic-serial-20261102.txt",
+      "sha256": "0ac070b910ecf4a0693526e8c8e5ef6e69635b8834bb4caf904f055b368ca139",
+      "scan_attempt_numbers": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "bus_not_idle_count": 4,
+      "complete_address_sweeps": 0,
+      "ack_lines": [],
+      "nack_counts_available": false,
+      "raw_tail_may_be_partial": true
+    }
+  ]
+}

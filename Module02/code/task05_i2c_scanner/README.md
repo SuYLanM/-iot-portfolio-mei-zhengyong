@@ -1,37 +1,30 @@
 # Task 5 — Repeating I2C Scanner
 
-**Compile verified / Upload and scanning on hold pending RTC identity and bus-voltage checks.** The RTC is labelled DAT/CLK/RST; its earlier DS3231 identification is unverified. Do not treat these labels as SDA/SCL without chip/module evidence. DS1302 uses a three-wire interface and cannot be scanned as an I2C target. The existing [Task 9 no-target baseline](../../evidence/task09-esp8266-i2c.md) is reusable evidence, not a new run of this revised sketch. [Task 5 report and current preflight](../../evidence/README.md#scanner-report--task-5-partial-baseline) · [Chinese guide](../../wiring-zh.md).
+**ESP32 compile/upload and serial diagnostics Completed; LCD address discovery Blocked; removal comparison Pending.** See the [real Task 5 report and logs](../../evidence/README.md#scanner-report--task-5-partial-baseline). The student now identifies the RTC as **DS1302**, not DS3231; it is not an I2C device and is excluded. This run only targets the LCD1602 PCF8574 backpack.
 
-Preflight on 2026-11-02 observed Arduino IDE 2.3.10 / ESP32 Dev Module / COM3 (CP210x). The unchanged source compiled under installed ESP32 Core 3.3.12: PASS, 294564 flash bytes / 23508 global RAM bytes. No upload, serial query or new scan was attempted because chip identity and measured electrical safety are still unconfirmed. A single idle-level check in the code only skips an apparently non-idle bus; it neither measures voltage nor proves pull-ups are suitable. Wire timeout is configured to 50 ms per operation; the 112-address loop has a finite bound. Expected scan duration can increase with errors; no precise completion-time guarantee is asserted.
+## Open and Build
 
-## Supported Boards and Wiring
+Open [task05_i2c_scanner.ino](task05_i2c_scanner.ino) in Arduino IDE 2.3.10. Select **ESP32 Dev Module**, installed Espressif Core **3.3.12**; the observed CP210x port was **COM3**. Console: **115200 baud, 8N1**.
 
-| Board selection | Core checked | SDA | SCL |
+The current diagnostic source compiled successfully (294644 flash bytes / 23508 global RAM bytes) and was uploaded on 2026-11-02 with **Hash of data verified**. It replaced on-board firmware on that ESP32, without changing any stored Task 9 files. The original source also compiled/uploaded (294564 / 23508 bytes). The new source adds only separate idle SDA/SCL level reporting; it does not bypass the idle guard. This revision was compiled for ESP32; no fresh ESP8266 build is claimed.
+
+## Pins and Electrical Constraints
+
+| Target | SDA | SCL | Bus / console |
 |---|---|---|---|
-| ESP32 Dev Module, classic target | Espressif 3.3.12 | GPIO21 | GPIO22 |
-| LOLIN(WEMOS) D1 R2 & mini | ESP8266 Community 3.1.2 | D2 / GPIO4 | D1 / GPIO5 |
+| Classic ESP32 Dev Module, current run | GPIO21 | GPIO22 | Requested 100 kHz / 115200 baud |
+| Existing ESP8266 branch, not used for this run | D2 / GPIO4 | D1 / GPIO5 | Requested 100 kHz / 115200 baud |
 
-The current requested controller is **ESP32 Dev Module, GPIO21 SDA / GPIO22 SCL**. The initial plan described a DS3231 and a PCF8574 LCD1602 at 3.3 V, with no translator or 5 V. The RTC identity is now unverified because its labels are DAT/CLK/RST; actual module power/pin compatibility and idle bus-voltage checks remain Pending. Select the actual board/port. **If reusing the black ESP32, uploading this sketch replaces its on-board LogicAnalyzer firmware, while GitHub source and saved captures remain intact.** This preparation performs no upload. The previous ESP8266 option remains supported without requiring a duplicate sketch. If separately probing its bus, SDA goes to black CH0/GPIO21 and SCL to black CH1/GPIO19; retain analyzer-local GPIO22→GPIO23 and common ground.
+LCD intended wiring: VCC→ESP32 3V3, GND→GND, SDA→GPIO21, SCL→GPIO22. The student confirms VCC on 3V3 and USB power; GND, signal landings, pull-ups and absence of other attached paths remain physically unverified. No voltage was measured. Keep ESP32 signals at compatible 3.3 V levels; never attach 5 V pull-ups. An LCD without visible text can still have a communicating backpack. Do not wire DS1302 DAT/CLK/RST as I2C.
 
-Required: a positively identified I2C module for ACK, datasheet-approved supply, common ground, short SDA/SCL wires and reviewed pull-ups to compatible 3.3 V. A module VIN label does not prove the pull-up rail. Do not join two regulator outputs or attach 5 V pull-ups. Confirm breakout schematic and address pin state before wiring. Scan probes may affect unusual devices; inspect the actual device specification first.
+Before correcting wiring, disconnect USB/all power. Trace only these LCD wires, isolate DS1302 signals if attached, remove the obsolete GPIO22–23 analyzer jumper if present, and inspect any static-test or external-board connections on GPIO21/22. A jumper alone is not a proven fault. Do not dismantle unrelated circuits. [Chinese preparation guide](../../wiring-zh.md) contains earlier conditional DS3231 preparation; the current report supersedes that hardware assumption.
 
-## Program and Output
+## Operation
 
-Open [task05_i2c_scanner.ino](task05_i2c_scanner.ino) in Arduino IDE 2.3.10. Console is 115200 baud. The same sketch uses ESP8266 `Wire.begin(SDA,SCL)` plus `setClock(100000)` or ESP32 `Wire.begin(21,22)` followed by `Wire.setClock(100000)` (through BUS_HZ=100000) with platform-appropriate timeout APIs. It requests 100 kHz, not a verified physical clock. ESP8266 begin is void; that branch returning ready does not prove target presence.
+On ESP32 the sketch calls `Wire.begin(21,22)`, requests 100000 Hz and sets a 50 ms operation timeout. It samples idle SDA/SCL once per scan attempt; if either is LOW it prints both states and skips address probes. This is a digital check, not a voltage measurement or pull-up validation. Otherwise it scans 0x08–0x77 (112 ordinary 7-bit addresses), prints ACK addresses, NACK/error counts and `SCAN_END`. No ACK prints **No I2C devices found**; errors must still be checked. It repeats about three seconds after each attempt; sending `s` requests an attempt. A scan error/skip is not evidence of an empty bus. An ACK is not independent chip identification.
 
-A scan starts after setup, repeats roughly three seconds after each scan, and can be requested with `s`. Reserved addresses are excluded: 0x08–0x77 are probes, not found devices. Output includes the scan sequence number, actual ACK addresses, probed/detected-address totals, NACK/error totals and a low-idle-line warning. With no ACK it prints exactly **No I2C devices found**. Error totals distinguish a failed bus from an assumed empty bus. There is no preset LCD or RTC address. ACK does not identify a model or count colliding devices. Blocking scan duration can increase with errors; an idle-level check cannot prove electrical compliance.
+## Actual Result and Remaining Procedure
 
-## Required Real Procedure
+The original capture contains five BUS_NOT_IDLE attempt records. The diagnostic capture contains four records with **SDA_GPIO21=LOW SCL_GPIO22=LOW** each time. No addresses were probed, no full sweep completed and ACK/NACK counts are unavailable. The LCD's actual address remains unknown. Both files, a live IDE screenshot and a verification JSON are linked in the report.
 
-1. Before GPIO attachment, inspect each module at the student-confirmed 3.3 V and measure idle SDA/SCL-to-GND in DC-voltage mode with GPIO disconnected; after combining modules recheck. See the detailed Chinese guide. Do not attach any 5 V pull-up to ESP32. Upload only after electrical checks and deliberate board selection.
-2. Run A: DS3231 module only; save every observed address and counts. Power off, add the LCD and run B. Do not assume exactly two addresses because a breakout can contain another I2C chip. Map actual addresses by the hardware and scan differences.
-3. Run C: power off all devices, remove one complete module and its bus wiring, then power on and scan. Record actual vanished address(es). Run D restores it after power-off and checks restoration.
-4. Save logs, actual board/module pictures and a reasoned conclusion. With no sensor, report the NACK baseline only. Do not populate Pending addresses from examples.
-
-## Evidence Reuse and Validation
-
-The preserved Task 9 full serial scan returned 0 ACK / 112 NACK / 0 other errors; its short raw capture shows twelve NACK requests, not twelve devices. Sensor identification and unplug/reconnect observations remain Pending. The revised Task 5 code has not been uploaded or hardware-tested. Compilation checks for both installed cores are recorded in [preparation validation](../../validation.md#task-5-ds3231lcd-preparation--2026-11-02).
-
-## RTC/LCD Extension Gate
-
-The second independent sketch is intentionally deferred until scan results and electrical safety are confirmed. The report records the planned **RTClib by Adafruit + Adafruit BusIO** and **hd44780 by Bill Perry / hd44780_I2Cexp** libraries, installation steps, explicit observed LCD address, and no automatic clock setting. No RTC timestamp or LCD output is claimed. [Full English report](../../evidence/README.md#scanner-report--task-5-partial-baseline).
+After power-off wiring/pull-up correction, capture at least three full LCD-connected scans. Then power off and remove the LCD, capture three more full scans and compare address sets; check that the remaining bus still has valid idle pull-ups. Physical removal awaits the student. The old [Task 9 NACK-only baseline](../../evidence/task09-esp8266-i2c.md) remains separate evidence from another board/sketch. No RTC/LCD time-display sketch is part of this run.
