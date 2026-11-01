@@ -1,0 +1,135 @@
+{
+  "date": "2026-11-02",
+  "port": "COM3 CP210x",
+  "serial_baud": 115200,
+  "input_command": "a",
+  "target_kind": "ESP32 Wire1 software-controlled physical I2C slave, not a sensor and not the Python model",
+  "student_reported_power_off_wiring": [
+    "GPIO32 to GPIO21/shared SDA",
+    "GPIO33 to GPIO22/shared SCL"
+  ],
+  "master_pins": [
+    21,
+    22
+  ],
+  "slave_pins": [
+    32,
+    33
+  ],
+  "requested_hz": 100000,
+  "physical_clock_measured": false,
+  "rounds": [
+    {
+      "round": 1,
+      "idle_SDA": 1,
+      "idle_SCL": 1,
+      "addresses": [
+        "0x27",
+        "0x42"
+      ],
+      "probed": 112,
+      "acks": 2,
+      "nacks": 110,
+      "scan_errors": 0,
+      "responses": [
+        {
+          "attempt": 1,
+          "valid_for_current_sequence": false,
+          "packet_hex": "54,37,01,00,2c,07,00,00,00,00,00,49",
+          "sequence": 0
+        },
+        {
+          "attempt": 2,
+          "valid_for_current_sequence": true,
+          "packet_hex": "54,37,01,01,da,07,00,00,01,00,00,bf",
+          "sequence": 1
+        }
+      ],
+      "target_uptime_ms": 2010,
+      "accepted_requests": 1,
+      "lcd_ddram_match": true,
+      "both_address_and_comm_pass": true
+    },
+    {
+      "round": 2,
+      "idle_SDA": 1,
+      "idle_SCL": 1,
+      "addresses": [
+        "0x27",
+        "0x42"
+      ],
+      "probed": 112,
+      "acks": 2,
+      "nacks": 110,
+      "scan_errors": 0,
+      "responses": [
+        {
+          "attempt": 1,
+          "valid_for_current_sequence": false,
+          "packet_hex": "54,37,01,01,da,07,00,00,01,00,00,bf",
+          "sequence": 1
+        },
+        {
+          "attempt": 2,
+          "valid_for_current_sequence": true,
+          "packet_hex": "54,37,01,02,1c,15,00,00,02,00,00,6b",
+          "sequence": 2
+        }
+      ],
+      "target_uptime_ms": 5404,
+      "accepted_requests": 2,
+      "lcd_ddram_match": true,
+      "both_address_and_comm_pass": true
+    },
+    {
+      "round": 3,
+      "idle_SDA": 1,
+      "idle_SCL": 1,
+      "addresses": [
+        "0x27",
+        "0x42"
+      ],
+      "probed": 112,
+      "acks": 2,
+      "nacks": 110,
+      "scan_errors": 0,
+      "responses": [
+        {
+          "attempt": 1,
+          "valid_for_current_sequence": false,
+          "packet_hex": "54,37,01,02,1c,15,00,00,02,00,00,6b",
+          "sequence": 2
+        },
+        {
+          "attempt": 2,
+          "valid_for_current_sequence": true,
+          "packet_hex": "54,37,01,03,eb,21,00,00,03,00,00,a8",
+          "sequence": 3
+        }
+      ],
+      "target_uptime_ms": 8683,
+      "accepted_requests": 3,
+      "lcd_ddram_match": true,
+      "both_address_and_comm_pass": true
+    }
+  ],
+  "totals": {
+    "complete_scans": 3,
+    "successful_dual_comm_rounds": 3,
+    "stale_first_responses_rejected": 3,
+    "valid_second_responses": 3,
+    "short_reads": 0,
+    "scan_errors": 0
+  },
+  "sensor_requirement": "two genuine I2C sensor readings not performed",
+  "sha256": {
+    "compile-dual-wired-20261102.txt": "ee4040981a6dbfb924f8c755d3bc24af09a88da54548a96278cb52b04d82eddc",
+    "upload-dual-wired-20261102.txt": "87ca37938f9b62303585a92516cd447a4727a6be3dce2d4c21076eaa280297d2",
+    "dual-wired-serial-20261102.txt": "ede4689d4cc3326b8482c29e0e5001c2cc2d836ac6233f32382ceeccff160d2b"
+  },
+  "source_sha256": {
+    "task07_two_devices.ino": "fa019960bf4308cc0fad22ee261971d02c8b6129db4de27c2616b917d0b40290",
+    "local_slave.h": "92a6636a022656ed461f80d78dc30493b2588e9f49d4f7fd1d44b382d45cbbb4",
+    "test_protocol.h": "91e352e21ff8d1ba4f76b39be54cadc0a85321029302a8ac22de462708cfda2d"
+  }
+}

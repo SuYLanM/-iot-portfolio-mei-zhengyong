@@ -1,0 +1,35 @@
+LOCAL_SLAVE init_ok=1 candidate_address=0x42 SDA=32 SCL=33 physical_jumpers_required=1
+SESSION_BEGIN TASK7_HARDWARE local_slave_enabled=1 protocol_armed=1
+MASTER init_ok=1 SDA=21 SCL=22 requested_hz=100000 timeout_ms=50
+SCAN_BEGIN round=1 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+ACK address_7bit=0x42 identity=UNVERIFIED_BY_ACK
+SCAN_END round=1 probed=112 ack=2 nack=110 errors=0
+TEST_COMMAND address=0x42 seq=1 wire_status=0
+TEST_RESPONSE attempt=1 requested=12 received=12 consumed=12 valid=0 raw=54,37,01,00,2C,07,00,00,00,00,00,49
+TEST_RESPONSE attempt=2 requested=12 received=12 consumed=12 valid=1 raw=54,37,01,01,DA,07,00,00,01,00,00,BF
+TEST_COMM_PASS seq=1 target_uptime_ms=2010 accepted_requests=1 data_kind=MCU_TEST_NOT_SENSOR
+LCD_INIT address=0x27 status=0
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=1 B:PASS  " data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=1 lcd_ack=1 lcd_comm=1 test_ack=1 test_comm=1 both_address_and_comm_pass=1
+SCAN_BEGIN round=2 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+ACK address_7bit=0x42 identity=UNVERIFIED_BY_ACK
+SCAN_END round=2 probed=112 ack=2 nack=110 errors=0
+TEST_COMMAND address=0x42 seq=2 wire_status=0
+TEST_RESPONSE attempt=1 requested=12 received=12 consumed=12 valid=0 raw=54,37,01,01,DA,07,00,00,01,00,00,BF
+TEST_RESPONSE attempt=2 requested=12 received=12 consumed=12 valid=1 raw=54,37,01,02,1C,15,00,00,02,00,00,6B
+TEST_COMM_PASS seq=2 target_uptime_ms=5404 accepted_requests=2 data_kind=MCU_TEST_NOT_SENSOR
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=2 B:PASS  " data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=2 lcd_ack=1 lcd_comm=1 test_ack=1 test_comm=1 both_address_and_comm_pass=1
+SCAN_BEGIN round=3 SDA=1 SCL=1
+ACK address_7bit=0x27 identity=UNVERIFIED_BY_ACK
+ACK address_7bit=0x42 identity=UNVERIFIED_BY_ACK
+SCAN_END round=3 probed=112 ack=2 nack=110 errors=0
+TEST_COMMAND address=0x42 seq=3 wire_status=0
+TEST_RESPONSE attempt=1 requested=12 received=12 consumed=12 valid=0 raw=54,37,01,02,1C,15,00,00,02,00,00,6B
+TEST_RESPONSE attempt=2 requested=12 received=12 consumed=12 valid=1 raw=54,37,01,03,EB,21,00,00,03,00,00,A8
+TEST_COMM_PASS seq=3 target_uptime_ms=8683 accepted_requests=3 data_kind=MCU_TEST_NOT_SENSOR
+LCD_COMM match=1 row1="Task7 LCD 0x27  " row2="round=3 B:PASS  " data_kind=LCD_DDRAM_NOT_SENSOR
+ROUND_RESULT round=3 lcd_ack=1 lcd_comm=1 test_ack=1 test_comm=1 both_address_and_comm_pass=1
+SESSION_END no automatic retries; no claim of two physical sensors

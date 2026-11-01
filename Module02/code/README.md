@@ -13,7 +13,7 @@ Existing ESP32 sketches compile for classic ESP32 Dev Module with Core 3.3.12; t
 | 6 | [BME280 library versus direct reading](task06_library_vs_register/README.md) | Compile PASS; extra sensor required, not uploaded/hardware verified |
 | 6 | [Library adapter](task06_library_template/README.md) | PENDING_CONFIG; stubs do not invent readings |
 | 6 | [Direct register adapter](task06_register_template/README.md) | PENDING_CONFIG; no guessed address/register |
-| 7 | [ESP32 master / optional Wire1 test target](task07_two_devices/README.md) | Compile/upload PASS; three real LCD 0x27 scan/DDRAM passes; physical 0x42 test Pending |
+| 7 | [ESP32 master / Wire1 test target](task07_two_devices/README.md) | Fresh compile/upload PASS; three real 0x27/0x42 dual-address/data passes; MCU emulator, not two sensors |
 | 7 | [ESP8266 built-in Wire slave candidate](task07_esp8266_slave/README.md) | Core 3.1.2 compile PASS; not uploaded, physical testing Pending |
 | 7 | [Simulation only](task07_simulation/README.md) | Eight real host-model tests PASS; synthetic address responses, not hardware evidence |
 | 8 | [Mux selection template](task08_mux_template/README.md) | PENDING_CONFIG; actual TCA9548A/straps needed |
