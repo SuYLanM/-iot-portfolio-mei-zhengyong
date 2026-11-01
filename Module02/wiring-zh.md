@@ -6,6 +6,8 @@
 
 ### 当前方案与尚待核验项
 
+用户最新补充：模块标称按“DS3231”记录，但芯片顶面丝印尚未核实；目前没有万用表，VCC、DAT、CLK对GND均没有实测读数。LCD和RTC信号线均已与ESP32 GPIO断开，未猜接DAT/CLK。这是用户提供的接线状态，不是电压或接口验证结果。完整丝印可用肉眼或手机放大查看，不需要万用表；电压实测仍需合适仪表。继续暂停烧录及带模块扫描，不将“暂无法测量”记录成“已通过”。
+
 **最新识别阻断：RTC排针为DAT、CLK、RST，不能据此认定它是DS3231或把DAT/CLK直接接GPIO21/22。** DS3231是SDA/SCL的I²C器件；DS1302是I/O、SCLK、CE三线接口。现有标识提示可能为三线模块，但芯片丝印和实际模块走线尚未提供，型号仍Pending。RST标记也不能直接当作DS3231的可闲置复位脚。先断电，核对芯片完整丝印/模块原理图；下面的DS3231接线表和RTClib方案只在型号及引脚确认后适用。[DS1302官方资料](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1302.pdf)。
 
 2026-11-02软件预检已确认IDE为task05_i2c_scanner、ESP32 Dev Module、COM3；端口为Silicon Labs CP210x。Core 3.3.12编译通过。实际供电和总线电压未提供，因此未上传、未打开串口扫描、未替换板上固件。请在信号线与ESP32隔离时完成DMM直流电压检查；GPIO读到HIGH或地址ACK都不能证明线电压没有超过3.3 V逻辑域。
