@@ -6,6 +6,10 @@
 
 ### 当前方案与尚待核验项
 
+**最新识别阻断：RTC排针为DAT、CLK、RST，不能据此认定它是DS3231或把DAT/CLK直接接GPIO21/22。** DS3231是SDA/SCL的I²C器件；DS1302是I/O、SCLK、CE三线接口。现有标识提示可能为三线模块，但芯片丝印和实际模块走线尚未提供，型号仍Pending。RST标记也不能直接当作DS3231的可闲置复位脚。先断电，核对芯片完整丝印/模块原理图；下面的DS3231接线表和RTClib方案只在型号及引脚确认后适用。[DS1302官方资料](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1302.pdf)。
+
+2026-11-02软件预检已确认IDE为task05_i2c_scanner、ESP32 Dev Module、COM3；端口为Silicon Labs CP210x。Core 3.3.12编译通过。实际供电和总线电压未提供，因此未上传、未打开串口扫描、未替换板上固件。请在信号线与ESP32隔离时完成DMM直流电压检查；GPIO读到HIGH或地址ACK都不能证明线电压没有超过3.3 V逻辑域。
+
 用户确认：本次使用 ESP32，不使用 LogicAnalyzer；没有双向 I²C 电平转换器；两个模块都支持 3.3 V，所有器件统一使用 **3.3 V，不接 5 V**。这作为本次主接线方案。模块兼容性来自用户确认；实际 SDA/SCL 上拉电压、阻值、接线与扫描结果仍待现场验证。本次只准备文件，不烧录、不接 GPIO。
 
 PCF8574 芯片支持 2.5–6 V，DS3231 芯片支持 2.3–5.5 V；芯片允许3.3 V不等于任意LCD玻璃/背光/模块都一定工作，但本次按用户确认的3.3 V模块配置。资料：[TI PCF8574](https://www.ti.com/lit/ds/symlink/pcf8574.pdf)、[ADI DS3231](https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231.pdf)。

@@ -19,7 +19,27 @@ For each actual experiment record: date, board/module markings, sketch/settings,
 
 ## Scanner Report — Task 5 Partial Baseline
 
-**Prepared / Awaiting electrical checks and real module scans.** Current hardware is an ESP32 Dev Module, a PCF8574 LCD1602 backpack and a DS3231 RTC module. The student confirms both modules support 3.3 V; the intended setup is entirely 3.3 V, with no 5 V connection or level translator. This is a user-confirmed plan, not a measured bus-voltage result. [Scanner sketch/instructions](../code/task05_i2c_scanner/README.md) · [Detailed Chinese wiring and checks](../wiring-zh.md).
+**Prepared / Upload and scanning on hold: RTC identity and actual bus voltages Pending.** Current hardware is an ESP32 Dev Module, a student-identified PCF8574 LCD1602 backpack and an **unverified RTC board labelled DAT, CLK, RST**. The earlier DS3231 identification is not established. The student reports 3.3 V-compatible modules and intends no 5 V connection or level translator; no actual module/bus-voltage readings have been supplied. [Scanner sketch/instructions](../code/task05_i2c_scanner/README.md) · [Detailed Chinese wiring and checks](../wiring-zh.md).
+
+### Current Preflight — 2026-11-02
+
+| Step | Status | Actual observation / limit |
+|---|---|---|
+| IDE/project/board | Completed | Observed task05_i2c_scanner in Arduino IDE 2.3.10; ESP32 Dev Module and COM3 selected |
+| Port inventory | Completed | COM3, Silicon Labs CP210x USB to UART Bridge; no other serial port detected in this preflight |
+| Source inspection / CLI compile | Completed | GPIO21 SDA / GPIO22 SCL, 100000 Hz requested, 115200 console, 0x08–0x77 range; Core 3.3.12 compile PASS, 294564 flash bytes / 23508 global RAM bytes |
+| RTC identity / pin mapping | Pending | DAT/CLK/RST alone does not prove I2C; inspect actual chip marking and module traces/schematic |
+| Supply/pull-ups/idle voltage | Pending | No independently measured VCC/SDA/SCL values; user-reported 3.3 V supply is not a bus-voltage measurement |
+| Upload / flash verification | Pending — not attempted | Firmware not replaced; no upload or Hash verified result is claimed |
+| Three complete scan rounds / actual address mapping | Pending — not attempted | No COM3 serial connection/query was opened for this preflight; no new raw scan log exists |
+| Physical removal comparison / RTC-LCD extension | Pending | Requires real module identification/electrical checks and user-performed power-off changes |
+| Failed steps | None observed in this preflight | Compilation passed; hardware stages were withheld, not tested and failed |
+
+![Real Arduino IDE preflight configuration, not an upload or scan result](task05-i2c-scanning/arduino-ide-preflight.jpg)
+
+**RTC identification gate:** [DS3231](https://www.analog.com/media/en/technical-documentation/data-sheets/DS3231.pdf) is I2C with SDA/SCL; [DS1302](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1302.pdf) uses I/O, SCLK and CE, not I2C. DAT/CLK/RST suggests a possible three-wire board, but does not establish a chip model or a mapping. Do not connect DAT→GPIO21 or CLK→GPIO22 until module evidence proves those labels are SDA/SCL. DS3231 RST and DS1302 CE have different functions; do not assume an RST-labelled pad is optional or can float. The DS3231-specific wiring and library plan below is conditional on positive identification. A DS1302 will not become an I2C target by connecting two of its three signals to SDA/SCL.
+
+Keep the assembly powered off while checking identity/rewiring. For voltage checks, isolate module signals from ESP32 GPIO before powering the correctly identified supply pins. Software/ACK results cannot establish 3.3 V electrical safety. If the RTC proves to be DS1302, safely isolated LCD-only scanning can be a partial I2C test after LCD electrical checks; it cannot be reported as two I2C devices or the requested DS3231 extension.
 
 ### Objective
 
@@ -31,7 +51,7 @@ Wire a voltage-compatible I2C bus, scan ordinary 7-bit addresses, identify each 
 |---|---|
 | Controller | ESP32 Dev Module; Arduino IDE 2.3.10, Espressif Core 3.3.12 checked for compilation |
 | Bus pins/settings | SDA GPIO21, SCL GPIO22; 100000 Hz requested; Serial 115200 |
-| RTC | DS3231 module, student confirms 3.3 V operation; board revision, auxiliary ICs and actual pull-ups still to inspect |
+| RTC | DAT/CLK/RST board, previously called DS3231; chip model, protocol, power/pin mapping and pull-ups unverified |
 | Display | LCD1602 + PCF8574 backpack, student confirms 3.3 V operation; actual address and display/backlight operation Pending |
 | Supply/reference | Intended common 3.3 V supply and GND; actual supply voltage, idle SDA/SCL and total current budget Pending |
 | Level translator | None available; not needed for verified all-3.3 V operation, but required/reassessed if a future module uses 5 V bus levels |
@@ -39,7 +59,7 @@ Wire a voltage-compatible I2C bus, scan ordinary 7-bit addresses, identify each 
 
 ### Wiring
 
-**Before GPIO connection:** inspect each module's pin labels and pull-up rail, power/check it separately at the confirmed 3.3 V, and measure idle SDA-to-GND and SCL-to-GND with a DMM in DC-voltage mode. Keep both GPIO lines disconnected. After combining the modules, recheck the idle bus before a power-off final GPIO connection. Do not interpret a floating/stuck-low line as a working safe bus. Do not use resistance/current mode on the powered bus.
+**Before GPIO connection:** resolve the RTC identification gate above. The following table applies only to a positively identified I2C DS3231 module. Inspect each module's pin labels and pull-up rail, power/check it separately at the confirmed 3.3 V, and measure idle SDA-to-GND and SCL-to-GND with a DMM in DC-voltage mode. Keep both GPIO lines disconnected. After combining the modules, recheck the idle bus before a power-off final GPIO connection. Do not interpret a floating/stuck-low line as a working safe bus. Do not use resistance/current mode on the powered bus.
 
 | ESP32 | DS3231 module | LCD1602 PCF8574 module |
 |---|---|---|
