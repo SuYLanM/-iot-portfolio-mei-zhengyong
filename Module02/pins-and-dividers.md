@@ -1,6 +1,6 @@
 # Task 1 — Simple Pins, PWM, UART and Voltage Dividers
 
-**Theory/code Prepared; two real voltage photographs documented. Exact measurement nodes, fixed-divider validation and the original 5 V experiment remain Pending.** Sources: [ESP32 electrical limits](references.md#r2-esp32-electrical), [Wire/UART APIs](references.md#r3-arduino-wire-and-uart).
+**Real 3.3 V potentiometer measurements documented: supply 3.307 V, wiper output 2.652 V, as confirmed by the student. Fixed-resistor baseline validation and the original 5 V experiment remain Pending.** Sources: [ESP32 electrical limits](references.md#r2-esp32-electrical), [Wire/UART APIs](references.md#r3-arduino-wire-and-uart).
 
 ## Baseline Comparison
 
@@ -24,24 +24,34 @@ Classify GPIO, PWM, analog and UART connections; prepare an ADC voltage-divider 
 | A — preliminary baseline | 3.3 V supply, fixed R1=10 kΩ / R2=10 kΩ, calculated Vout=1.650 V | Prepared / Awaiting hardware validation |
 | B — original course task | 5 V signal, proposed conservative R1=10 kΩ / R2=12 kΩ (1%), calculated Vout=2.727 V | Pending suitable resistors, bounded 5 V source and multimeter; not performed |
 
-A does not satisfy or replace B. Two actual ESP32/potentiometer/DMM photos are now available below, but their electrical nodes and resistance values are unconfirmed; they cannot be assigned as verified results of either fixed-resistor design. No new ADC serial evidence has been supplied.
+A does not satisfy or replace B. The two photographs below document a separate **3.3 V potentiometer experiment**: the student has confirmed the supply and wiper measurement identities and readings. Resistance values remain unknown; these are not verified results of either fixed-resistor design. No new ADC serial evidence has been supplied.
 
-## New Real Photo Evidence — Partial Observation, Not Divider Verification
+## Real Measurements — 3.3 V Potentiometer Experiment
 
-[Original photographs and integrity record](evidence/task01-voltage-divider/README.md). The photographs show an ESP32, potentiometer, breadboard and multimeter, rather than proving the fixed-resistor topology proposed in A or B.
+[Original photographs and integrity record](evidence/task01-voltage-divider/README.md). The photographs show an ESP32, potentiometer, breadboard and multimeter. The student subsequently confirmed the following measurement identities and readings; the earlier approximate 2.7 V label for Photo B is superseded by **2.652 V**. The image remains unchanged, including the glare that initially obscured the display.
 
-| Evidence | Recorded observation | Interpretation / TODO |
+| Quantity | Measured voltage | Measurement identity / evidence |
 |---|---|---|
-| Photo A | Main display approximately **3.307 V DC**, readable in photograph | Probe nodes and whether it measures a supply rail are unconfirmed |
-| Photo B | Approximately **2.7 V as reported by the student**; display partly obscured | Exact displayed digits and both measurement nodes Pending; no more precise value is asserted |
+| Input / supply, Vin | **3.307 V** | ESP32 3V3 supply voltage, student-confirmed: [Photo A](evidence/task01-voltage-divider/Task1_photo_A_multimeter_3V3.jpg) |
+| Wiper output, Vout | **2.652 V** | Potentiometer wiper output voltage, student-confirmed: [Photo B](evidence/task01-voltage-divider/Task1_photo_B_potentiometer_output.jpg) |
 
-![Real Photo A, approximately 3.307 V display; exact nodes unconfirmed](evidence/task01-voltage-divider/Task1_photo_A_multimeter_3V3.jpg)
+![Original Photo A: student-confirmed ESP32 3V3 supply voltage of 3.307 V](evidence/task01-voltage-divider/Task1_photo_A_multimeter_3V3.jpg)
 
-![Real Photo B, student-estimated approximately 2.7 V; glare prevents exact verification](evidence/task01-voltage-divider/Task1_photo_B_potentiometer_output.jpg)
+![Original Photo B: student-confirmed potentiometer wiper output of 2.652 V; display partly obscured](evidence/task01-voltage-divider/Task1_photo_B_potentiometer_output.jpg)
 
-These support that a physical low-voltage measurement setup was photographed. They do **not** establish Vin=5 V, a resistor pair, a verified wiper connection, GPIO35 connectivity, a measured divider ratio, or ADC accuracy. Do not derive a ratio from separately photographed readings with unknown nodes. Potentiometer resistance and position cannot be inferred from appearance. The nominal 2.727 V calculation in B remains a design example, not confirmation of the approximately 2.7 V photo.
+### Calculated Output-to-Input Ratio
 
-To complete the original task, identify a known bounded 5 V input, record actual R1/R2 (or clearly defined potentiometer segments), label Vin/Vout/GND and probe locations, measure paired Vin and Vout, calculate from measured components and compare uncertainty. Verify Vout is safe before attaching the ADC. Exact measurement nodes, date, meter settings and a clearer second display are still needed. The existing empty A/B tables below remain empty until those runs are identified and measured.
+Using the two student-confirmed measured voltages:
+
+`Vout / Vin = 2.652 / 3.307 = 0.801935… ≈ 0.8019`, or approximately **80.2%**.
+
+This is a calculated ratio of the recorded voltages, not an independently measured resistance ratio or a simultaneous two-channel measurement. The meter's stated accuracy, measurement timing and loading were not recorded; displayed decimal places do not establish equivalent physical accuracy.
+
+A potentiometer can act as an **adjustable voltage divider**: when its end terminals span a supply and reference, the wiper selects a fraction of that voltage. Moving the wiper changes the resistive segments and therefore the output voltage; connected loads can also affect it. The present record documents one confirmed output setting, not a measured sweep. The 80.2% voltage ratio does **not** establish an exact knob angle, mechanical position, potentiometer taper, total resistance or individual resistance values.
+
+**Scope:** these readings come from the **3.3 V potentiometer experiment**, not the professor's **5 V → 3.3 V fixed-resistor divider validation**. They do not establish a 5 V source, either proposed fixed-resistor pair, GPIO35 connectivity or ADC accuracy. The nominal 2.727 V calculation in B remains an untested design example and must not be substituted for the real 2.652 V reading.
+
+To complete the original fixed-resistor task, identify a known bounded 5 V input, record actual R1/R2 and tolerances, label Vin/Vout/GND and probe locations, measure paired Vin and Vout, calculate from measured components and compare uncertainty. Verify Vout is safe before attaching the ADC. Measurement dates, meter settings/uncertainty and a labelled wiring record would strengthen the potentiometer evidence; the confirmed readings above are no longer Pending. The existing A/B tables remain empty because neither fixed-resistor run has been validated by these photographs.
 
 ## A — 3.3 V Fixed-Resistor Baseline
 
@@ -151,11 +161,12 @@ The existing general voltage/current and UART record templates remain available:
 |---|---|---|---|---|
 | | | | | |
 
-The photo observations above are genuine evidence with unconfirmed nodes; no fixed-divider voltage, current, UART success or group role is inferred from prepared code.
+The supply/wiper readings above are student-confirmed real measurements with original photo evidence. No fixed-resistor result, current, UART success or group role is inferred from prepared code.
 
 ## Remaining Task 1 TODO
 
-- [ ] Identify both probe nodes and the exact second display; confirm the actual source, potentiometer connections/values and whether either photo belongs to the required 5 V experiment.
+- [x] Record the student's confirmation: Photo A is the ESP32 3V3 supply at 3.307 V; Photo B is the potentiometer wiper output at 2.652 V. These belong to the 3.3 V experiment, not the required 5 V fixed-divider test.
+- [ ] Add a labelled potentiometer wiring record, actual resistance information if available, measurement date and meter settings/uncertainty; do not infer exact knob position or resistor values from the voltage ratio.
 
 - [ ] Hardware-test A using the two real 10 kΩ resistors, GPIO35 and an independent DMM; record real observations and evidence.
 - [ ] Obtain/check the proposed 1% 10 kΩ / 12 kΩ resistors, a known 5 V signal/source and its worst-case voltage (assumed 4.75–5.25 V here), and a multimeter for B.

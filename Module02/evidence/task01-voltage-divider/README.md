@@ -1,21 +1,21 @@
 # Task 1 — Original Voltage Measurement Photographs
 
-**Photo evidence documented; divider topology and 5 V conversion verification Pending.** [English Task 1 report](../../pins-and-dividers.md). Imported on 2026-11-02 from the student's ZIP; the actual capture date/operator details are not established by this import. The two JPEGs are copied byte-for-byte without cropping, enhancement or recompression.
+**Student-confirmed 3.3 V potentiometer measurements: supply 3.307 V, wiper output 2.652 V. The original 5 V fixed-divider verification remains Pending.** [English Task 1 report](../../pins-and-dividers.md). Imported on 2026-11-02 from the student's ZIP; the actual capture date/operator details are not established by this import. The two JPEGs are copied byte-for-byte without cropping, enhancement or recompression.
 
-| Original file | Supported observation | Not established |
+| Original file | Confirmed measurement | Not established |
 |---|---|---|
-| [Photo A](Task1_photo_A_multimeter_3V3.jpg) | ESP32, breadboard, potentiometer and multimeter visible; main DC voltage display approximately **3.307 V** | Exact probe nodes, whether this is a supply measurement, source voltage, resistor values and divider ratio |
-| [Photo B](Task1_photo_B_potentiometer_output.jpg) | Same types of equipment visible; student reports approximately **2.7 V**, with display partly obscured by glare | Exact numeric reading and probe nodes; whether this is a potentiometer wiper-to-ground measurement |
+| [Photo A](Task1_photo_A_multimeter_3V3.jpg) | **ESP32 3V3 supply voltage = 3.307 V**, as confirmed by the student | Meter uncertainty, measurement timing and resistance values |
+| [Photo B](Task1_photo_B_potentiometer_output.jpg) | **Potentiometer wiper output voltage = 2.652 V**, as confirmed by the student; this supersedes the initial approximate 2.7 V label | Glare still obscures part of the original display; resistance values and exact knob position are not inferred |
 
-The filenames are supplied labels, not independent proof of the electrical nodes. Do not calculate a measured divider ratio by treating these two photographs as simultaneous Vin/Vout measurements. In particular, approximately 2.7 V does not prove the proposed 10 kΩ/12 kΩ design or a 5 V source.
+The measurement identities and the corrected Photo B reading are based on the student's explicit confirmation, not newly inferred from the obscured image. Their calculated voltage ratio is `2.652 / 3.307 ≈ 0.8019`, approximately **80.2%**. This is not evidence of simultaneous readings, an exact resistance ratio or a knob position. The experiment uses the 3.3 V supply and a potentiometer; it does not verify the proposed 10 kΩ/12 kΩ fixed-divider design or any 5 V input conversion.
 
 ## Photo A
 
-![Original ESP32 and potentiometer setup with a visible approximately 3.307 V display; nodes unconfirmed](Task1_photo_A_multimeter_3V3.jpg)
+![Original Photo A: ESP32 3V3 supply voltage 3.307 V, confirmed by the student](Task1_photo_A_multimeter_3V3.jpg)
 
 ## Photo B
 
-![Original ESP32 and potentiometer setup; student-estimated approximately 2.7 V display partly obscured](Task1_photo_B_potentiometer_output.jpg)
+![Original Photo B: potentiometer wiper voltage 2.652 V, confirmed by the student; display partly obscured](Task1_photo_B_potentiometer_output.jpg)
 
 ## Integrity
 
@@ -26,4 +26,4 @@ The filenames are supplied labels, not independent proof of the electrical nodes
 
 ## Required Follow-up
 
-Record a labelled schematic, actual source and ground, both probe nodes for each reading, potentiometer terminal/wiper connections and resistance or actual R1/R2 values, meter range/uncertainty, and paired Vin/Vout readings for the professor's 5 V task. Verify a safe output with the ADC disconnected before any connection to ESP32. No new measurements are inferred here.
+For this potentiometer experiment, supplement the confirmed supply/wiper readings with a labelled schematic, measurement date and meter range/uncertainty if available. Potentiometer resistance, segment resistance and exact position remain unspecified. For the separate professor-required 5 V fixed-divider task, record actual R1/R2, source limits and paired Vin/Vout measurements with identified nodes. Verify safe output before any ADC connection. Neither fixed-divider completion nor additional measured data is inferred from this update.
