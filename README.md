@@ -7,8 +7,8 @@ This portfolio documents preparation, ESP32 experiments, Arduino source code and
 
 ## Group Members
 
-- Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
-- Felix — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)
+- Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)    50279940                
+- Gao Xinyu — GitHub: [@Felix-Gaoxinyu](https://github.com/Felix-Gaoxinyu)    50292679
 
 ## Module 01 Hardware Experiments
 
