@@ -31,7 +31,25 @@ The absolute error decreased by 52.85% at this held-out point. ADC scatter, DMM 
 
 ![ADC two-point fit and independent validation](../figures/task03-calibration/adc/adc-validation.png)
 
-The operator reported four photos for the supply, low point, earlier high point and validation point. The image files are pending. A photo of the earlier 2.389 V reading would document that reading, while 2.398 V is the reference paired with the ADC capture.
+### Original DMM photographs
+
+The photos show a UNI-T UT139B in DC voltage mode. The paired ADC captures use the operator-confirmed DMM readings recorded in the table above.
+
+![ESP32 supply reading of 3.296 V](../evidence/task03-calibration/adc/photos/task03a_supply_3p296V.jpg)
+
+**Supply.** The DMM display reads 3.296 V, documenting the reported ESP32 supply measurement.
+
+![Low-voltage setup with a DMM display of 0.589 V](../evidence/task03-calibration/adc/photos/task03a_low_0p568V.jpg)
+
+**Low-voltage setup.** The supplied filename contains 0.568 V, but the photographed display reads 0.589 V. The low-point reference paired with the ADC capture remains the separately confirmed 0.568 V.
+
+![Earlier high-point reading of 2.389 V](../evidence/task03-calibration/adc/photos/task03a_high_prior_2p389V.jpg)
+
+**Earlier high-point reading.** The photo shows 2.389 V. The later 2.398 V reading confirmed immediately before ADC capture was used in the fit.
+
+![Independent validation reading of 1.526 V](../evidence/task03-calibration/adc/photos/task03a_validation_1p526V.jpg)
+
+**Independent validation.** The DMM display reads 1.526 V, matching the reference value for the held-out check.
 
 ## Task 3b — LDR power-law calibration
 
