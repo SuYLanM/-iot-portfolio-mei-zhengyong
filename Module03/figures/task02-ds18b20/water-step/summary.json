@@ -1,0 +1,11 @@
+{
+  "tau_s": 9.671085913578693,
+  "settling_4_to_5_tau_s": [
+    38.68434365431477,
+    48.35542956789347
+  ],
+  "observed_5_percent_settling_s": 32.3275,
+  "initial_c": 17.826149425287355,
+  "final_c": 55.66056034482759,
+  "invalid_samples": 0
+}

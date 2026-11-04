@@ -1,6 +1,6 @@
 # Task 2 — DS18B20 resolution, accuracy and response time
 
-**Status: Single-probe bench capture verified at all four resolutions. Reference, field and thermal step measurements pending.**
+**Status: Single-probe bench capture verified at all four resolutions. Water step captured with a trace-derived timing estimate. Reference, field and still-air measurements pending.**
 
 ## Objective
 
@@ -57,6 +57,32 @@ python Module03/analyze.py step RUN.csv OUT --rom ROM --step-s TRANSFER_SECONDS 
 
 The analysis uses pre-step and tail means and interpolates the first crossing of 63.2% of the observed change after transfer. It reports τ, the approximate 4–5τ settling range and an observed 5% settling time if the trace supports it. Report missing crossings or an unstable tail as unverified. If the run ends before stabilization, lengthen it and repeat. Discuss marker timing, conversion cadence, stirring, probe housing, reference lag and differences in heat transfer.
 
+### Water step — 2026-11-04
+
+Two separate 10-sample cold-water checks averaged 6.450 °C and 6.5375 °C. The continuous run started at 17.0625 °C and approached 18.1 °C before the observed rise. The reason for the difference is unverified, so the step analysis uses the continuous run's own baseline. The run recorded 240 valid 12-bit samples over about 151 s.
+
+The last sample near the pre-rise level was 18.0625 °C at 55.064 s. The next sample was 18.5625 °C at 55.697 s, followed by a sustained rise. Their time midpoint, 55.3805 s, was used as a detectable onset estimate. The firmware marker at 68.127 s records the operator's chat confirmation and arrived after the rise began. The physical immersion time was not independently measured.
+
+| Result | Value |
+|---|---:|
+| Mean before inferred onset | 17.83 °C |
+| Mean from 115 s to end | 55.66 °C |
+| Observed 63.2% response time from inferred onset | 9.67 s |
+| Observed sustained 5% settling time | 32.33 s |
+| First-order rule-of-thumb settling interval, 4–5τ | 38.68–48.36 s |
+
+The terminal window ranged from 55.3125 to 55.8125 °C, so the bath or probe may still have drifted slightly. The estimate includes probe housing and water conditions. Onset detection and the roughly 0.63 s logging cadence limit timing precision. No independent bath thermometer reading was recorded.
+
+Reproduce from the repository root:
+
+```text
+python Module03/analyze.py step Module03/evidence/task02-ds18b20/water-step/20261104-173236.csv Module03/figures/task02-ds18b20/water-step --rom 28E55FA300000007 --step-s 55.3805 --final-start-s 115
+```
+
+[Cold-water checks](../evidence/task02-ds18b20/cold-water-baseline/) · [Original step UART log](../evidence/task02-ds18b20/water-step/20261104-173236.serial.txt) · [Step CSV](../evidence/task02-ds18b20/water-step/20261104-173236.csv) · [Calculated results](../figures/task02-ds18b20/water-step/summary.json)
+
+![Measured water-step trace with inferred onset and 63.2% threshold](../figures/task02-ds18b20/water-step/thermal-step.png)
+
 ## Results
 
 The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uploader verified the written flash. At 115200 baud, one explicit `r` command returned `DS18B20_COUNT=0` and `NO_DS18B20`. The firmware counts only ROMs with family code 0x28 and a valid ROM CRC. This result does not distinguish absent bus presence from a search or ROM validation failure. The four resolution captures were skipped after discovery failed. No temperature, conversion-time, CSV sample rows or thermal plot were obtained.
@@ -84,7 +110,8 @@ The runs were sequential and had no simultaneous reference thermometer. The mean
 | Four resolutions and ten readings per probe | Verified, ten valid samples per resolution in the retest |
 | Reference error and unit comparison | Pending hardware or class data |
 | Outdoor transect | Pending field work |
-| Water and air plots, τ and settling comparison | Pending hardware |
+| Water plot, τ and settling | Captured. Timing estimated from the trace |
+| Still-air plot and water/air comparison | Pending hardware |
 | Build and synthetic Python checks | [Software verification](../evidence/verification.md) |
 
 ### Bench evidence
