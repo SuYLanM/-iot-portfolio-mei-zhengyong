@@ -14,6 +14,7 @@ Use [analog_capture.ino](code/analog_capture/analog_capture.ino), ESP32 Dev Modu
 | Command | Capture |
 |---|---|
 | `l` / `p` | 32 LDR / pot samples. Pot mode also records a separate `analogReadMilliVolts` baseline conversion. |
+| `t` | 150 LDR samples for one settled Task 1 condition |
 | `L` / `P` | 500 LDR / pot samples |
 | `S` | 1000 pot samples for a step or a slow threshold sweep |
 

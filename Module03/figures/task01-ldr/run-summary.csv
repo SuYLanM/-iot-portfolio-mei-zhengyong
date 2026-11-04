@@ -1,0 +1,2 @@
+run,role,distance_cm,n,raw_min,raw_max,raw_mean,raw_sd,adc_mean_v,dmm_vout_v,supply_v,supply_basis,fixed_ohm,resistance_ohm,adc_rail_code_observed,notes
+baseline,check,,150,285,302,295.2266666666667,2.9563869357116523,0.38449333333333335,,3.3,nominal,10000.0,75827.23584284079,False,Unspecified room light before controlled flashlight experiment

@@ -1,0 +1,25 @@
+{
+  "runs": [
+    {
+      "run": "baseline",
+      "role": "check",
+      "distance_cm": null,
+      "n": 150,
+      "raw_min": 285,
+      "raw_max": 302,
+      "raw_mean": 295.2266666666667,
+      "raw_sd": 2.9563869357116523,
+      "adc_mean_v": 0.38449333333333335,
+      "dmm_vout_v": null,
+      "supply_v": 3.3,
+      "supply_basis": "nominal",
+      "fixed_ohm": 10000.0,
+      "resistance_ohm": 75827.23584284079,
+      "adc_rail_code_observed": false,
+      "notes": "Unspecified room light before controlled flashlight experiment"
+    }
+  ],
+  "ladder_distances": 0,
+  "fit": null,
+  "repeatability_ohm": {}
+}

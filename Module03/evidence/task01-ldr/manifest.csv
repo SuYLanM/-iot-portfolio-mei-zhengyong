@@ -1,0 +1,2 @@
+run,role,distance_cm,csv,supply_v,supply_basis,fixed_ohm,dmm_vout_v,notes
+baseline,check,,baseline.csv,3.3,nominal,10000,,Unspecified room light before controlled flashlight experiment

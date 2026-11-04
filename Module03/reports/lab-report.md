@@ -4,6 +4,8 @@
 
 ## Task 1 — LDR transfer function
 
+See the [Task 1 bench report](task01-ldr.md) for the live capture, results and outstanding measurements.
+
 **Objective.** Estimate how resistance changes with illumination using the DMM as the voltage reference and the ESP32 as the ADC logger.
 
 The LDR is the upper divider element and the fixed resistor is the lower element. Therefore `R = Rfixed × (Vs − Vout) / Vout`, and more light raises the node voltage. Measure the supply and node voltages and identify whether the fixed resistor was measured or taken at nominal value. Record at least six levels and three repeats of one level. Use measured lux for the entire fit or relative illuminance from inverse-square distance. If both are available, compare their ratios and explain deviations from point-source geometry. A phone app supplies an approximate relative reference.

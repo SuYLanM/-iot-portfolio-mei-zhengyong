@@ -4,7 +4,7 @@
 
 | Round | Task | Work and expected evidence | Status |
 |---|---|---|---|
-| 1 | 1. LDR transfer function | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Prepared. Bench pending |
+| 1 | [1. LDR transfer function](reports/task01-ldr.md) | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Initial ADC capture verified. Light ladder pending |
 | 1 | 2. DS18B20 characterization | 2–3 ROMs, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | Prepared. Probes and bench pending |
 | 2 | 3. Calibration | Pot/ADC two-point voltage correction, LDR two-point power and linear models, DS18B20 cold offset. Validate on independent voltage, light and ice-water points | Prepared. Bench and peer validation pending |
 | 2 | 4. Hysteresis and repeatability | LDR up/down curves at two sweep speeds and with dwell, ten marked pot returns, ten readings per probe at 9 and 12 bits | Prepared. Bench pending |
