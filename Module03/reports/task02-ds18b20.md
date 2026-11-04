@@ -1,6 +1,6 @@
 # Task 2 — DS18B20 resolution, accuracy and response time
 
-**Status: Software prepared. Power was disconnected pending verification of the probe model, wire assignments and 3.3 V compatibility. No hardware capture was made.**
+**Status: Hardware attempted. COM3 upload and UART verified. The trial scan found no valid DS18B20 ROM.**
 
 ## Objective
 
@@ -18,6 +18,8 @@ Use an externally powered DS18B20 with verified pinout, an ESP32 Dev Module, a 4
 | Pull-up resistor | 4.7 kΩ between DQ and 3V3. Check for an existing pull-up on a breakout first. |
 
 For multiple probes, parallel VDD, GND and DQ and use one bus pull-up. Verify the probe pinout with the supplier before trusting cable colors.
+
+For the 2026-11-04 trial the operator authorized the assumed mapping red → 3V3, blue → GND and yellow → GPIO18. The wire functions, supply compatibility and physical installation of the 4.7 kΩ pull-up were unverified.
 
 ## Datasheet reference
 
@@ -57,11 +59,19 @@ The analysis uses pre-step and tail means and interpolates the first crossing of
 
 ## Results
 
+The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uploader verified the written flash. At 115200 baud, one explicit `r` command returned `DS18B20_COUNT=0` and `NO_DS18B20`. The firmware counts only ROMs with family code 0x28 and a valid ROM CRC. This result does not distinguish absent bus presence from a search or ROM validation failure. The four resolution captures were skipped after discovery failed. No temperature, conversion-time, CSV sample rows or thermal plot were obtained.
+
 | Evidence | Result |
 |---|---|
-| ROM scan and plausible first reading | Pending hardware |
+| ROM scan and plausible first reading | Attempted. Zero valid ROMs. No temperature |
 | Four resolutions and ten readings per probe | Pending hardware |
 | Reference error and unit comparison | Pending hardware or class data |
 | Outdoor transect | Pending field work |
 | Water and air plots, τ and settling comparison | Pending hardware |
 | Build and synthetic Python checks | [Software verification](../evidence/verification.md) |
+
+### Bench evidence
+
+- [Compile log](../evidence/task02-ds18b20/compile.txt)
+- [Upload log](../evidence/task02-ds18b20/upload.txt), with absolute paths and board MAC redacted
+- [Original COM3 scan response](../evidence/task02-ds18b20/scan.serial.txt)
