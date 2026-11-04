@@ -43,10 +43,24 @@ Each run spanned one code step. The smaller 12-bit step describes quantization. 
 
 ## 4a — LDR hysteresis and light history
 
-**Software prepared. Hardware pending.** With USB disconnected, remove the potentiometer wiper wire from GPIO34 before connecting the LDR divider node. Wire 3V3 → LDR → node → 10 kΩ → GND. The [analog capture sketch](../code/analog_capture/analog_capture.ino) records GPIO34 raw ADC and separate voltage estimates. Command `t` records 150 samples. Keep the lamp fixed and use a card with repeatable marked openings. Record the same levels in increasing and decreasing light. Use the same sample window and document actual dwell times and direction. Repeat at a faster and slower cadence, with a paused sequence to help distinguish lag from light history. Use matched measured lux if available or clearly identified relative card settings.
+**Hardware verified for one manual sweep.** The operator switched GPIO34 from the potentiometer to the LDR divider node, wired as 3V3 → LDR → node → 10 kΩ → GND. The [analog capture sketch](../code/analog_capture/analog_capture.ino) was compiled and uploaded on COM3. A fixed lamp and marked card positions provided relative low, medium and high light settings. Command `t` captured 150 samples per setting, with separate raw ADC and API voltage conversions. The high setting was the shared turning point. Only low and medium were independently revisited on the return path.
 
-Save raw captures and populate the [sweep template](../data/ldr-sweep.csv), recording whether the divider voltages and resistor value are measured, ADC-estimated or nominal. Run `python Module03/analyze.py repeat RUN.csv OUT --kind ldr` to overlay directions and calculate the maximum gap for each sweep. Flag rail codes before deriving resistance. Any observed gap should be interpreted in light of timing, prior illumination and the reproducibility of the card positions.
+| Relative setting | Up mean code | Down mean code | Up estimate | Down estimate | Down minus up |
+|---|---:|---:|---:|---:|---:|
+| Low | 153.73 | 150.77 | 112.93 kΩ | 114.05 kΩ | +1.12 kΩ |
+| Medium | 243.11 | 174.57 | 86.58 kΩ | 105.66 kΩ | +19.08 kΩ |
+| High, shared turn | 335.93 | — | 68.95 kΩ | — | — |
+
+The maximum observed gap between independent captures was **19.08 kΩ** at the medium setting. Resistance was calculated as `R_fixed × (Vs − Vout) / Vout` using nominal 3.3 V, nominal 10 kΩ and the ADC API voltage estimate. Card position was a relative setting with no lux measurement. The medium setting differed by 56.37 mV between directions. Positioning variation, ambient light, sensor lag and illumination history may all contribute. Dwell times were not controlled or independently logged, so the gap cannot isolate static hysteresis. Controlled fast, slow and paused sweeps remain pending.
+
+The first diagnostic serial capture had framing artifacts and was retained as an unparsed log. Its retry had a floor code. The first low setting clipped to zero, and the adjusted low setting initially fluctuated. The subsequent held capture was used for the up-sweep low point. All these captures are preserved.
+
+[Raw captures, flash logs and sweep input](../evidence/task04a-ldr/) · [Maximum gap](../figures/task04a-ldr/summary.json)
+
+![LDR up and down curves with a shared high-light turning point](../figures/task04a-ldr/hysteresis.png)
+
+Reproduce with `python Module03/analyze.py repeat Module03/evidence/task04a-ldr/sweep.csv Module03/figures/task04a-ldr --kind ldr`.
 
 ## Conclusion
 
-The potentiometer test measured marked-position return spread, with individual sources unresolved. The temperature test measured short-run repeatability and quantization on one probe. The LDR directional comparison remains pending.
+The potentiometer test measured marked-position return spread, with individual sources unresolved. The temperature test measured short-run repeatability and quantization on one probe. The LDR test measured a direction-dependent difference at matched card marks under one manual procedure.
