@@ -21,6 +21,8 @@ Record the largest residuals and possible causes such as ambient light, lamp geo
 
 ## Task 2 — DS18B20 characterization
 
+See the [Task 2 bench report](task02-ds18b20.md) for GPIO18 wiring, CSV capture, and the thermal step procedure. The current course brief permits one probe, with multiple probes optional.
+
 | Resolution | Step (°C) | Datasheet maximum conversion time (ms) |
 |---|---:|---:|
 | 9 bit | 0.5 | 93.75 |
@@ -30,7 +32,7 @@ Record the largest residuals and possible causes such as ambient light, lamp geo
 
 The manufacturer specifies ±0.5 °C over −10 to +85 °C, active current up to 1.5 mA and standby current up to 1 µA under the stated datasheet conditions. The bus uses 64-bit ROM addressing and a 4.7 kΩ pull-up in this experiment. [Analog Devices DS18B20 datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf)
 
-- **Stable reference.** Record 2–3 ROM IDs and ten readings per probe next to the reference. Compare means, SD and reference errors. Add unit means to the class table if it exists.
+- **Stable reference.** Record ROM IDs and ten readings per probe next to the reference. Compare means, SD and reference errors. If only one probe is available, use class data for the unit comparison when available.
 - **Field transect.** Measure one or two assigned locations and record time, height or depth, reference and conditions. Compare cold spots against reference error and datasheet limits.
 - **Dynamics.** At 12 bits, estimate the elapsed time from transfer to 63.2% of the observed step. Report both the approximate 4–5τ settling range and the observed sustained 5% settling time when available. Compare water and air using separate plots and state transfer-time uncertainty. Optional extensions are self-heating and the DHT11 comparison.
 

@@ -5,7 +5,7 @@
 | Round | Task | Work and expected evidence | Status |
 |---|---|---|---|
 | 1 | [1. LDR transfer function](reports/task01-ldr.md) | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Six-distance ADC ladder and repeatability captured. DMM and one-code comparison pending |
-| 1 | 2. DS18B20 characterization | 2–3 ROMs, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | Prepared. Probes and bench pending |
+| 1 | [2. DS18B20 characterization](reports/task02-ds18b20.md) | One probe or optional multidrop, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | Prepared on GPIO18. Hardware pending |
 | 2 | 3. Calibration | Pot/ADC two-point voltage correction, LDR two-point power and linear models, DS18B20 cold offset. Validate on independent voltage, light and ice-water points | Prepared. Bench and peer validation pending |
 | 2 | 4. Hysteresis and repeatability | LDR up/down curves at two sweep speeds and with dwell, ten marked pot returns, ten readings per probe at 9 and 12 bits | Prepared. Bench pending |
 | 3 | 5. Noise and filtering | 500+ raw values per input, raw/filtered statistics, single spike comparison, pot step lag and threshold decisions | Prepared. Bench pending |
@@ -16,7 +16,7 @@
 ## Tools and outputs
 
 - [Analog logger](code/analog_capture/analog_capture.ino) covers Tasks 1, 3a/3b, 4 and 5. It logs raw readings and three causal filters.
-- [DS18B20 logger](code/ds18b20_capture/ds18b20_capture.ino) covers Tasks 2, 3c and 4 using OneWire 2.3.8 and DallasTemperature 4.0.5.
+- [DS18B20 logger](code/ds18b20_capture/ds18b20_capture.ino) covers Tasks 2, 3c and 4 using OneWire 2.3.8 and DallasTemperature 4.0.6.
 - [CSV templates](data/README.md), [Python analysis](analyze.py), [figures index](figures/README.md) and [verification record](evidence/verification.md).
 
 Install Python dependencies with `python -m pip install -r Module03/requirements.txt`. Run from the repository root. In the commands below, replace input filenames, ROM and numerical placeholders with values from the named run. Use a separate output directory for each invocation.

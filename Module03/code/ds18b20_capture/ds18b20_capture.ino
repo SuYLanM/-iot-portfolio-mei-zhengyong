@@ -2,8 +2,9 @@
 #include <DallasTemperature.h>
 #include <OneWire.h>
 
-constexpr int DATA_PIN = 4;
+constexpr int DATA_PIN = 18;
 constexpr int MAX_PROBES = 8;
+constexpr uint16_t CONVERSION_MS[] = {94, 188, 375, 750};
 OneWire bus(DATA_PIN);
 DallasTemperature sensors(&bus);
 
@@ -47,7 +48,19 @@ void capture(int bits, int samples) {
   Serial.println("sample,t_ms,rom,bits,temp_c,status");
   const uint32_t start = millis();
   for (int i = 0; i < samples; ++i) {
+    if (!bus.reset()) {
+      Serial.println("# BUS_NO_PRESENCE; capture aborted");
+      break;
+    }
     sensors.requestTemperatures();
+    const uint32_t conversionStart = millis();
+    // Allow a manual transfer marker while the externally powered probes convert.
+    while (millis() - conversionStart < CONVERSION_MS[bits - 9] + 1U) {
+      if (Serial.read() == 'm') {
+        Serial.printf("# TRANSFER t_ms=%lu\n", static_cast<unsigned long>(millis() - start));
+      }
+      delay(1);
+    }
     const uint32_t elapsed = millis() - start;
     for (int j = 0; j < count; ++j) {
       const float value = sensors.getTempC(roms[j]);
@@ -68,10 +81,10 @@ void setup() {
   Serial.begin(115200);
   sensors.begin();
   sensors.setAutoSaveScratchPad(false);
-  sensors.setCheckForConversion(false);
-  sensors.setWaitForConversion(true);
+  sensors.setWaitForConversion(false);
   Serial.println("# r: scan ROM IDs; 9/a/b/c: 10 conversions at 9/10/11/12 bits");
   Serial.println("# s: 240 conversions at 12 bits for a step response");
+  Serial.println("# m: mark transfer during a capture (DQ GPIO18)");
 }
 
 void loop() {
