@@ -1,6 +1,6 @@
 # Task 1 — The LDR's transfer function
 
-**Status: Initial bench capture verified. Controlled light ladder pending.**
+**Status: Six-distance ADC ladder and three independent 30 cm placements captured. DMM and lux reference measurements pending.**
 
 ## Objective
 
@@ -23,8 +23,15 @@ Send `t` to collect 150 samples at a nominal 20 ms interval. Each row includes t
 | Condition | Samples | Minimum | Maximum | Mean | Sample SD | Mean ADC-estimated voltage |
 |---|---:|---:|---:|---:|---:|---:|
 | Initial uncontrolled light | 150 | 285 | 302 | 295.227 | 2.956 | 0.384493 V |
+| LDR covered by operator | 150 | 0 | 0 | 0 | 0 | 0.142 V (ADC API floor) |
+| 10 cm | 150 | 407 | 432 | 428.113 | 2.982 | 0.494007 V |
+| 15 cm, second attempt | 150 | 215 | 249 | 226.253 | 9.978 | 0.327553 V |
+| 20 cm | 150 | 419 | 443 | 434.273 | 3.364 | 0.498713 V |
+| 30 cm, first placement | 150 | 167 | 183 | 173.507 | 2.328 | 0.284427 V |
+| 40 cm | 150 | 125 | 135 | 128.647 | 1.194 | 0.247533 V |
+| 60 cm, second attempt | 150 | 77 | 87 | 80.040 | 0.776 | 0.207973 V |
 
-The voltage estimates ranged from 0.379 to 0.401 V. Neither ADC rail code was observed. This establishes serial communication and a varying ADC input, with deliberate light response still to be tested.
+The initial voltage estimates ranged from 0.379 to 0.401 V. Covering the LDR brought the raw input to the ADC floor for all samples. The API's 142 mV output in that condition is unsuitable for inferring resistance. The serial capture succeeded after releasing the Arduino serial monitor's COM3 handle.
 
 ## Voltage and resistance calculation
 
@@ -32,28 +39,39 @@ For the stated divider, `R_LDR = R_fixed × (Vs − Vout) / Vout`. The initial e
 
 ## Six light conditions
 
-| Planned distance | Capture |
-|---:|---|
-| 10 cm | Pending |
-| 15 cm | Pending |
-| 20 cm | Pending |
-| 30 cm | Pending |
-| 40 cm | Pending |
-| 60 cm | Pending |
+| Distance | Relative illuminance | Estimated resistance (kΩ) | Fit residual (kΩ) |
+|---:|---:|---:|---:|
+| 10 cm | 1.0000 | 56.80 | +0.10 |
+| 15 cm | 0.4444 | 90.75 | +20.55 |
+| 20 cm | 0.2500 | 56.17 | −25.50 |
+| 30 cm | 0.1111 | 106.02 | +4.93 |
+| 40 cm | 0.0625 | 123.32 | +5.70 |
+| 60 cm | 0.0278 | 148.67 | +3.08 |
 
-Cover/uncover response is pending. The initial trace has no measured light level or distance and is excluded from the transfer fit.
+The 10 cm flashlight reading exceeded the initial ambient-light reading, and covering the LDR brought the ADC to its lower limit. The first 15 cm capture rose from a first-block mean of 326 to a last-block mean of 687. The first 60 cm capture rose during acquisition and included two zero codes. Both attempts were retained and excluded from the fit. The 15 cm recapture declined from about 244 to 222 across the first and last 30-sample blocks. Its full-run mean was retained, so the fit remains provisional.
 
 ## Power-law fitting
 
-Pending controlled distances. With no lux readings, use relative illuminance `E = (d_min / d)^2` under the point-source approximation and fit `log(R) = log(A) − γ log(E)`. Record gamma, residuals and R² in resistance units. A fit from fewer than six valid levels is provisional.
+With no lux readings, relative illuminance was estimated as `E = (10 cm / d)^2` under the point-source approximation. A log-space fit of `log(R) = log(A) − γ log(E)` gives **γ = 0.263** and **A = 56.71 kΩ**. The residuals above are observed minus predicted in resistance units. The 20 cm observation has the largest absolute power-law residual.
 
 ## Linear model comparison
 
-Pending. Compare the linear resistance model with the power law on the same eligible rows using residuals, RMSE and R² in ohms.
+| Model | RMSE (kΩ) | R² on resistance scale |
+|---|---:|---:|
+| Power law fitted in log space | 13.78 | 0.832 |
+| Linear resistance versus relative illuminance | 23.18 | 0.524 |
+
+Both metrics use the same six rows and the original resistance scale. The power law fits these observations better by both metrics. The non-monotonic 20 cm observation was retained. Neither the fit nor its R² establishes accuracy on independent data.
 
 ## Repeatability
 
-Pending. Reposition the lamp independently at the same distance for three total captures. Compare the range and sample SD of the three resistance estimates. The initial within-capture ADC SD does not measure repositioning repeatability. Compare with a local one-code resistance change once the ADC slope is measured.
+| 30 cm placement | Samples | ADC mean | ADC sample SD | Mean ADC voltage estimate | Estimated resistance |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 150 | 173.507 | 2.328 | 0.284427 V | 106.02 kΩ |
+| 2 | 150 | 139.667 | 4.149 | 0.256913 V | 118.45 kΩ |
+| 3 | 150 | 143.540 | 2.009 | 0.259873 V | 116.98 kΩ |
+
+Across placements the mean resistance estimate was **113.82 kΩ**, the sample SD **6.79 kΩ**, and the range **12.43 kΩ**. This spread includes setup variation. A comparison against the resistance change for one local ADC code remains pending until the voltage-per-code slope is measured.
 
 ## Limitations and uncertainty
 
@@ -61,12 +79,18 @@ The ADC voltage is a calibrated estimate from a separate conversion and has ADC 
 
 ## Results and conclusion
 
-The ESP32 acquisition path responded at COM3 and produced 150 usable initial samples. Light response, controlled transfer fitting and independent repeatability remain pending.
+The bench run produced 12 captures of 150 samples each, including six usable distance groups for a provisional transfer fit and three 30 cm placements. The overall trend was higher resistance at greater distance, with deviations between individual points. The DMM supply and node readings, direct lux measurements and one-code repeatability comparison are still missing. Share the ladder and repeat results with the class if a shared table is available.
 
 ## Evidence
 
 - [Original UART output](../evidence/task01-ldr/baseline.serial.txt) and [extracted samples](../evidence/task01-ldr/baseline.csv)
+- Covered LDR [original UART output](../evidence/task01-ldr/covered.serial.txt) and [extracted samples](../evidence/task01-ldr/covered.csv)
+- [All original logs and per-run CSVs](../evidence/task01-ldr/) and [fit residuals](../figures/task01-ldr/fit-residuals.csv)
 - [Bench manifest](../evidence/task01-ldr/manifest.csv), [run summary](../figures/task01-ldr/run-summary.csv), [machine-readable results](../figures/task01-ldr/summary.json) and [analysis script](../analyze_ldr_run.py)
 - Rebuild with `python Module03/analyze_ldr_run.py Module03/evidence/task01-ldr/manifest.csv Module03/figures/task01-ldr`.
 
-![Initial real GPIO34 voltage estimates](../figures/task01-ldr/functional-check.png)
+![GPIO34 voltage estimates during initial and diagnostic captures](../figures/task01-ldr/functional-check.png)
+
+![Distance versus mean ADC voltage estimate](../figures/task01-ldr/distance-voltage.png)
+
+![Log-log power-law fit and linear comparison](../figures/task01-ldr/transfer-fit.png)

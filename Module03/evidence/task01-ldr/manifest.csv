@@ -1,2 +1,13 @@
 run,role,distance_cm,csv,supply_v,supply_basis,fixed_ohm,dmm_vout_v,notes
 baseline,check,,baseline.csv,3.3,nominal,10000,,Unspecified room light before controlled flashlight experiment
+covered,check,,covered.csv,3.3,nominal,10000,,LDR covered by operator
+distance-10cm,ladder,10,distance-10cm.csv,3.3,nominal,10000,,Flashlight position confirmed by operator
+distance-15cm,check,15,distance-15cm.csv,3.3,nominal,10000,,Transient ADC rise during capture; excluded from settled ladder fit
+distance-20cm,ladder,20,distance-20cm.csv,3.3,nominal,10000,,Flashlight position confirmed by operator
+distance-30cm,ladder,30,distance-30cm.csv,3.3,nominal,10000,,Flashlight position confirmed by operator
+distance-40cm,ladder,40,distance-40cm.csv,3.3,nominal,10000,,Flashlight position confirmed by operator
+distance-60cm,check,60,distance-60cm.csv,3.3,nominal,10000,,ADC floor codes and transient rise; excluded from settled ladder
+distance-15cm-retry,ladder,15,distance-15cm-retry.csv,3.3,nominal,10000,,Recapture with initial decline and stable tail; full-run mean retained for provisional fit
+distance-60cm-retry,ladder,60,distance-60cm-retry.csv,3.3,nominal,10000,,Stable recapture without rail codes
+distance-30cm-repeat2,repeat,30,distance-30cm-repeat2.csv,3.3,nominal,10000,,Second 30 cm placement
+distance-30cm-repeat3,repeat,30,distance-30cm-repeat3.csv,3.3,nominal,10000,,Third 30 cm placement

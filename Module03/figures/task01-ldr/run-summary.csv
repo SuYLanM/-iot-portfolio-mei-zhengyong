@@ -1,2 +1,13 @@
 run,role,distance_cm,n,raw_min,raw_max,raw_mean,raw_sd,adc_mean_v,dmm_vout_v,supply_v,supply_basis,fixed_ohm,resistance_ohm,adc_rail_code_observed,notes
 baseline,check,,150,285,302,295.2266666666667,2.9563869357116523,0.38449333333333335,,3.3,nominal,10000.0,75827.23584284079,False,Unspecified room light before controlled flashlight experiment
+covered,check,,150,0,0,0.0,0.0,0.14199999999999996,,3.3,nominal,10000.0,,True,LDR covered by operator
+distance-10cm,ladder,10.0,150,407,432,428.11333333333334,2.9821317240669973,0.49400666666666665,,3.3,nominal,10000.0,56800.717939029164,False,Flashlight position confirmed by operator
+distance-15cm,check,15.0,150,315,694,523.0333333333333,159.7963644018932,0.5716266666666666,,3.3,nominal,10000.0,47729.98693786155,False,Transient ADC rise during capture; excluded from settled ladder fit
+distance-20cm,ladder,20.0,150,419,443,434.2733333333333,3.3636363086698657,0.49871333333333323,,3.3,nominal,10000.0,56170.278182523034,False,Flashlight position confirmed by operator
+distance-30cm,ladder,30.0,150,167,183,173.50666666666666,2.32796442080179,0.28442666666666666,,3.3,nominal,10000.0,106022.87642977686,False,Flashlight position confirmed by operator
+distance-40cm,ladder,40.0,150,125,135,128.64666666666668,1.193588389625115,0.24753333333333336,,3.3,nominal,10000.0,123315.37840021546,False,Flashlight position confirmed by operator
+distance-60cm,check,60.0,150,0,50,16.92,19.326415486852955,0.15591333333333335,,3.3,nominal,10000.0,,True,ADC floor codes and transient rise; excluded from settled ladder
+distance-15cm-retry,ladder,15.0,150,215,249,226.25333333333333,9.977953325843279,0.32755333333333336,,3.3,nominal,10000.0,90746.95215028594,False,Recapture with initial decline and stable tail; full-run mean retained for provisional fit
+distance-60cm-retry,ladder,60.0,150,77,87,80.04,0.7761546929462902,0.20797333333333332,,3.3,nominal,10000.0,148674.18899858958,False,Stable recapture without rail codes
+distance-30cm-repeat2,repeat,30.0,150,131,144,139.66666666666666,4.149337566062378,0.2569133333333334,,3.3,nominal,10000.0,118447.98505332535,False,Second 30 cm placement
+distance-30cm-repeat3,repeat,30.0,150,135,147,143.54,2.0088061164340423,0.2598733333333334,,3.3,nominal,10000.0,116984.94138169875,False,Third 30 cm placement
