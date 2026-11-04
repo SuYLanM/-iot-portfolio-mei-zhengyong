@@ -1,0 +1,12 @@
+{
+  "light_axis": "relative illuminance (first distance = 1)",
+  "A": 56800.71793902916,
+  "gamma": 0.268509337280855,
+  "validation_ohm": 106022.87642977686,
+  "power_prediction_ohm": 102465.30777301472,
+  "linear_prediction_ohm": 140799.32005062728,
+  "power_error_ohm": -3557.568656762145,
+  "linear_error_ohm": 34776.44362085042,
+  "linear_slope_ohm": -94498.42737554786,
+  "linear_intercept_ohm": 151299.14531457704
+}

@@ -123,10 +123,22 @@ def calibrate(rows, out, args):
                 "power_error_ohm": predicted-y[2], "linear_error_ohm": a*x[2]+b-y[2]}
     raw, ref = col(rows, "raw_mean"), col(rows, "reference_v")
     gain, offset = line(raw[:2], ref[:2])
+    if gain <= 0 or not min(raw[:2]) < raw[2] < max(raw[:2]):
+        raise ValueError("Use increasing voltage with ADC code and an interior validation point")
     corrected = gain * raw[2] + offset
+    baseline = col(rows, "baseline_v")
+    fig, ax = plt.subplots()
+    ax.plot(raw[:2], ref[:2], "s-", label="DMM calibration and fit")
+    ax.scatter([raw[2]]*3, [ref[2], baseline[2], corrected], marker="o",
+               c=["black", "tab:orange", "tab:green"])
+    for value, label in zip((ref[2], baseline[2], corrected), ("DMM", "ADC API", "Corrected")):
+        ax.annotate(label, (raw[2], value), xytext=(5, 0), textcoords="offset points")
+    ax.set(xlabel="Mean raw ADC code", ylabel="Voltage (V)")
+    ax.legend()
+    save(fig, out, "adc-validation")
     return {"gain_v_per_code": gain, "offset_v": offset, "validation_reference_v": ref[2],
             "corrected_v": corrected, "error_after_v": corrected-ref[2],
-            "error_before_v": float(rows[2]["baseline_v"])-ref[2]}
+            "error_before_v": baseline[2]-ref[2]}
 
 
 def line(x, y):
