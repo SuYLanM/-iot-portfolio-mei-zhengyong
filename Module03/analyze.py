@@ -174,6 +174,31 @@ def spread(x):
 
 
 def repeat(rows, out, args):
+    if args.kind == "pot-adc":
+        trials = col(rows, "trial")
+        if len(rows) != 11 or set(trials) != set(range(11)):
+            raise ValueError("Record baseline 0 and ten independent returns 1–10")
+        if np.any(col(rows, "n") < 100):
+            raise ValueError("Require at least 100 ADC samples at each position")
+        rows = sorted(rows, key=lambda row: int(row["trial"]))
+        x = col(rows, "raw_mean")
+        voltage = col(rows, "adc_estimated_v")
+        delta = x - x[0]
+        table(out / "return-deviations.csv",
+              ["trial", "started", "n", "raw_mean", "raw_sd", "raw_min", "raw_max",
+               "adc_estimated_v", "delta_from_baseline_codes"],
+              ([r[k] for k in ("trial", "started", "n", "raw_mean", "raw_sd", "raw_min",
+                               "raw_max", "adc_estimated_v")] + [d] for r, d in zip(rows, delta)))
+        fig, ax = plt.subplots()
+        ax.plot(range(1, 11), delta[1:], "o-")
+        ax.axhline(0, color="gray")
+        ax.set(xlabel="Independent return", ylabel="Mean deviation from baseline (ADC codes)",
+               xticks=range(1, 11))
+        save(fig, out, "pot-returns")
+        return {"baseline_raw_mean": float(x[0]), "baseline_raw_sd": float(rows[0]["raw_sd"]),
+                "return_raw_means": spread(x[1:]), "return_adc_estimated_v": spread(voltage[1:]),
+                "return_deviation_codes": spread(delta[1:]),
+                "max_absolute_deviation_codes": float(np.max(np.abs(delta[1:])))}
     if args.kind == "pot":
         if len(rows) != 10:
             raise ValueError("Record ten independent returns to the mark")
@@ -378,7 +403,7 @@ def main():
         mode.add_argument("output", type=Path)
     modes["ldr"].add_argument("--adc-step-v", type=float)
     modes["calibrate"].add_argument("--kind", choices=["pot", "ldr", "temperature"], required=True)
-    modes["repeat"].add_argument("--kind", choices=["pot", "ldr", "ds"], required=True)
+    modes["repeat"].add_argument("--kind", choices=["pot", "pot-adc", "ldr", "ds"], required=True)
     modes["step"].add_argument("--rom", required=True)
     modes["step"].add_argument("--step-s", type=float, required=True)
     modes["step"].add_argument("--final-start-s", type=float, required=True)
