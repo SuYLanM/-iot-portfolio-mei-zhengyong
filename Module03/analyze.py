@@ -175,8 +175,11 @@ def repeat(rows, out, args):
             valid = [r for r in group if r["status"] == "ok"]
             if len(valid) < 2 or bits not in (9, 10, 11, 12):
                 raise ValueError("Require at least two valid samples and 9–12 bits")
-            result[f"{rom}/{bits}"] = spread(col(valid, "temp_c")) | {
+            stats = spread(col(valid, "temp_c")) | {
                 "step_c": 2.0**(8-bits), "invalid": len(group)-len(valid)}
+            if "conversion_ms" in valid[0]:
+                stats["conversion_ms"] = spread(col(valid, "conversion_ms"))
+            result[f"{rom}/{bits}"] = stats
         return result
     y = resistance(rows)
     sweeps = {}

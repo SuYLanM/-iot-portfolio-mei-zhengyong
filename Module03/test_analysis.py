@@ -49,9 +49,12 @@ def main():
         assert math.isclose(result["fast"]["max_gap_ohm"], 5000)
         result = run(folder, "returns", "reference_v,raw_mean", [(1, 500)]*10, "repeat", "--kind", "pot")
         assert result["raw_mean"]["sd"] == 0
-        result = run(folder, "resolutions", "rom,bits,temp_c,status", [("ROM", 9, 5, "ok")]*10,
+        result = run(folder, "resolutions", "rom,bits,temp_c,status,conversion_ms",
+                     [("ROM", 9, 5, "ok", 90)]*10 + [("ROM", 9, 85, "suspect_85c", 91)],
                      "repeat", "--kind", "ds")
         assert result["ROM/9"]["step_c"] == 0.5
+        assert result["ROM/9"]["n"] == 10 and result["ROM/9"]["invalid"] == 1
+        assert result["ROM/9"]["conversion_ms"]["mean"] == 90
 
         thermal = [(i*1000, "ROM", "ok", 20 if i <= 5 else 30-10*math.exp(-(i-5)/4))
                    for i in range(50)]

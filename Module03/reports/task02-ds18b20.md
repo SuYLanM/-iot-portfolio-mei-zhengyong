@@ -1,6 +1,10 @@
 # Task 2 — DS18B20 resolution, accuracy and response time
 
-**Status: Software compiled. Sensor availability and hardware measurements pending.**
+**Status: Software prepared. Power was disconnected pending verification of the probe model, wire assignments and 3.3 V compatibility. No hardware capture was made.**
+
+## Objective
+
+Compare measured temperature, resolution, conversion time and thermal response with the datasheet and a reference thermometer.
 
 ## Wiring and materials
 
@@ -30,7 +34,11 @@ The manufacturer specifies ±0.5 °C from −10 to +85 °C. The specified maximu
 
 Open [the DS18B20 sketch](../code/ds18b20_capture/ds18b20_capture.ino) with ESP32 Dev Module selected. Use Serial Monitor at 115200 baud. Send `r` for the CRC-validated 64-bit ROM list. Send `9`, `a`, `b` or `c` for ten conversion cycles at 9, 10, 11 or 12 bits. Each cycle reports sample index, elapsed milliseconds, ROM, resolution, temperature and read status.
 
-Save the original serial transcript under the [evidence index](../evidence/README.md). Copy the CSV header and its rows to one CSV per run. Retain failed rows with blank temperatures, and preserve messages and markers in the original transcript. Use `python Module03/analyze.py repeat RUN.csv OUT --kind ds` to summarize readings by ROM and resolution.
+Save the original serial transcript under the [evidence index](../evidence/README.md). Copy the CSV header and its rows to one CSV per run. Preserve diagnostic rows and marker messages in the original transcript. Only rows with status `ok` contribute to temperature and timing statistics. A disconnected or invalid scratchpad read has a blank temperature, and an exact 85 °C reading is flagged because it can be the power-on value. Use `python Module03/analyze.py repeat RUN.csv OUT --kind ds` to summarize readings by ROM and resolution.
+
+## Conversion time
+
+The logger measures elapsed milliseconds from the conversion command to the first observed bus-ready poll. The timestamp includes polling overhead and represents all probes in a broadcast cycle. A missing busy signal or timeout leaves conversion time blank. Datasheet limits above are reference values. Actual means and standard deviations are pending.
 
 Place the probe and reference thermometer together in one stable location. Record at least ten readings per unit plus the reference instrument and its uncertainty in the [temperature reference template](../data/temperature-reference.csv). Compare unit means, sample SDs and signed errors against the reference. With one probe, use the class table for the unit comparison when available. For the outdoor transect, record one or two assigned locations, times, ROM, temperatures, co-located reference, height or depth, and conditions. Assess whether the apparent differences exceed the accuracy limits.
 

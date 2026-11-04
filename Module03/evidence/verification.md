@@ -11,4 +11,6 @@ Compile each sketch using `arduino-cli compile --fqbn esp32:esp32:esp32 <sketch-
 
 The updated Task 2 GPIO18 sketch with a serial transfer marker compiled on the same core with OneWire 2.3.8 and DallasTemperature 4.0.6. Flash usage was 277176 bytes and global RAM usage was 22164 bytes. No upload or DS18B20 reading was performed for this build.
 
+The subsequent GPIO18 build with ROM counts, conversion timing and diagnostic statuses compiled offline with the same versions. Arduino CLI reported 277464 bytes of flash and 22164 bytes of global RAM. Windows enumerated a CP210x bridge on COM3 before power was disconnected. No upload or sensor traffic was performed for this build.
+
 `python Module03/test_analysis.py` passed 11 synthetic cases using Python 3.11, NumPy 2.4.0 and Matplotlib 3.10.8. Tests cover the fit and validation paths, hysteresis, repeatability, thermal timing, filter spike and lag behavior, decision output and uncertainty arithmetic. The test builds fixtures in a temporary directory. Hardware upload and measurement are pending.
