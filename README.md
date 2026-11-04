@@ -28,6 +28,10 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 
 [Module 02 guide and Task 1–10 checklist](Module02/README.md) covers pin/divider theory, bus research, I2C study, scanner/register/multi-device code and scope feasibility. **Task 2 — Pod 4: CAN Bus — Research Prepared:** [English CAN profile](Module02/bus-can.md), [classroom speech](Module02/can-pitch.md), [local self-test](Module02/code/task02_can_self_test/README.md) and [external CAN example](Module02/code/task02_can_external/README.md). **CAN Hardware Test Pending**; [Task 9 static CH0 LOW/HIGH captures](Module02/evidence/task09-logic-analyzer/README.md) are verified at 10,000 samples each. A later [real ESP8266-source PWM capture](Module02/evidence/task09-esp8266-pwm.md) records approximately 1 ms period and 50% duty from sample counts. A real [NACK-only I2C capture](Module02/evidence/task09-esp8266-i2c.md) is also verified; sensor ACK/data, independent timebase calibration, presentations and class decision remain Pending. Task 10 is optional.
 
+## Module 03 — Sensor Characterization, Calibration & Data Quality
+
+[Module 03 guide and task checklist](Module03/README.md) links to ESP32 capture sketches, CSV templates, analysis tools and the lab report. Software preparation is verified. Bench measurements and classroom exchanges are pending.
+
 ## Pre-study and Preparation
 
 - [Module 0 pre-study](00-pre-study.md): original notes, datasheet study, project idea and Wokwi evidence; retained as submitted.

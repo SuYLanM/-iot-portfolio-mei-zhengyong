@@ -1,0 +1,12 @@
+# Software verification
+
+Local Windows 11 environment with Arduino IDE 2.3.10's Arduino CLI. Target `esp32:esp32:esp32` (ESP32 Dev Module), ESP32 Core 3.3.12.
+
+| Sketch | Result | Flash bytes | Global RAM bytes |
+|---|---|---:|---:|
+| [Analog capture](../code/analog_capture/analog_capture.ino) | Compiled | 278964 | 22196 |
+| [DS18B20 capture](../code/ds18b20_capture/ds18b20_capture.ino) | Compiled with OneWire 2.3.8 and DallasTemperature 4.0.5 | 276916 | 22164 |
+
+Compile each sketch using `arduino-cli compile --fqbn esp32:esp32:esp32 <sketch-directory>`. Use the installed core and library versions above to reproduce the check.
+
+`python Module03/test_analysis.py` passed 11 synthetic cases using Python 3.11, NumPy 2.4.0 and Matplotlib 3.10.8. Tests cover the fit and validation paths, hysteresis, repeatability, thermal timing, filter spike and lag behavior, decision output and uncertainty arithmetic. The test builds fixtures in a temporary directory. Hardware upload and measurement are pending.
