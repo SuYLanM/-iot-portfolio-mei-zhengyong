@@ -61,6 +61,12 @@ Reproduce from the repository root with `python Module03/analyze_calibration.py 
 | Indoor or greenhouse reference | Pending paired readings | Indoor offset pending |
 | Stirred ice-water validation | Pending fresh stabilized reading and bath reference | Before and after residuals pending |
 
+### Initial Task 3c capture — 2026-11-04
+
+The existing Task 2 sketch compiled and flashed successfully on COM3. At 115200 baud it discovered one CRC-valid ROM, `28E55FA300000007`. Ten consecutive 12-bit readings over the capture all returned **9.125 °C** (sample SD 0.000 °C at this resolution). Mean conversion time was 620 ms. Elapsed sample times are recorded in the CSV. The location and independent reference were not recorded with this capture, so it is a stability check and remains outside the calibration fit.
+
+[Original UART log](../evidence/task03c-ds18b20/initial-environment.serial.txt) · [Raw CSV](../evidence/task03c-ds18b20/initial-environment.csv) · [Statistics](../evidence/task03c-ds18b20/summary.json) · [Compile log](../evidence/task03c-ds18b20/compile.txt) · [Upload log](../evidence/task03c-ds18b20/upload.txt)
+
 Keep the existing DS18B20 wiring. At the cold outdoor spot and then indoors, place the reference thermometer next to the probe, allow both to stabilize, record the reference, and send `c` in the [Task 2 sketch](../code/ds18b20_capture/ds18b20_capture.ino) for ten 12-bit readings. Record time, site, ROM and reference uncertainty. Apply only the cold offset `T_ref,cold − T_probe,cold`; compare it with the indoor offset.
 
 For independent validation, make a stirred slurry of crushed ice and water with ice still present. Immerse only the sealed tip near the reference and clear of the cup walls and bottom. Keep the connector and ESP32 dry. Wait for stabilization, then capture a fresh run. Record the reference thermometer reading if available, or document the ice-point realization as a nominal 0 °C reference and state its uncertainty. Use [the existing calibration template](../data/temperature-calibration.csv) and `python Module03/analyze.py calibrate RUN.csv OUT --kind temperature`. Evaluate the signed before/after ice residuals and whether the correction is useful near 2 °C.
