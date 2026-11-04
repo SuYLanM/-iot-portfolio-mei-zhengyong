@@ -60,6 +60,8 @@ void capture(int bits, int samples) {
     const auto request = sensors.requestTemperatures();
     const uint32_t timeout = CONVERSION_MS[bits - 9] + 25U;
     bool sawBusy = false;
+    // Give the probe time to assert busy before the first read slot.
+    delay(2);
     bool complete = sensors.isConversionComplete();
     // Poll the externally powered bus until all probes release it.
     while (!complete && millis() - request.timestamp < timeout) {

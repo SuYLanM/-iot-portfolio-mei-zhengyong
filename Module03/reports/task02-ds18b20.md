@@ -1,6 +1,6 @@
 # Task 2 — DS18B20 resolution, accuracy and response time
 
-**Status: Hardware attempted. COM3 upload and UART verified. The trial scan found no valid DS18B20 ROM.**
+**Status: Single-probe bench capture verified at all four resolutions. Reference, field and thermal step measurements pending.**
 
 ## Objective
 
@@ -40,7 +40,7 @@ Save the original serial transcript under the [evidence index](../evidence/READM
 
 ## Conversion time
 
-The logger measures elapsed milliseconds from the conversion command to the first observed bus-ready poll. The timestamp includes polling overhead and represents all probes in a broadcast cycle. A missing busy signal or timeout leaves conversion time blank. Datasheet limits above are reference values. Actual means and standard deviations are pending.
+The logger measures elapsed milliseconds from the conversion command to the first observed bus-ready poll. The reading includes polling overhead and represents all probes in a broadcast cycle. A missing busy signal or timeout leaves conversion time blank. The measured timings below apply to this probe and firmware.
 
 Place the probe and reference thermometer together in one stable location. Record at least ten readings per unit plus the reference instrument and its uncertainty in the [temperature reference template](../data/temperature-reference.csv). Compare unit means, sample SDs and signed errors against the reference. With one probe, use the class table for the unit comparison when available. For the outdoor transect, record one or two assigned locations, times, ROM, temperatures, co-located reference, height or depth, and conditions. Assess whether the apparent differences exceed the accuracy limits.
 
@@ -63,10 +63,25 @@ The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uplo
 
 **Follow-up after adding a pull-up.** The operator reported adding a resistor between GPIO18 and 3V3. Its resistance and the probe supply polarity remain unverified. Windows enumerated the COM3 USB bridge and the existing sketch compiled offline with ESP32 Core 3.3.12. The serial port was left unopened and no upload or scan was performed in this follow-up. The earlier zero-ROM result applies only to the earlier wiring.
 
+### Verified-wiring run
+
+The operator confirmed red to 3V3, blue to GND, yellow to GPIO18 and a multimeter-checked 4.7 kΩ pull-up from GPIO18 to 3V3. COM3 uploads passed flash verification. An explicit scan returned one family-0x28 ROM with valid CRC, **`28E55FA300000007`**.
+
+The first capture returned five valid rows and five `no_busy_signal` rows at each resolution. The firmware was then changed to wait 2 ms before the first busy poll. A single retest gave ten valid rows per resolution, with no diagnostic rows. The initial alternating results are retained. The retest demonstrates the observed improvement under these conditions, while the exact cause of the initial pattern remains unconfirmed.
+
+| Resolution | Valid samples | Mean temperature (°C) | Sample SD (°C) | Mean conversion (ms) | Conversion sample SD (ms) |
+|---:|---:|---:|---:|---:|---:|
+| 9 bit | 10 | 27.3500 | 0.2415 | 77.2 | 0.42 |
+| 10 bit | 10 | 26.9750 | 0.0791 | 154.1 | 0.32 |
+| 11 bit | 10 | 26.8750 | 0.0000 | 308.0 | 0.00 |
+| 12 bit | 10 | 26.8438 | 0.0329 | 615.1 | 0.32 |
+
+The runs were sequential and had no simultaneous reference thermometer. The means and spread describe observed readout, while absolute accuracy and unit-to-unit variation remain unmeasured. Zero spread in the 11-bit run means all ten readings returned the same code.
+
 | Evidence | Result |
 |---|---|
-| ROM scan and plausible first reading | Attempted. Zero valid ROMs. No temperature |
-| Four resolutions and ten readings per probe | Pending hardware |
+| ROM scan and plausible first reading | Verified for one CRC-valid ROM |
+| Four resolutions and ten readings per probe | Verified, ten valid samples per resolution in the retest |
 | Reference error and unit comparison | Pending hardware or class data |
 | Outdoor transect | Pending field work |
 | Water and air plots, τ and settling comparison | Pending hardware |
@@ -77,3 +92,7 @@ The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uplo
 - [Compile log](../evidence/task02-ds18b20/compile.txt)
 - [Upload log](../evidence/task02-ds18b20/upload.txt), with absolute paths and board MAC redacted
 - [Original COM3 scan response](../evidence/task02-ds18b20/scan.serial.txt)
+- [Verified wiring initial capture, including diagnostic rows](../evidence/task02-ds18b20/verified-wiring/)
+- [Timing retest logs, CSVs and summary](../evidence/task02-ds18b20/timing-retest/)
+
+![Ten valid bench readings at each resolution](../figures/task02-ds18b20/resolution-runs.png)
