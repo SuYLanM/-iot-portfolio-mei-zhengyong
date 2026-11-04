@@ -8,17 +8,30 @@ Calibrate the ADC chain, the LDR transfer model, and the digital temperature off
 
 ## Task 3a — ADC two-point calibration
 
-**Status: Software prepared. DMM references and paired captures pending.** Use the [GPIO34 sketch](../code/adc_calibration/adc_calibration.ino) and [build log](../evidence/task03-calibration/adc-compile.txt). With USB disconnected, ensure the LDR divider node is detached from GPIO34 if still connected. Connect the pot outer terminals to 3V3 and GND, and its wiper to GPIO34. The DS18B20 branch can stay wired to GPIO18. Use a DMM in DC volts between wiper and GND.
+**Status: Two-point calibration and independent validation completed.** The [GPIO34 sketch](../code/adc_calibration/adc_calibration.ino) compiled and flashed on COM3. The operator wired the potentiometer across 3V3 and GND with the wiper on GPIO34 and reported a supply of 3.296 V. The rail measurement documents the setup. The fit uses the DMM wiper voltages.
 
-| Point | Target for setup only | DMM voltage | Mean raw code / ADC API volts | Corrected voltage / residual |
-|---|---:|---|---|---|
-| Calibration 1 | ~0.6 V | Pending | Pending | Pending |
-| Calibration 2 | ~2.4 V | Pending | Pending | Pending |
-| Independent validation | ~1.5 V | Pending | Pending | Pending |
+| Point | DMM voltage | Samples | Mean raw code | Raw sample SD | ADC API mean voltage |
+|---|---:|---:|---:|---:|---:|
+| Calibration 1 | 0.568 V | 150 | 526.427 | 25.441 | 0.577013 V |
+| Calibration 2 | 2.398 V | 150 | 2769.180 | 20.229 | 2.415087 V |
+| Independent validation | 1.526 V | 150 | 1716.427 | 21.282 | 1.553560 V |
 
-At each stable position send `t` at 115200 baud to acquire 150 rows with separate raw and ADC API voltage conversions. Save the original serial log and one CSV per point. Check for rail codes and record the actual DMM value, meter model, range and specification. The targets only help place the wiper in the usable range.
+Each DMM voltage was confirmed immediately before triggering a capture at the held wiper position. The paired high-point value is the new 2.398 V reading. The earlier 2.389 V reading was supplied before this capture session. The serial logger used 115200 baud, 12-bit ADC and 11 dB attenuation. Raw code and API millivolts come from separate conversions. No raw samples reached either rail. The low-point series includes brief low samples of 321 and 359, retained in the mean and the archive.
 
-Use [the existing input template](../data/pot-calibration.csv) and run `python Module03/analyze.py calibrate RUN.csv OUT --kind pot`. This fits the equivalent form `V = gain × code + offset` and writes a validation plot. The before-error uses the API voltage minus DMM voltage. The after-error uses corrected voltage minus DMM voltage. Both errors remain pending. This procedure calibrates the measured ADC chain at its recorded configuration.
+The fit was `code = 1225.548270 × V − 169.684750`, equivalent to `V = 0.000815961333 × code + 0.138456195`. The 1.526 V observation was held out from fitting.
+
+| Independent check | Predicted voltage | Signed error vs DMM |
+|---|---:|---:|
+| Before correction, ADC API | 1.553560 V | +27.560 mV |
+| After two-point correction | 1.538994 V | +12.994 mV |
+
+The absolute error decreased by 52.85% at this held-out point. ADC scatter, DMM uncertainty and possible voltage changes after reading the meter limit the comparison. The DMM model, range and accuracy specification were not supplied. This calibrates the ADC chain over the measured range and checks its performance at one interior voltage.
+
+[Original logs, sample CSVs and paired data](../evidence/task03-calibration/adc/) · [Calibration parameters](../figures/task03-calibration/adc/summary.json)
+
+![ADC two-point fit and independent validation](../figures/task03-calibration/adc/adc-validation.png)
+
+The operator reported four photos for the supply, low point, earlier high point and validation point. The image files are pending. A photo of the earlier 2.389 V reading would document that reading, while 2.398 V is the reference paired with the ADC capture.
 
 ## Task 3b — LDR power-law calibration
 

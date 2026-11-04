@@ -1,0 +1,4 @@
+"role","raw_mean","baseline_v","reference_v","notes"
+"fit1","526.4266666666666","0.5770133333333333","0.568","Operator confirmed DMM reading before capture"
+"fit2","2769.18","2.4150866666666664","2.398","Operator confirmed DMM reading before capture"
+"validation","1716.4266666666667","1.55356","1.526","Operator confirmed DMM reading before capture"

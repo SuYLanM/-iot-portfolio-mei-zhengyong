@@ -1,0 +1,8 @@
+{
+  "gain_v_per_code": 0.0008159613332421756,
+  "offset_v": 0.1384561952124323,
+  "validation_reference_v": 1.526,
+  "corrected_v": 1.5389939865581892,
+  "error_after_v": 0.012993986558189174,
+  "error_before_v": 0.02756000000000003
+}
