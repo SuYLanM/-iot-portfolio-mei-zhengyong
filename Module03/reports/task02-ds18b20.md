@@ -61,6 +61,8 @@ The analysis uses pre-step and tail means and interpolates the first crossing of
 
 The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uploader verified the written flash. At 115200 baud, one explicit `r` command returned `DS18B20_COUNT=0` and `NO_DS18B20`. The firmware counts only ROMs with family code 0x28 and a valid ROM CRC. This result does not distinguish absent bus presence from a search or ROM validation failure. The four resolution captures were skipped after discovery failed. No temperature, conversion-time, CSV sample rows or thermal plot were obtained.
 
+**Follow-up after adding a pull-up.** The operator reported adding a resistor between GPIO18 and 3V3. Its resistance and the probe supply polarity remain unverified. Windows enumerated the COM3 USB bridge and the existing sketch compiled offline with ESP32 Core 3.3.12. The serial port was left unopened and no upload or scan was performed in this follow-up. The earlier zero-ROM result applies only to the earlier wiring.
+
 | Evidence | Result |
 |---|---|
 | ROM scan and plausible first reading | Attempted. Zero valid ROMs. No temperature |
