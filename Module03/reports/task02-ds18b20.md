@@ -34,6 +34,8 @@ The manufacturer specifies ±0.5 °C from −10 to +85 °C. The specified maximu
 
 ## Capture and reference comparison
 
+**Final-audit gap against the current brief.** The current Task 2.4 requires at least 20 readings at each resolution during a slow temperature change, checking the return from `setResolution(address, ...)` and printing the per-address `getResolution(address)`. Existing runs contain ten readings per setting, and the sketch checks `getResolution(address)` but does not print it or check the setter return. The archived experiment verifies a narrower ten-reading test. The expanded sweep and configuration-output evidence are pending.
+
 Open [the DS18B20 sketch](../code/ds18b20_capture/ds18b20_capture.ino) with ESP32 Dev Module selected. Use Serial Monitor at 115200 baud. Send `r` for the CRC-validated 64-bit ROM list. Send `9`, `a`, `b` or `c` for ten conversion cycles at 9, 10, 11 or 12 bits. Each cycle reports sample index, elapsed milliseconds, ROM, resolution, temperature and read status.
 
 Save the original serial transcript under the [evidence index](../evidence/README.md). Copy the CSV header and its rows to one CSV per run. Preserve diagnostic rows and marker messages in the original transcript. Only rows with status `ok` contribute to temperature and timing statistics. A disconnected or invalid scratchpad read has a blank temperature, and an exact 85 °C reading is flagged because it can be the power-on value. Use `python Module03/analyze.py repeat RUN.csv OUT --kind ds` to summarize readings by ROM and resolution.
@@ -85,9 +87,9 @@ python Module03/analyze.py step Module03/evidence/task02-ds18b20/water-step/2026
 
 ## Results
 
-The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uploader verified the written flash. At 115200 baud, one explicit `r` command returned `DS18B20_COUNT=0` and `NO_DS18B20`. The firmware counts only ROMs with family code 0x28 and a valid ROM CRC. This result does not distinguish absent bus presence from a search or ROM validation failure. The four resolution captures were skipped after discovery failed. No temperature, conversion-time, CSV sample rows or thermal plot were obtained.
+**Historical initial attempt.** The ESP32-D0WD-V3 compiled with ESP32 Core 3.3.12 and uploaded on COM3. The uploader verified the written flash. At 115200 baud, one explicit `r` command returned `DS18B20_COUNT=0` and `NO_DS18B20`. The firmware counts only ROMs with family code 0x28 and a valid ROM CRC. This result does not distinguish absent bus presence from a search or ROM validation failure. No temperature rows were obtained in that attempt. Successful later results appear below.
 
-**Follow-up after adding a pull-up.** The operator reported adding a resistor between GPIO18 and 3V3. Its resistance and the probe supply polarity remain unverified. Windows enumerated the COM3 USB bridge and the existing sketch compiled offline with ESP32 Core 3.3.12. The serial port was left unopened and no upload or scan was performed in this follow-up. The earlier zero-ROM result applies only to the earlier wiring.
+**Historical follow-up after adding a pull-up.** At that stage the operator reported adding a resistor between GPIO18 and 3V3, with its resistance and probe polarity still unverified. Windows enumerated COM3 and the sketch compiled offline. The serial port was left unopened in that follow-up. The next section records the later confirmed wiring and successful capture.
 
 ### Verified-wiring run
 
@@ -108,6 +110,7 @@ The runs were sequential and had no simultaneous reference thermometer. The mean
 |---|---|
 | ROM scan and plausible first reading | Verified for one CRC-valid ROM |
 | Four resolutions and ten readings per probe | Verified, ten valid samples per resolution in the retest |
+| Current brief's 20-reading temperature sweep and printed per-probe configuration | Pending |
 | Reference error and unit comparison | Pending hardware or class data |
 | Outdoor transect | Pending field work |
 | Water plot, τ and settling | Captured. Timing estimated from the trace |

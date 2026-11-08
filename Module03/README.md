@@ -2,10 +2,12 @@
 
 [Portfolio](../README.md) · [Course brief](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/03-sensor-characterization-and-calibration.md) · [Bench guide](bench-guide.md) · [Lab report](reports/lab-report.md) · [Evidence](evidence/README.md)
 
+[Final submission audit](reports/final-submission-audit.md) lists each current requirement, the archived deliverables and the outstanding activities. This portfolio is submission-ready as a transparent record of achieved work, with the incomplete requirements disclosed.
+
 | Round | Task | Work and expected evidence | Status |
 |---|---|---|---|
 | 1 | [1. LDR transfer function](reports/task01-ldr.md) | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Six-distance ADC ladder and repeatability captured. DMM and one-code comparison pending |
-| 1 | [2. DS18B20 characterization](reports/task02-ds18b20.md) | One probe or optional multidrop, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | One ROM, four resolutions and water step verified. Reference, field and still-air step pending |
+| 1 | [2. DS18B20 characterization](reports/task02-ds18b20.md) | One probe or optional multidrop, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | One ROM, ten readings per resolution and water step verified. Current 20-reading warming/configuration evidence, reference, field and air step pending |
 | 2 | [3. Calibration](reports/task03-calibration.md) | Pot/ADC two-point voltage correction, LDR two-point power and linear models, DS18B20 cold offset | 3a and 3b validated at held-out points. 3a photos archived. 3c temperature references pending |
 | 2 | [4. Hysteresis and repeatability](reports/task04-repeatability.md) | LDR up/down curves, ten marked pot returns, ten readings per probe at 9 and 12 bits | One LDR sweep, pot and one DS18B20 verified. Controlled sweep timing and multi-probe comparison pending |
 | 3 | [5. Noise and filtering](reports/task05-noise-filtering.md) | 500+ raw values per input, raw/filtered statistics, single spike comparison, pot step lag and threshold decisions | Real pot/LDR noise and decision replay verified. Unclipped descending transition latency measured; simulation retained |
@@ -59,3 +61,38 @@ Shared pod log keeper and link from the other member's portfolio — Pending.
 [Task B exchange record](reports/class-exchange.md)
 
 These additions summarize the recorded analysis. Each member's personal interpretation, shared log-keeper assignment, peer review, agreed learning and Discord artefact remain pending.
+
+### Evidence-based reflection notes for student review
+
+The ADC calibration reduced the held-out error but left a 12.994 mV discrepancy. The Task 6 conditional random budget was smaller than that discrepancy. This supports checking the reference, timing and measurement model before relying on extra smoothing to improve accuracy. The original photo mismatch also shows why a photograph and a contemporaneous paired reference need distinct labels.
+
+LDR values were non-monotonic at some intermediate distances, and the manual up/down card sequence gave a directional gap. Together they show that repeatable geometry, settling time and illumination history matter when interpreting the transfer model. The current evidence cannot isolate static hysteresis.
+
+The temperature probe gave fresh conversions and visible resolution-dependent code steps. Its repeated stable codes do not establish the true temperature. A reference near the frost threshold is still needed. In the ADC filter replay, EMA reduced SD most strongly and delayed the real transition most. A decision should account for both effects.
+
+These are retrospective conclusions from archived records. Each member's own experience and agreed learning are awaiting confirmation.
+
+### Sources, lookup topics and verification
+
+| Lookup topic | Documented finding | Source and verification |
+|---|---|---|
+| ADC code versus voltage | Raw codes and API voltage conversions have distinct roles; Task 3a pairs the ADC with DMM readings | [ESP32 ADC API](https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html), checked against the sketch and original CSV columns |
+| DS18B20 resolution versus accuracy | Step size changes with resolution; the datasheet accuracy is a separate specification | [Manufacturer datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf), checked against ROM-specific run tables. The current 20-reading sweep remains pending |
+| Correlated calibration coefficients | Slope and intercept share endpoint observations; their covariance enters propagation | [GUM](https://doi.org/10.59161/JCGM100-2008E), checked through two equivalent calculations in the Task 6 script |
+
+### Selected actual LLM exchanges
+
+| Recorded request | Answer summary and verification |
+|---|---|
+| “没有万用表，模拟一下吧” | Generated explicitly synthetic noise, spike, step and drift examples. Later ADC troubleshooting recovered a real light response and supplied a separate fresh 500-point record. Simulation did not establish hardware noise. |
+| “请专门排查 ESP32 GPIO34 的真实模拟输入” | A minimal diagnostic returned zero under illumination and cover. After the operator reconnected the divider, nonzero/light-sensitive readings appeared. UART logs support the change, but the exact physical fault was not identified. |
+| “现在开始完成 HSBI Sensors & Actuators — Module 3 — Task 6：Uncertainty and Declarative Filtering” | Recomputed uncertainty and filters from archived CSVs. Source hashes, finite-difference sensitivities and covariance identities checked the calculations. The result remains conditional because reference and systematic bounds are missing. |
+
+### Draft mini-check answers from the records
+
+- **Why is the voltage validation independent?** Its 1.526 V capture was acquired after the endpoint captures and excluded from the two-point fit.
+- **Which correction acts on the chain?** Task 3a maps raw ADC code to DMM-referenced voltage within the tested range. Task 3c has no applied temperature offset.
+- **What can be said about the frost threshold?** The present probe has no independent reference near 2 °C, so its uncertainty at that threshold is unverified. The LDR provides a relative-light indication with geometry and voltage limitations.
+- **Which seasonal effects were measured?** Short-run noise, response, repeatability and held-out calibration errors were observed. Seasonal drift, installation and environmental dependence were not bounded.
+
+These are document-based draft answers. Instructor mini checks and personal or joint confirmation remain pending.

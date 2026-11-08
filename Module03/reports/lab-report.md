@@ -1,6 +1,6 @@
 # Sensor characterization, calibration and data quality
 
-**Status:** Software preparation. Hardware and classroom results pending. See the [bench guide](../bench-guide.md), [CSV templates](../data/README.md) and [evidence index](../evidence/README.md).
+**Status:** This is the retained planning and method guide. Current hardware results are in the [six task reports](../README.md) and the [final submission audit](final-submission-audit.md). Classroom records and the remaining measurements are identified there.
 
 ## Task 1 — LDR transfer function
 

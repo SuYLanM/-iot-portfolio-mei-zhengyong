@@ -25,7 +25,7 @@ The fit was `code = 1225.548270 × V − 169.684750`, equivalent to `V = 0.00081
 | Before correction, ADC API | 1.553560 V | +27.560 mV |
 | After two-point correction | 1.538994 V | +12.994 mV |
 
-The absolute error decreased by 52.85% at this held-out point. ADC scatter, DMM uncertainty and possible voltage changes after reading the meter limit the comparison. The DMM model, range and accuracy specification were not supplied. This calibrates the ADC chain over the measured range and checks its performance at one interior voltage.
+The absolute error decreased by 52.85% at this held-out point. ADC scatter, DMM uncertainty and possible voltage changes after reading the meter limit the comparison. The photos identify a UNI-T UT139B, while its range accuracy and calibration status remain undocumented. This calibrates the ADC chain over the measured range and checks its performance at one interior voltage.
 
 [Original logs, sample CSVs and paired data](../evidence/task03-calibration/adc/) · [Calibration parameters](../figures/task03-calibration/adc/summary.json)
 
@@ -105,3 +105,57 @@ For independent validation, make a stirred slurry of crushed ice and water with 
 ## Peer validation
 
 Use these calibration records for [Task B](class-exchange.md). Neighbouring pod reviewer, date, reference uncertainty checks and sign-off are pending.
+
+### Calibration record — 3a chain
+
+| Case | Point | Reference (V) | Raw mean (code) | Converted API (V) | Corrected (V) | Residual (V) | Conditions / notes |
+|---|---|---:|---:|---:|---:|---:|---|
+| 3a | Calibration 1 | 0.568 | 526.426667 | 0.577013 | 0.568000 | 0 by construction | 150 samples |
+| 3a | Calibration 2 | 2.398 | 2769.180000 | 2.415087 | 2.398000 | 0 by construction | 150 samples |
+| 3a | Validation | 1.526 | 1716.426667 | 1.553560 | 1.538994 | +0.012994 | Fresh held-out capture, 150 samples |
+
+Fit: `V = 0.000815961333 × code + 0.138456195`.
+
+Reference uncertainty: Unknown; meter accuracy and calibration status unavailable.
+
+Validation uncertainty: [Task 6](task06-uncertainty-filtering.md) gives conditional random uc 1.776 mV and k=2 U 3.552 mV. Reference and systematic model effects remain unquantified.
+
+Decision: The correction reduced the observed held-out error, but a full accuracy claim needs the missing reference and model bounds.
+
+Checked by neighbouring pod: Pending name / initials / date.
+
+### Calibration record — 3b LDR
+
+Here the comparison reference is the ADC-derived resistance at each relative light setting. It is not an independently calibrated resistance or lux standard.
+
+| Case | Point | Comparison resistance (kΩ) | Raw mean (code) | Converted (kΩ) | Power prediction (kΩ) | Residual (kΩ) | Conditions / notes |
+|---|---|---:|---:|---:|---:|---:|---|
+| 3b | Calibration 1 | 56.800718 | 428.113333 | 56.800718 | 56.800718 | 0 by construction | 10 cm, E=1 |
+| 3b | Calibration 2 | 148.674189 | 80.040000 | 148.674189 | 148.674189 | 0 by construction | 60 cm recapture, E=1/36 |
+| 3b | Validation | 106.022876 | 173.506667 | 106.022876 | 102.465308 | −3.557569 | Existing 30 cm point held out from fit, E=1/9 |
+
+Fit: `R = 56.800718 kΩ × E^(-0.26850934)`.
+
+Reference uncertainty: Unquantified relative-light geometry and divider voltage/resistance estimates.
+
+Validation uncertainty: Unknown absolute interval; leading sources are light-level reproducibility and ADC/divider conversion. The observed three-placement resistance SD is 6.79 kΩ.
+
+Decision: The power model had the smaller error at this held-out point. The other intermediate observations retain their inconsistencies.
+
+Checked by neighbouring pod: Pending name / initials / date.
+
+### Calibration record — 3c DS18B20
+
+| Case | Point | Reference (°C) | Raw reading (°C) | Converted (°C) | Corrected (°C) | Residual (°C) | Conditions / notes |
+|---|---|---|---|---|---|---|---|
+| 3c | Calibration 1 | Pending | Pending paired observation | Pending | Pending | Pending | Cold outdoor reference |
+| 3c | Calibration 2 | Pending | Pending paired observation | Pending | Pending | Pending | Indoor reference |
+| 3c | Validation | Pending | Pending independent run | Pending | Pending | Pending | Stirred ice-water reference |
+
+Fit: `T_corrected = T_raw + offset`, offset pending independent references.
+
+Reference uncertainty and validation uncertainty: Pending.
+
+Decision: No offset is applied because the reference data are unavailable.
+
+Checked by neighbouring pod: Pending name / initials / date.
