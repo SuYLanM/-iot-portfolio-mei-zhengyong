@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory)][string]$OutputDirectory,
     [Parameter(Mandatory)][ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$Run,
-    [string]$Port = 'COM3'
+    [string]$Port = 'COM3',
+    [ValidateSet(32, 150, 500, 1000)][int]$Samples = 150
 )
 $ErrorActionPreference = 'Stop'
 New-Item -ItemType Directory -Force $OutputDirectory | Out-Null
@@ -18,8 +19,10 @@ $bytes = [IO.MemoryStream]::new()
 try {
     $serial.Open()
     Start-Sleep -Milliseconds 1400
-    $serial.Write('t')
-    $deadline = [DateTime]::UtcNow.AddSeconds(12)
+    $serial.DiscardInBuffer()
+    $command = @{32 = 'l'; 150 = 't'; 500 = 'L'; 1000 = 'W'}[$Samples]
+    $serial.Write($command)
+    $deadline = [DateTime]::UtcNow.AddSeconds($Samples * 0.02 + 10)
     $buffer = [byte[]]::new(4096)
     while ([DateTime]::UtcNow -lt $deadline) {
         try {
@@ -42,7 +45,7 @@ $match = [regex]::Match($serialText, '(?m)^sample,t_ms,raw,baseline_mv,mean5,med
 if (!$match.Success) { throw "Incomplete capture. Original bytes saved to $rawPath" }
 $csv = $match.Value.Substring(0, $match.Value.LastIndexOf('# END'))
 $rows = @($csv | ConvertFrom-Csv)
-if ($rows.Count -ne 150) { throw "Expected 150 samples; got $($rows.Count)" }
+if ($rows.Count -ne $Samples) { throw "Expected $Samples samples; got $($rows.Count)" }
 for ($i = 0; $i -lt $rows.Count; $i++) {
     if ($rows[$i].sample -ne "$i" -or $rows[$i].raw -notmatch '^\d+$' -or
         [int]$rows[$i].raw -gt 4095 -or $rows[$i].ldr_mv -notmatch '^\d+$') {

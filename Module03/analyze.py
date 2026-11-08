@@ -309,11 +309,17 @@ def noise(rows, out, args):
     stats = {}
     if args.step_s is None:
         stats = {key: spread(y[4:]) for key, y in traces.items()}
+        raw_sd = stats["raw"]["sd"]
+        for values in stats.values():
+            values["sd_reduction_percent"] = None if raw_sd == 0 else 100*(1-values["sd"]/raw_sd)
         if args.spike_codes is not None:
             modified = x.copy()
             index = len(x)//2
             modified[index] += args.spike_codes
             spiked = filters(modified)
+            table(out / "synthetic-spike.csv",
+                  ["t_s", "original_raw", "synthetic_raw", "synthetic_mean5", "synthetic_median5", "synthetic_ema"],
+                  zip(t, x, modified, spiked["mean5"], spiked["median5"], spiked["ema"]))
             stats["synthetic_spike"] = {"index": index, "injected_codes": args.spike_codes,
                                         "peak_deviation_codes": {
                                             k: float(np.max(np.abs(spiked[k][4:]-v[4:])))
@@ -325,8 +331,10 @@ def noise(rows, out, args):
             ax.set_xlim(t[max(0, index-20)], t[min(len(t)-1, index+30)])
             ax.legend()
             save(fig, out, "synthetic-spike")
-        table(out / "noise-statistics.csv", ["signal", "n", "mean", "sd", "range"],
-              ([key, v["n"], v["mean"], v["sd"], v["range"]] for key, v in stats.items() if "n" in v))
+        table(out / "noise-statistics.csv", ["signal", "n", "mean", "sd", "range", "sd_reduction_percent"],
+              ([key, v["n"], v["mean"], v["sd"], v["range"], v["sd_reduction_percent"]]
+               for key, v in stats.items() if "n" in v))
+        stats["raw_all_samples"] = spread(x) | {"min": float(min(x)), "max": float(max(x))}
     else:
         if not t[4] < args.step_s < t[-20]:
             raise ValueError("Record a pre-step baseline and a stabilized tail")

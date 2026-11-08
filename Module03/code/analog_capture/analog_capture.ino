@@ -56,6 +56,7 @@ void setup() {
   analogSetPinAttenuation(POT_PIN, ADC_11db);
   Serial.println("# l/p: 32 LDR/pot samples; L/P: 500; S: 1000 pot samples");
   Serial.println("# t: 150 LDR samples with calibrated millivolt estimates");
+  Serial.println("# W: 1000 GPIO34 samples for a later potentiometer step test");
 }
 
 void loop() {
@@ -64,6 +65,7 @@ void loop() {
     case 't': capture(LDR_PIN, 150); break;
     case 'p': capture(POT_PIN, 32); break;
     case 'L': capture(LDR_PIN, 500); break;
+    case 'W': capture(LDR_PIN, 1000); break;
     case 'P': capture(POT_PIN, 500); break;
     case 'S': capture(POT_PIN, 1000); break;
   }
