@@ -1,0 +1,14 @@
+contribution,estimate,unit,distribution,output_standard_uncertainty_mv,basis,treatment,source
+low calibration noise,2.0772195033327847,ADC code (standard error),Type A; independent stationary samples assumed,0.7956042325659863,Measured SD; assumed independence,Included in conditional mean budget,"Task3a fit1.csv, n=150"
+high calibration noise,1.6517110645375854,ADC code (standard error),Type A; independent stationary samples assumed,0.7151038357008886,Measured SD; assumed independence,Included in conditional mean budget,"Task3a fit2.csv, n=150"
+validation noise,1.737630536301102,ADC code (standard error),Type A; independent stationary samples assumed,1.417839329082564,Measured SD; assumed independence,Included in conditional mean budget,"Task3a validation.csv, n=150"
+Reference accuracy and calibration,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,UT139B visible in photos; accuracy/range certificate unavailable
+ADC quantization,0.23554774769784803,mV per single reading,Uniform half-width 0.5 code assumed,,Assumed model,Diagnostic scale only; already contained in observed ADC scatter,Two-point fitted voltage per code
+Independent reset repeatability,Unknown,mV,Unknown,,Unknown,Excluded; do not reuse the same within-capture noise,Task4 marked returns are different positions/voltages
+Calibration coefficient uncertainty,Covariance matrix in summary.json,mixed coefficient units,First-order propagation of endpoint code means,,Measured plus independence assumption,Already included through the first two noise rows,Two endpoints; two-point fit has zero residual degrees of freedom
+Validation signed residual,12.993986558188952,mV,Observed signed error,,Measured comparison,Evidence of model/reference discrepancy; not assigned a random distribution,Held-out Task3a validation
+Supply variation,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,Single reported 3.296 V rail reading; no rail time series
+Temperature dependence and long-term drift,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,No paired temperature or long-duration calibration runs
+Reference reading timing and settling,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,Operator read DMM before each ADC burst
+Component tolerance and loading,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,Pot resistance tolerance not needed as an input; loading/contact effects unbounded
+Self-heating,Unknown,mV,Unknown,,Unknown,Excluded; full uncertainty pending,No controlled comparison or appropriate circuit-specific bound

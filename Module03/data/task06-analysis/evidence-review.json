@@ -1,0 +1,63 @@
+{
+  "task1": {
+    "ladder_n": 6,
+    "six_point_gamma": 0.26314331365109883,
+    "three_30cm_resistance_sd_ohm": 6790.811059834455,
+    "voltage_basis": "ADC estimate; nominal 3.3 V and 10 kohm"
+  },
+  "task2": {
+    "resolution_runs": {
+      "9": {
+        "valid_n": 10,
+        "mean_c": 27.35,
+        "sd_c": 0.24152294576982394
+      },
+      "10": {
+        "valid_n": 10,
+        "mean_c": 26.975,
+        "sd_c": 0.07905694150420949
+      },
+      "11": {
+        "valid_n": 10,
+        "mean_c": 26.875,
+        "sd_c": 0.0
+      },
+      "12": {
+        "valid_n": 10,
+        "mean_c": 26.84375,
+        "sd_c": 0.03294039229342062
+      }
+    },
+    "water_n": 240,
+    "water_first_c": 17.0625,
+    "water_last_c": 55.3125,
+    "water_reference": "None recorded; dynamic data excluded from stable calibration"
+  },
+  "task3b": {
+    "two_point_gamma": 0.26850933728085496,
+    "A_ohm": 56800.717939029164,
+    "30cm_prediction_ohm": 102465.30777301473,
+    "30cm_error_ohm": -3557.5686567621306
+  },
+  "task3c": {
+    "paired_temperature_reference_rows": 0,
+    "basis": "temperature-reference.csv and temperature-calibration.csv have headers only"
+  },
+  "task4": {
+    "ten_return_means_sd_codes": 98.17000018486446,
+    "ldr_max_directional_gap_ohm": 19080.715963199094,
+    "one_probe_resolution_runs": {
+      "9": {
+        "n": 10,
+        "mean_c": 22.55,
+        "sd_c": 0.15811388300841894
+      },
+      "12": {
+        "n": 10,
+        "mean_c": 22.29375,
+        "sd_c": 0.030190368221227996
+      }
+    },
+    "limitations": "One probe; card positions lack lux reference and controlled dwell"
+  }
+}

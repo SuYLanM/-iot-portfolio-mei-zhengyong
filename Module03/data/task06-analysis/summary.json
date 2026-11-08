@@ -1,0 +1,44 @@
+{
+  "scope": "PARTIAL CONDITIONAL UNCERTAINTY; full metrological coverage unavailable",
+  "adc": {
+    "corrected_v": 1.538993986558189,
+    "reference_v": 1.526,
+    "baseline_v": 1.55356,
+    "residual_mv": 12.993986558188952,
+    "gain_v_per_code": 0.0008159613332421756,
+    "offset_v": 0.1384561952124323,
+    "w": 0.5305978068623983,
+    "conditional_mean_uc_mv": 1.7761272346890946,
+    "conditional_mean_U_k2_mv": 3.5522544693781892,
+    "conditional_single_uc_mv": 17.39783360233984,
+    "conditional_single_U_k2_mv": 34.79566720467968,
+    "output_contributions_mv": [
+      0.7956042325659863,
+      0.7151038357008886,
+      1.417839329082564
+    ],
+    "coefficient_covariance": [
+      [
+        9.322517918296174e-13,
+        -1.7716834523480019e-09
+      ],
+      [
+        -1.7716834523480017e-09,
+        4.479762918738477e-06
+      ]
+    ],
+    "coefficient_correlation": -0.8669459062492489,
+    "batch_U_k2_range_mv": [
+      3.1431798899971604,
+      3.798277817101481
+    ]
+  },
+  "filtering": {
+    "latency_ms": {
+      "raw": 0.0,
+      "mean5": 37.449192066318915,
+      "median5": 40.032482937505165,
+      "ema": 68.8970954646777
+    }
+  }
+}
