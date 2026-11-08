@@ -1,0 +1,5 @@
+provenance,assumed_reference_rectangular_halfwidth_c,assumed_reference_standard_uncertainty_c,illustrative_quantization_standard_uncertainty_c,conditional_offset_standard_uncertainty_c,assumption
+SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT,0.0,0.0,0.018042195912175808,0.018042195912175808,independent uniform reference and uniform rounding phase; no bias-model uncertainty included
+SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT,0.05,0.02886751345948129,0.018042195912175808,0.03404194716326707,independent uniform reference and uniform rounding phase; no bias-model uncertainty included
+SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT,0.2,0.11547005383792516,0.018042195912175808,0.11687110064796459,independent uniform reference and uniform rounding phase; no bias-model uncertainty included
+SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT,0.5,0.2886751345948129,0.018042195912175808,0.28923840368572545,independent uniform reference and uniform rounding phase; no bias-model uncertainty included

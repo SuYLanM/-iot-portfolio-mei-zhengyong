@@ -64,3 +64,9 @@ Reproduce with `python Module03/analyze.py repeat Module03/evidence/task04a-ldr/
 ## Conclusion
 
 The potentiometer test measured marked-position return spread, with individual sources unresolved. The temperature test measured short-run repeatability and quantization on one probe. The LDR test measured a direction-dependent difference at matched card marks under one manual procedure.
+
+## Supplementary Simulation — Not Hardware Measurement
+
+The [dynamics and virtual-probe supplement](../simulation/supplementary/task04-hysteresis/README.md) refits the real six-point LDR equilibrium law, then assumes a 2 s first-order resistance response. Fast/slow 5/30 s sweep legs and 10 s fixed dwell illustrate rate-dependent apparent loops. These simulated differences do not identify a real dynamic time constant or establish intrinsic static hysteresis. The recorded manual sweep remains the only real LDR directional sequence.
+
+Three explicitly virtual probes have assumed -0.2/0/+0.2 °C biases and 0.03 °C pre-quantization noise. Their 9/12-bit output demonstrates that code resolution, repeatability and bias are different properties. The measured single-probe mean is only a numerical anchor, not a true bath reference. No extra ROM or probe is claimed; real multi-probe and controlled speed/dwell evidence remain pending. The ten real potentiometer returns and original single-probe CSVs are unchanged.

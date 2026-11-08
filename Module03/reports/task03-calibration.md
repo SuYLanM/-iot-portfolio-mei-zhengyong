@@ -159,3 +159,11 @@ Reference uncertainty and validation uncertainty: Pending.
 Decision: No offset is applied because the reference data are unavailable.
 
 Checked by neighbouring pod: Pending name / initials / date.
+
+## Supplementary Simulation — Not Hardware Measurement
+
+### Task 3c: hypothetical reference calibration
+
+The [separate simulation](../simulation/supplementary/task03c-calibration/README.md) uses invented 5 °C cold, 20 °C indoor and ideal 0 °C ice scenarios. An assumed temperature-dependent bias and 12-bit quantization yield a cold-point offset of -0.3125 °C. The indoor and ice points are held out: synthetic signed errors change from +0.5000 to +0.1875 °C and from +0.2500 to -0.0625 °C respectively. These values describe a hypothetical sensor model and are not applied to the real probe.
+
+The reference-sensitivity table uses explicitly illustrative rectangular bounds; it is not an instrument specification. It shows how reference error transfers into the correction, while an offset cannot remove temperature-dependent bias. **Formal Task 3c remains Reference Pending.** No independently measured reference temperature, real ice-water validation or accuracy improvement is claimed. Task 3a/3b formulas, paired data, photos and results above are preserved.

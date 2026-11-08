@@ -1,0 +1,46 @@
+{
+  "classification": "SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT",
+  "seed": 73421,
+  "task01": {
+    "nominal_supply_v": 3.3,
+    "nominal_fixed_ohm": 10000,
+    "illustrative_ideal_adc_span_v": 3.3,
+    "adc_bits": 12,
+    "assumptions": "Supply and resistor are nominal, not session DMM measurements. The ideal span is hypothetical, not the ESP32 attenuation transfer characteristic. The Task 3a endpoint secant is an empirical comparison, extrapolated below its calibration range at these LDR voltages."
+  },
+  "task02": {
+    "warming_points_per_resolution": 80,
+    "sample_interval_s": 1.0,
+    "assumed_warming_rise_c": 2.0,
+    "assumed_air_tau_s": 45.0,
+    "response_step_s": 10.0,
+    "response_duration_s": 260.0,
+    "datasheet_step_c": {"9": 0.5, "10": 0.25, "11": 0.125, "12": 0.0625},
+    "datasheet_max_conversion_ms": {"9": 93.75, "10": 187.5, "11": 375.0, "12": 750.0},
+    "assumptions": "A linear warming ramp and first-order thermal dynamics are idealizations. The actual 12-bit bench mean anchors the ramp, but is not an independent true temperature. Water tau and endpoints are derived from the archived water run. The modeled water bath is idealized as well-mixed/stirred; actual stirring was not controlled or recorded. Air is modeled as still air with a wholly assumed tau; no air test was performed. Conversion limits constrain scheduling, not simulated measured conversion times."
+  },
+  "task03c": {
+    "hypothetical_reference_c": {"cold_calibration": 5.0, "indoor_validation": 20.0, "ideal_ice_validation": 0.0},
+    "assumed_bias_at_cold_c": 0.3,
+    "assumed_bias_slope_c_per_c": 0.015,
+    "quantization_step_c": 0.0625,
+    "illustrative_reference_halfwidths_c": [0.0, 0.05, 0.2, 0.5],
+    "assumptions": "All reference temperatures, sensor biases and reference uncertainty scenarios are invented model inputs, not actual thermometer observations or specifications. The ideal ice point applies only to the synthetic scenario; the real ice bath remains unverified. Reference halfwidths are rectangular illustrative bounds."
+  },
+  "task04": {
+    "assumed_ldr_tau_s": 2.0,
+    "fast_leg_s": 5.0,
+    "slow_leg_s": 30.0,
+    "fixed_dwell_s": 10.0,
+    "integration_step_s": 0.1,
+    "virtual_probe_biases_c": [-0.2, 0.0, 0.2],
+    "assumed_virtual_probe_noise_sd_c": 0.03,
+    "virtual_probe_samples": 40,
+    "assumptions": "LDR equilibrium law is refitted to six real ladder means; its single time constant is assumed, not identified from the manual sweep. Simulated rate-dependent lag is not proof of intrinsic static hysteresis. Three virtual probes and their bias/noise values are hypothetical; only one real DS18B20 was tested. The archived 12-bit mean anchors a synthetic bath, not a reference thermometer."
+  },
+  "references": {
+    "course": "https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/03-sensor-characterization-and-calibration.md",
+    "ds18b20_datasheet_rev6": "https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf",
+    "adc_api": "https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html"
+  }
+}

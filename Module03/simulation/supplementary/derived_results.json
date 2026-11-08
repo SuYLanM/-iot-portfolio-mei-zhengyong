@@ -1,0 +1,60 @@
+{
+  "classification": "SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT",
+  "task01": {
+    "ideal_step_v": 0.0008056640625,
+    "empirical_secant_v_per_code": 0.0008159613332421756
+  },
+  "ldr_static_fit": {
+    "A_ohm": 56705.54247173968,
+    "gamma": 0.2631433136511005
+  },
+  "task02": {
+    "warming_anchor_observed_c": 26.84375,
+    "water_tau_data_derived_s": 9.671085913578693,
+    "air_tau_assumed_s": 45.0
+  },
+  "task03c": {
+    "assumed_model_offset_c": -0.3125,
+    "simulated_validation_rows": [
+      {
+        "scenario": "cold_calibration",
+        "role": "calibration",
+        "assumed_reference_c": 5.0,
+        "simulated_uncorrected_c": 5.3125,
+        "simulated_offset_c": -0.3125,
+        "simulated_corrected_c": 5.0,
+        "simulated_before_error_c": 0.3125,
+        "simulated_after_error_c": 0.0
+      },
+      {
+        "scenario": "indoor_validation",
+        "role": "independent_simulated_validation",
+        "assumed_reference_c": 20.0,
+        "simulated_uncorrected_c": 20.5,
+        "simulated_offset_c": -0.3125,
+        "simulated_corrected_c": 20.1875,
+        "simulated_before_error_c": 0.5,
+        "simulated_after_error_c": 0.1875
+      },
+      {
+        "scenario": "ideal_ice_validation",
+        "role": "independent_simulated_validation",
+        "assumed_reference_c": 0.0,
+        "simulated_uncorrected_c": 0.25,
+        "simulated_offset_c": -0.3125,
+        "simulated_corrected_c": -0.0625,
+        "simulated_before_error_c": 0.25,
+        "simulated_after_error_c": -0.0625
+      }
+    ]
+  },
+  "task04": {
+    "assumed_tau_s": 2.0,
+    "max_modeled_gaps_ohm": {
+      "fast": 62866.66512177205,
+      "slow": 36622.91289277571,
+      "fixed_dwell": 300.74847957582097
+    },
+    "virtual_bath_anchor_observed_c": 22.29375
+  }
+}

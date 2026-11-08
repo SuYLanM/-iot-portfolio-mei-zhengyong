@@ -126,3 +126,9 @@ The runs were sequential and had no simultaneous reference thermometer. The mean
 - [Timing retest logs, CSVs and summary](../evidence/task02-ds18b20/timing-retest/)
 
 ![Ten valid bench readings at each resolution](../figures/task02-ds18b20/resolution-runs.png)
+
+## Supplementary Simulation — Not Hardware Measurement
+
+The [resolution and medium-response supplement](../simulation/supplementary/task02-ds18b20/README.md) provides 80 synthetic slow-warming points per resolution. Quantization steps and maximum conversion times come from the manufacturer datasheet, and a 1 s simulation interval respects all four conversion limits. This is not an actual 20-reading warming/configuration run.
+
+Both new medium-response curves are simulated first-order responses. The water curve uses the archived, onset-dependent estimate tau = 9.671086 s; the air curve uses a wholly assumed tau = 45 s. Their common endpoints are real-water sensor indications reused as model inputs, not reference bath or air temperatures. There is no new air measurement or controlled comparison of stirring. Real reference, air/field observations and current warming/configuration evidence remain pending.

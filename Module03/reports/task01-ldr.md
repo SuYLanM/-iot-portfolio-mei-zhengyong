@@ -94,3 +94,9 @@ The bench run produced 12 captures of 150 samples each, including six usable dis
 ![Distance versus mean ADC voltage estimate](../figures/task01-ldr/distance-voltage.png)
 
 ![Log-log power-law fit and linear comparison](../figures/task01-ldr/transfer-fit.png)
+
+## Supplementary Simulation — Not Hardware Measurement
+
+The [supplementary quantization analysis](../simulation/supplementary/task01-quantization/README.md) recalculates the six real operating-point means, then models a one-code voltage change and its effect on inferred resistance. A hypothetical 3.3 V span gives 0.805664 mV/code; the Task 3a endpoint secant is 0.815961 mV/code. The latter is extrapolated below its calibration range here and is not a measured local LDR-session ADC step. The derivative dR/dV = -Rfixed Vs/V² explains why a low node voltage is more sensitive to voltage error.
+
+The simulated code ladder and sensitivity plots are separate from the raw evidence. No DMM measurements have been added. Independent supply/node validation and a justified local ADC voltage-step comparison remain pending. Original distance anomalies, excluded failed runs and repeatability results remain unchanged.

@@ -6,7 +6,7 @@
 
 | Round | Task | Work and expected evidence | Status |
 |---|---|---|---|
-| 1 | [1. LDR transfer function](reports/task01-ldr.md) | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Six-distance ADC ladder and repeatability captured. DMM and one-code comparison pending |
+| 1 | [1. LDR transfer function](reports/task01-ldr.md) | Six-level light ladder, DMM and ADC readings, resistance, log-log power law and linear fit residuals, three repeats versus one ADC step | Six-distance ADC ladder and repeatability captured. Supplementary one-code sensitivity modeled; independent DMM/local ADC validation pending |
 | 1 | [2. DS18B20 characterization](reports/task02-ds18b20.md) | One probe or optional multidrop, four resolution settings, reference and unit means, outdoor transect, air/water step curves and time constants | One ROM, ten readings per resolution and water step verified. Current 20-reading warming/configuration evidence, reference, field and air step pending |
 | 2 | [3. Calibration](reports/task03-calibration.md) | Pot/ADC two-point voltage correction, LDR two-point power and linear models, DS18B20 cold offset | 3a and 3b validated at held-out points. 3a photos archived. 3c temperature references pending |
 | 2 | [4. Hysteresis and repeatability](reports/task04-repeatability.md) | LDR up/down curves, ten marked pot returns, ten readings per probe at 9 and 12 bits | One LDR sweep, pot and one DS18B20 verified. Controlled sweep timing and multi-probe comparison pending |
@@ -14,6 +14,23 @@
 | 3 | [6. Uncertainty and filter comparison (stretcher)](reports/task06-uncertainty-filtering.md) | Budget for one measured value, expanded uncertainty at k = 2, dominant term, moving average versus EMA and median | Available-data analysis complete. Conditional random budget; full uncertainty pending reference specifications and systematic bounds |
 | All | A. Shared study log | References, findings, verified LLM answers, examples, mini checks and calibration decisions | Evidence-based analytical notes added. Personal learning, pod agreement and classroom checks pending |
 | 2–3 | B. Two pod exchanges | Independent-point review, agreed learning, shared artefact and Discord post | Classroom activity pending |
+
+## Final status with supplementary simulation
+
+[Supplementary Simulation — Not Hardware Measurement](simulation/supplementary/README.md) contains reproducible parameters, synthetic CSVs, figures and limitations. These additions do not replace missing physical evidence. No further hardware experiments are planned for this submission stage.
+
+| Task | Hardware / analysis status | Supplementary status | Pending External Evidence |
+|---|---|---|---|
+| 1 | **Hardware Partially Completed**: six light conditions, fits and repeats | **Simulation Completed**: code-step and resistance sensitivity | LDR-session DMM rail/node checks and validated local voltage-per-code comparison |
+| 2 | **Hardware Partially Completed**: one probe, four resolution runs and water response | **Simulation Completed**: 80 warming points per resolution; ideal air/water models | Actual current warming/configuration exercise, reference temperatures, air and field observations |
+| 3a / 3b | **Hardware Completed** for recorded two-point fits and held-out validation; nominal-light limitations retained | Task 1 sensitivity reuses ADC calibration and the real LDR fit | Peer review; no claim of complete metrological traceability |
+| 3c | **Hardware Partially Completed**: stable indications only; **Reference Pending** | **Simulation Completed**: hypothetical cold offset, independent indoor/ice validation and reference sensitivity | Paired independent references and actual independent ice-water validation |
+| 4 | **Hardware Partially Completed**: manual LDR sweep, ten pot returns, one probe at two resolutions | **Simulation Completed**: scan rates/dwell and three explicitly virtual probes | Controlled real timing comparison and real additional probes; actual probe count remains one |
+| 5 | **Hardware Completed** for measured noise, digital-filter replay, real descending step and ADC threshold analysis | Existing synthetic spike/drift examples retained | No temperature-alarm hardware result is claimed; transition/latency limits remain in report |
+| 6 (stretcher) | Available-data analysis completed; conditional uncertainty only, no new hardware claim | Existing illustrative reference sensitivity retained | DMM accuracy, drift and systematic/model bounds for a complete uncertainty statement |
+| A / B | Evidence-based study notes prepared | Simulation is not personal or classroom evidence | Personal/member confirmation, shared agreement, exchanges and Discord post remain **Pending External Evidence** |
+
+The hardware labels describe the named experiment, not professor acceptance or completion of every associated classroom activity. The [final audit](reports/final-submission-audit.md) remains the detailed outstanding-requirements checklist.
 
 ## Tools and outputs
 

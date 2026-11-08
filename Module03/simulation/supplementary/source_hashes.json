@@ -1,0 +1,13 @@
+{
+  "evidence/task01-ldr/distance-10cm.csv": "6197a6ebedb224d7caaa81e62533af2c6c2ee28a8a93f9f2510f6bc90631441d",
+  "evidence/task01-ldr/distance-15cm-retry.csv": "4f7769c5f53df4d42c0ad3edbc9e3c74f25a3c908f1a8dca04c158d3a275f51f",
+  "evidence/task01-ldr/distance-20cm.csv": "d2468133f857bc3cc8ba8d9c2941b0c2234b44de84804b7e006f964046c43338",
+  "evidence/task01-ldr/distance-30cm.csv": "a1b51edcd7e60254ed68d70fc56c7b9257cf08c7e8e7cb1bf208fb69fb962dda",
+  "evidence/task01-ldr/distance-40cm.csv": "9d5291a8e7696085344eb27e7d495da7a23d81fd71a8e7ce105384acb56967ca",
+  "evidence/task01-ldr/distance-60cm-retry.csv": "4661737538cad6320200ac5c6095282479be884777d07388ee0f4716477b5c8b",
+  "evidence/task01-ldr/manifest.csv": "51e3090513cd9c783e77872ba840a530e34601ded6bc150c928e828207d6e844",
+  "evidence/task02-ds18b20/timing-retest/resolution-12.csv": "4e7703c04aea8da2e17d668aaad0cd82a2246d6759a652b492be683fe3874628",
+  "evidence/task03-calibration/adc/paired-points.csv": "f694ec2e16d9ba996ed21d11c9b04780bb3895e627cefdd496a7c35d9e324ee0",
+  "evidence/task04c-ds18b20/resolution-12.csv": "fdf55722f250ca2651155ffef4e2b4cd42eeb1cd20c2ad7477603dc6086be61d",
+  "figures/task02-ds18b20/water-step/summary.json": "6ce2722a1a9e0179f65a218f37bade7dc8deb1ac8d1b1b83f93489134ea83f03"
+}

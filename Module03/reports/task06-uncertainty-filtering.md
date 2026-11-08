@@ -125,3 +125,7 @@ The available-data Task 6 analysis is complete. It supplies a transparent partia
 ## Reproducibility
 
 Run `python Module03/analyze_uncertainty.py` from the repository root with the existing NumPy/Matplotlib environment. Outputs are under [data/task06-analysis](../data/task06-analysis/) and [figures/task06-analysis](../figures/task06-analysis/). The script checks analytic sensitivities against finite differences and verifies the two equivalent covariance calculations. Its [SHA-256 source inventory](../data/task06-analysis/source-hashes.csv) checks that original CSV bytes stay unchanged during execution.
+
+## Supplementary Simulation — Not Hardware Measurement
+
+The [supplementary index](../simulation/supplementary/README.md) adds sensitivity examples without altering the real budget or filter results. Task 1 models resistance sensitivity to a voltage step, and Task 3c illustrates offset sensitivity to assumed reference bounds. The [existing ADC reference-uncertainty grid](../data/task06-analysis/illustrative-reference-sensitivity.csv) already varies hypothetical reference uncertainty and correlation. All these scenarios remain separate from the conditional result above. They supply no missing DMM accuracy, drift bound or full metrological traceability; systematic terms remain Unknown/Pending.

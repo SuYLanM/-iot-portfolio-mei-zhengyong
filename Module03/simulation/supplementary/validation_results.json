@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "classification": "SUPPLEMENTARY_SIMULATION_NOT_HARDWARE_MEASUREMENT",
+  "csv_rows": {
+    "task01-quantization/modeled-one-code-sensitivity.csv": 12,
+    "task01-quantization/simulated-code-steps.csv": 60,
+    "task02-ds18b20/simulated-warming-resolutions.csv": 320,
+    "task02-ds18b20/simulated-water-air-response.csv": 522,
+    "task03c-calibration/illustrative-reference-sensitivity.csv": 4,
+    "task03c-calibration/simulated-calibration-validation.csv": 3,
+    "task04-hysteresis/simulated-ldr-rate-sweeps.csv": 1902,
+    "task04-hysteresis/simulated-matched-level-gaps.csv": 18,
+    "task04-hysteresis/simulated-virtual-probe-statistics.csv": 6,
+    "task04-hysteresis/simulated-virtual-probes.csv": 240
+  },
+  "source_hashes_verified": 11,
+  "images_decoded": [
+    "task01-quantization/quantization-sensitivity.png",
+    "task02-ds18b20/resolution-and-medium-models.png",
+    "task03c-calibration/simulated-offset-and-reference-sensitivity.png",
+    "task04-hysteresis/simulated-ldr-speed-and-dwell.png",
+    "task04-hysteresis/simulated-virtual-probes.png"
+  ],
+  "local_links_verified": 28,
+  "checks": [
+    "finite and labeled CSV values",
+    ">=20 synthetic samples per resolution",
+    "datasheet quantization grid and conversion-time scheduling",
+    "first-order 63.2% response",
+    "held-out synthetic calibration",
+    "finite-difference sensitivity",
+    "rate/dwell comparison",
+    "virtual units are labeled",
+    "original source hashes unchanged"
+  ]
+}

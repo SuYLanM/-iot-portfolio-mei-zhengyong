@@ -131,3 +131,9 @@ The current brief emphasizes measurement records and learning evidence. It does 
 5. Member-reviewed Task A entries and the actual Task B exchanges and Discord artefact.
 
 Class tables apply if supplied by the instructor. Optional light dynamics, fall-light, DHT11, self-heating, analog RC and IoTempower extensions remain optional. Meter specifications and controlled drift measurements would strengthen the conditional Task 6 budget.
+
+## Supplementary Simulation — Not Hardware Measurement
+
+The [supplementary package](../simulation/supplementary/README.md) now supplies reproducible quantization, temperature-resolution/thermal-response, hypothetical offset-calibration and rate/virtual-probe models. Its CSVs, assumptions, figures and validation are separate from hardware evidence. The earlier file-check counts describe the audit before this addition; the package has its own current [validation record](../simulation/supplementary/validation_results.json).
+
+This does not close any of the outstanding physical or classroom evidence listed above. In particular, Task 3c remains Reference Pending, Task 4 has only one real probe, and Task 6 remains a partial conditional budget. The [module status table](../README.md#final-status-with-supplementary-simulation) now distinguishes Hardware Completed, Hardware Partially Completed, Simulation Completed and Pending External Evidence. No new hardware work is planned at this stage; the submission is a disclosed partial-hardware portfolio with supplementary models. Personal/member confirmation, peer feedback and Discord sharing remain pending.
