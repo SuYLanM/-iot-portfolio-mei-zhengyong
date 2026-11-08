@@ -1,5 +1,6 @@
 """Reproducible Task 5 software simulation. No hardware samples are generated."""
 import json
+import argparse
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -9,6 +10,27 @@ from analyze import noise, read, table
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--real-baseline", type=Path)
+    args = parser.parse_args()
+    if args.real_baseline:
+        rows = read(args.real_baseline)
+        root = Path(__file__).resolve().parent / "simulation" / "task05" / "real-baseline-drift"
+        root.mkdir(parents=True, exist_ok=True)
+        drift = np.rint(np.linspace(-12, 12, len(rows))).astype(int)
+        source = root / "synthetic-drift-on-real.csv"
+        table(source, ["sample", "t_ms", "raw", "original_hardware_raw",
+                       "added_synthetic_drift", "provenance"],
+              ((row["sample"], row["t_ms"], int(row["raw"])+int(delta), row["raw"],
+                int(delta), "REAL_BASELINE_PLUS_SYNTHETIC_DRIFT")
+               for row, delta in zip(rows, drift)))
+        settings = SimpleNamespace(step_s=None, spike_codes=None, threshold=864, band=4,
+                                   label="SYNTHETIC slow drift added to a real LDR baseline")
+        result = noise(read(source), root, settings)
+        result["provenance"] = "REAL_BASELINE_PLUS_SYNTHETIC_DRIFT"
+        result["original_source"] = str(args.real_baseline)
+        (root / "summary.json").write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")
+        return
     root = Path(__file__).resolve().parent / "simulation" / "task05"
     root.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(20261109)

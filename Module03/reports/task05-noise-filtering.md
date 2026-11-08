@@ -98,9 +98,49 @@ For this hardware baseline, the artificial spike at index 250 caused a peak chan
 
 Fixed lamp placement and shielding do not establish perfectly constant illumination. Drift, flicker, sensor physics, source impedance and ADC electronics can all contribute. The separate API voltage conversion estimates node voltage and does not provide an independent DMM reference. Fixed-input SD reduction alone does not establish the latency on a real step.
 
-## Pending potentiometer measurements
+## Potentiometer measurements and decisions
 
-Task 5.1 and 5.4 are **Pending Hardware**. At the later wiring change, disconnect USB and detach the LDR node from GPIO34. Connect the pot outer terminals to 3V3 and GND and the wiper to GPIO34. Keep the current LDR circuit for this session.
+### Task 5.1 — ADC noise floor with the potentiometer
+
+**Hardware captured.** The operator disconnected the LDR node and connected the potentiometer wiper to GPIO34, with outer terminals at 3V3 and GND. The sketch compiled and flashed on COM3. A 32-sample check was non-clipped. After the operator fixed the wiper position, the first 500-row transmission had a corrupted header and was retained as an unparsed log. A complete 500-row retry was used for statistics.
+
+| Raw measurement | Fixed potentiometer | Earlier fixed LDR |
+|---|---:|---:|
+| Samples | 500 | 500 |
+| Mean code | 285.836 | 863.690 |
+| Sample SD (codes) | 1.94645 | 2.00548 |
+| Minimum / maximum | 272 / 291 | 852 / 878 |
+| Range | 19 | 26 |
+| Mean API voltage | 0.377076 V | 0.851632 V |
+
+The five 100-row pot means were 285.70, 285.80, 285.63, 285.94 and 286.11. The operator described the position as near the middle; its actual API voltage estimate was in the lower part of the input range. These experiments differ in operating voltage, source impedance, time and surroundings. The small SD difference cannot isolate LDR sensor noise from electrical noise.
+
+[Pot raw samples and serial evidence](../evidence/task05-noise/hardware-pot/) · [Fixed-pot statistics](../figures/task05-noise/hardware-pot-fixed/summary.json)
+
+![Real fixed-potentiometer noise and filter replay](../figures/task05-noise/hardware-pot-fixed/filters.png)
+
+### Task 5.4 — Real input transition and measured filter latency
+
+**Hardware transition captured with limitations.** The sketch added command `B` for at most 6000 GPIO34 samples at a nominal 20 ms interval and `x` to stop. Continuous logging started before the operator was prompted to rotate. The first attempt recorded a decreasing transition from about 3026 codes to zero and retained all 6000 rows. The retry began near 2038 codes (about 1.816 V API estimate) and also decreased to zero. It contains 4661 rows, including 1288 ADC floor codes. Both runs are preserved.
+
+The retry was analyzed using the measured pre-transition mean before 60 s and the terminal mean of the final 20 rows. A common 50% threshold of that observed raw span was used for every trace. Linear interpolation between adjacent samples supplied the crossing times below.
+
+| Trace | 50% crossing since run start | Additional delay relative to raw |
+|---|---:|---:|
+| Raw | 66.77716 s | 0 ms |
+| Mean-5 | 66.81300 s | 35.84 ms |
+| Median-5 | 66.81711 s | 39.95 ms |
+| EMA, alpha 0.2 | 66.85237 s | 75.21 ms |
+
+These are measured replay differences on a nonideal descending input. The 20 ms sample interval, noise and manual motion limit timing precision. The clipped endpoint prevents determining the physical voltage span beyond the ADC floor. The result demonstrates filter delay on this recorded signal; the requested clean rising, unclipped potentiometer step still needs a new capture. The measured values were not replaced with theoretical group delay.
+
+[Retry raw CSV](../evidence/task05-noise/hardware-pot/pot-step-retry-20261109-034147.csv) · [Latency calculations](../figures/task05-noise/hardware-pot-step/summary.json)
+
+Reproduce the latency and transition decisions with `python Module03/analyze.py noise Module03/evidence/task05-noise/hardware-pot/pot-step-retry-20261109-034147.csv Module03/figures/task05-noise/hardware-pot-step --step-s 60 --threshold 1019 --band 20 --label "HARDWARE descending ADC transition; final ADC floor"`.
+
+![Real descending transition with all samples retained](../figures/task05-noise/hardware-pot-step/filters.png)
+
+![Zoom around the common half-span threshold](../figures/task05-noise/hardware-pot-step/step-crossing-zoom.png)
 
 Use the same sketch and collector for both future potentiometer runs. The GPIO34 channel is named LDR in the existing sketch; the actual circuit connected determines the source.
 
@@ -113,7 +153,33 @@ python Module03/analyze.py noise POT_STEP.csv POT_STEP_OUTPUT --step-s OBSERVED_
 
 For the step, hold the first voltage during the initial baseline, turn quickly to a second voltage, then hold it for the rest of the capture. The 1000-point window targets 20 seconds. Use the trace and actual timestamps to identify onset. The Python script compares half-step crossing delays relative to raw. A five-point mean has a nominal two-sample group delay (about 40 ms at this cadence). EMA and median latency depend on the waveform and must be measured.
 
-Task 5.5 is **Software Prepared**. The existing `--threshold` and `--band` arguments replay a two-threshold decision. A real slow crossing and justified thresholds are pending. A dead zone can instead retain the previous output until the absolute input change exceeds a chosen band.
+### Task 5.5 — Threshold hysteresis and dead zone
+
+**Real-data decision replay completed, with a labeled synthetic drift supplement.** The single decision uses `x >= threshold`. Hysteresis switches on at threshold plus band and stays on until the input falls to threshold minus band. The dead-zone path retains its previous code until the absolute change is greater than the band, then applies the single threshold to that retained code.
+
+For the fixed LDR trace, center 864 codes was selected near the observed mean and band 4 codes was chosen to illustrate suppression of fluctuations. For the pot retry, center 1019 and band 20 were selected near half the observed span. These values are ADC demonstration settings.
+
+Reproduce the real fixed-LDR decision comparison with `python Module03/analyze.py noise Module03/evidence/task05-noise/hardware-ldr/ldr-fixed-500.csv Module03/figures/task05-noise/hardware-ldr-decisions --threshold 864 --band 4 --label "HARDWARE fixed LDR; decision replay"`.
+
+| Input and parameters | Single threshold transitions | Hysteresis transitions | Dead-zone transitions |
+|---|---:|---:|---:|
+| Real fixed LDR, center 864, band 4 | 231 | 10 | 25 |
+| Real pot transition, center 1019, band 20 | 1 | 1 | 1 |
+| Real LDR copy plus synthetic slow drift, center 864, band 4 | 41 | 5 | 13 |
+
+The fixed LDR shows how thresholds near a noisy value chatter. The one-direction pot transition crosses the threshold once for all three policies. A separate copy of the real LDR values was augmented with a rounded linear ramp from −12 to +12 codes to demonstrate a slow crossing. Original hardware columns, added drift and provenance are stored in the synthetic CSV. Reproduce with `python Module03/simulate_noise.py --real-baseline Module03/evidence/task05-noise/hardware-ldr/ldr-fixed-500.csv`.
+
+![Decision replay on the real fixed LDR record](../figures/task05-noise/hardware-ldr-decisions/decision.png)
+
+![Decision replay on the real potentiometer transition](../figures/task05-noise/hardware-pot-step/decision.png)
+
+![Synthetic slow drift applied to a copy of the real LDR baseline](../simulation/task05/real-baseline-drift/decision.png)
+
+For the frost-alarm scenario, separate turn-on and turn-off temperatures can reduce repeated heater switching near a threshold. Their separation also delays reversal and must be selected with uncertainty and the acceptable temperature range. This ADC replay does not validate a DS18B20 temperature alarm or heater. Median filtering helps isolated spikes; hysteresis and dead zones act on decisions and suppress small reversals with a loss of sensitivity.
+
+## Results and conclusion
+
+Tasks 5.1 and 5.2 have fresh 500-point hardware captures. Task 5.3 has real-data filter replay and an explicitly injected spike. Task 5.4 has measured relative delay for a real descending transition, with a clean rising step pending. Task 5.5 has real-data decision comparisons plus a labeled drift demonstration. Hardware uncertainty, input conditions and software timing limits remain part of interpreting these results.
 
 ## Figures and raw data
 

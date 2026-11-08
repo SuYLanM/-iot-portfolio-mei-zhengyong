@@ -10,6 +10,10 @@ void capture(int pin, int count) {
   int window[5] = {};
   float ema = 0;
   for (int i = 0; i < count; ++i) {
+    if (Serial.peek() == 'x') {
+      Serial.read();
+      break;
+    }
     const uint32_t target = start + i * INTERVAL_US;
     while (static_cast<int32_t>(micros() - target) < 0) {
       delayMicroseconds(100);
@@ -57,6 +61,7 @@ void setup() {
   Serial.println("# l/p: 32 LDR/pot samples; L/P: 500; S: 1000 pot samples");
   Serial.println("# t: 150 LDR samples with calibrated millivolt estimates");
   Serial.println("# W: 1000 GPIO34 samples for a later potentiometer step test");
+  Serial.println("# B: up to 6000 GPIO34 samples; x: stop after current sample");
 }
 
 void loop() {
@@ -66,6 +71,7 @@ void loop() {
     case 'p': capture(POT_PIN, 32); break;
     case 'L': capture(LDR_PIN, 500); break;
     case 'W': capture(LDR_PIN, 1000); break;
+    case 'B': capture(LDR_PIN, 6000); break;
     case 'P': capture(POT_PIN, 500); break;
     case 'S': capture(POT_PIN, 1000); break;
   }

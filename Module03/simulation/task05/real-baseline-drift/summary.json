@@ -1,0 +1,45 @@
+{
+  "raw": {
+    "n": 496,
+    "mean": 863.7903225806451,
+    "sd": 6.920937863168007,
+    "range": 34.0,
+    "sd_reduction_percent": 0.0
+  },
+  "mean5": {
+    "n": 496,
+    "mean": 863.6943548387097,
+    "sd": 6.693917666384923,
+    "range": 24.600000000000023,
+    "sd_reduction_percent": 3.28019411922833
+  },
+  "median5": {
+    "n": 496,
+    "mean": 863.6975806451613,
+    "sd": 6.78212700118111,
+    "range": 24.0,
+    "sd_reduction_percent": 2.005665485390684
+  },
+  "ema": {
+    "n": 496,
+    "mean": 863.5979768537408,
+    "sd": 6.667870852716914,
+    "range": 24.075828225029454,
+    "sd_reduction_percent": 3.65654215446537
+  },
+  "raw_all_samples": {
+    "n": 500,
+    "mean": 863.69,
+    "sd": 6.983368447227991,
+    "range": 34.0,
+    "min": 846.0,
+    "max": 880.0
+  },
+  "decision_transitions": {
+    "single": 41,
+    "hysteresis": 5,
+    "dead_zone": 13
+  },
+  "provenance": "REAL_BASELINE_PLUS_SYNTHETIC_DRIFT",
+  "original_source": "Module03\\evidence\\task05-noise\\hardware-ldr\\ldr-fixed-500.csv"
+}

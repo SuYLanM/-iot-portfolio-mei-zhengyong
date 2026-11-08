@@ -1,0 +1,48 @@
+{
+  "raw": {
+    "n": 496,
+    "mean": 863.6935483870968,
+    "sd": 2.012797116451977,
+    "range": 26.0,
+    "sd_reduction_percent": 0.0
+  },
+  "mean5": {
+    "n": 496,
+    "mean": 863.6943548387097,
+    "sd": 0.9365142694403698,
+    "range": 8.200000000000045,
+    "sd_reduction_percent": 53.47199865373447
+  },
+  "median5": {
+    "n": 496,
+    "mean": 863.6875,
+    "sd": 0.8995649902687252,
+    "range": 6.0,
+    "sd_reduction_percent": 55.30771666374316
+  },
+  "ema": {
+    "n": 496,
+    "mean": 863.6940518469104,
+    "sd": 0.6833025588278021,
+    "range": 5.894128889519152,
+    "sd_reduction_percent": 66.05208973906511
+  },
+  "raw_all_samples": {
+    "n": 500,
+    "mean": 863.69,
+    "sd": 2.0054784685395033,
+    "range": 26.0,
+    "min": 852.0,
+    "max": 878.0
+  },
+  "decision_transitions": {
+    "single": 231,
+    "hysteresis": 10,
+    "dead_zone": 25
+  },
+  "firmware_replay_max_difference_codes": {
+    "mean5": 0.0,
+    "median5": 0.0,
+    "ema": 0.00019608686329775082
+  }
+}

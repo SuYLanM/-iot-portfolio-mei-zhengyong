@@ -1,0 +1,24 @@
+{
+  "half_step_crossing_s": {
+    "raw": 66.77715987055556,
+    "mean5": 66.81300171061274,
+    "median5": 66.81711355202778,
+    "ema": 66.85237133126012
+  },
+  "delay_vs_raw_s": {
+    "raw": 0.0,
+    "mean5": 0.03584184005717361,
+    "median5": 0.039953681472212565,
+    "ema": 0.07521146070455131
+  },
+  "decision_transitions": {
+    "single": 1,
+    "hysteresis": 1,
+    "dead_zone": 1
+  },
+  "firmware_replay_max_difference_codes": {
+    "mean5": 0.0,
+    "median5": 0.0,
+    "ema": 0.00046346327712853963
+  }
+}

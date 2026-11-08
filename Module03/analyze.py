@@ -359,26 +359,46 @@ def noise(rows, out, args):
     if getattr(args, "label", None):
         fig.suptitle(args.label)
     save(fig, out, "filters")
+    if args.step_s is not None:
+        available = [v for v in crossings.values() if v is not None]
+        if available:
+            fig, ax = plt.subplots()
+            for key, y in traces.items():
+                ax.plot(t, y, label=key)
+            ax.axhline(halfway, color="gray", linestyle=":")
+            ax.set(xlim=(min(available)-0.5, max(available)+0.5),
+                   xlabel="Time (s)", ylabel="ADC codes")
+            ax.legend()
+            if getattr(args, "label", None):
+                fig.suptitle(args.label)
+            save(fig, out, "step-crossing-zoom")
     if args.threshold is not None:
         threshold, band = args.threshold, args.band
         if band <= 0:
             raise ValueError("Hysteresis half-width must be positive")
         direct = x >= threshold
         decision = [bool(direct[0])]
+        retained = [float(x[0])]
         for value in x[1:]:
             decision.append(value >= threshold+band if not decision[-1] else value > threshold-band)
+            retained.append(float(value) if abs(value-retained[-1]) > band else retained[-1])
+        dead_zone_decision = np.array(retained) >= threshold
         fig, ax = plt.subplots()
         ax.step(t, direct.astype(int), where="post", label="Single threshold")
         ax.step(t, np.array(decision, dtype=int), where="post", label="Hysteresis")
+        ax.step(t, dead_zone_decision.astype(int), where="post", label="Dead-zone then threshold")
         ax.set(xlabel="Time (s)", ylabel="Decision (0/1)")
         ax.legend()
         if getattr(args, "label", None):
             fig.suptitle(args.label)
         save(fig, out, "decision")
         stats["decision_transitions"] = {"single": int(np.count_nonzero(np.diff(direct))),
-                                          "hysteresis": int(np.count_nonzero(np.diff(decision)))}
+                                          "hysteresis": int(np.count_nonzero(np.diff(decision))),
+                                          "dead_zone": int(np.count_nonzero(np.diff(dead_zone_decision)))}
         traces["decision_single"] = direct.astype(int)
         traces["decision_hysteresis"] = np.array(decision, dtype=int)
+        traces["dead_zone_retained_codes"] = np.array(retained)
+        traces["decision_dead_zone"] = dead_zone_decision.astype(int)
     if all(key in rows[0] for key in ("mean5", "median5", "ema")):
         stats["firmware_replay_max_difference_codes"] = {
             key: float(np.max(np.abs(col(rows[4:], key)-traces[key][4:])))
