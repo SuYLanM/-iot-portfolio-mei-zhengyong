@@ -1,0 +1,11 @@
+{
+  "provenance": "SYNTHETIC_SIMULATION",
+  "seed": 20261109,
+  "samples_per_run": 500,
+  "sample_interval_ms": 20,
+  "fixed": "1800 codes plus Gaussian noise, sigma 12, rounded",
+  "step": "Ideal 1000 to 2000 code step at index 250; no hardware latency",
+  "drift": "1785 to 1815 codes plus Gaussian noise, sigma 6, rounded",
+  "voltage": "No voltage or resistance reference assigned",
+  "spike": "Add 1000 codes at index 250 of a separate fixed-input copy"
+}

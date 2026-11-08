@@ -12,6 +12,35 @@ The operator reported 3V3 → LDR → GPIO34 node → 10 kΩ → GND, with the p
 
 The first 32-sample hardware check returned raw ADC code 0 for every sample, and the voltage API returned 142 mV. The acquisition guard stopped before the 500-sample command because the input was at the ADC floor. This record is preserved. A new non-clipped capture under fixed illumination is required.
 
+After the operator reported fixing the illumination, a second 32-sample check also returned zero raw codes and a constant 142 mV API estimate. Independent voltage measurements were unavailable. The operator then requested a software simulation.
+
+## Simulation results — synthetic input
+
+**Software simulation completed. Hardware noise measurement remains pending.** The [reproducible generator](../simulate_noise.py) uses seed 20261109 and creates three 500-sample synthetic inputs at a nominal 20 ms interval. The fixed input is 1800 codes plus rounded Gaussian noise with sigma 12. The step is an ideal 1000-to-2000-code change. The slow drift is 1785 to 1815 codes plus rounded Gaussian noise with sigma 6. The generator assigns no voltage or resistance reference.
+
+The fixed-input 500-row mean was 1800.09 codes, sample SD 12.001 codes, minimum 1765, maximum 1840 and range 75. For the common valid interval, excluding the first four rows from every trace:
+
+| Signal | Samples | Mean (codes) | Sample SD (codes) | SD reduction |
+|---|---:|---:|---:|---:|
+| Synthetic raw | 496 | 1800.107 | 12.004 | 0% |
+| Mean-5 | 496 | 1800.114 | 5.107 | 57.45% |
+| Median-5 | 496 | 1799.968 | 6.213 | 48.24% |
+| EMA, alpha 0.2 | 496 | 1800.141 | 3.687 | 69.28% |
+
+![Simulation of fixed ADC input and three filters](../simulation/task05/fixed/filters.png)
+
+In a separate copy, a single +1000-code perturbation at index 250 caused peak deviations of 200 codes for mean-5, 3 codes for median-5, and 200 codes for EMA. These differences compare each perturbed output with its unperturbed counterpart. Median-5 suppressed the isolated spike most strongly in this example. EMA gave the lowest fixed-input SD at these settings, while mean-5 outperformed median-5 on the Gaussian input.
+
+![Simulation of a single-sample spike](../simulation/task05/fixed/synthetic-spike.png)
+
+On the synthetic ideal step, half-step crossing delays relative to raw were 40 ms for mean-5, 40 ms for median-5 and 52.34 ms for EMA. These are software timing estimates for this generated waveform. A real potentiometer step still needs measurement. On the synthetic slow drift, the single-threshold decision made 125 transitions and the two-threshold decision made 19 transitions using center 1800 and half-width 8 codes.
+
+![Simulation of filter step delay](../simulation/task05/step/filters.png)
+
+![Simulation of threshold hysteresis on a slow drift](../simulation/task05/drift/decision.png)
+
+Reproduce with `python Module03/simulate_noise.py`. [Synthetic inputs, parameters, CSV statistics and plots](../simulation/task05/) are stored separately from the [real serial evidence](../evidence/task05-noise/). The chosen noise distribution and ideal step do not establish how the present LDR or ADC hardware behaves.
+
 ## Task 5.3 — Filter comparison
 
 The [Python analysis](../analyze.py) implements a trailing mean of five samples, a trailing median of five samples and EMA with alpha 0.2. The first four rows are excluded from every comparison statistic, including the raw comparison, so all filters use the same 496 timestamps in a 500-row run. The EMA starts at the first raw code. All original samples remain archived.

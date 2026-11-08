@@ -1,0 +1,43 @@
+{
+  "raw": {
+    "n": 496,
+    "mean": 1800.2459677419354,
+    "sd": 10.634610157546808,
+    "range": 51.0,
+    "sd_reduction_percent": 0.0
+  },
+  "mean5": {
+    "n": 496,
+    "mean": 1800.1524193548387,
+    "sd": 9.088013761812716,
+    "range": 36.59999999999991,
+    "sd_reduction_percent": 14.543047397337416
+  },
+  "median5": {
+    "n": 496,
+    "mean": 1800.116935483871,
+    "sd": 9.372775721801029,
+    "range": 41.0,
+    "sd_reduction_percent": 11.865356764867618
+  },
+  "ema": {
+    "n": 496,
+    "mean": 1800.0700109328661,
+    "sd": 8.887752158956399,
+    "range": 34.70696488945259,
+    "sd_reduction_percent": 16.42615923584898
+  },
+  "raw_all_samples": {
+    "n": 500,
+    "mean": 1800.184,
+    "sd": 10.633356975157106,
+    "range": 51.0,
+    "min": 1773.0,
+    "max": 1824.0
+  },
+  "decision_transitions": {
+    "single": 125,
+    "hysteresis": 19
+  },
+  "provenance": "SYNTHETIC_SIMULATION"
+}

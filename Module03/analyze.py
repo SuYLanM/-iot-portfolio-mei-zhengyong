@@ -330,6 +330,8 @@ def noise(rows, out, args):
             ax.set(xlabel="Time (s)", ylabel="ADC codes", title="Synthetic single-sample injection")
             ax.set_xlim(t[max(0, index-20)], t[min(len(t)-1, index+30)])
             ax.legend()
+            if getattr(args, "label", None):
+                fig.suptitle(args.label)
             save(fig, out, "synthetic-spike")
         table(out / "noise-statistics.csv", ["signal", "n", "mean", "sd", "range", "sd_reduction_percent"],
               ([key, v["n"], v["mean"], v["sd"], v["range"], v["sd_reduction_percent"]]
@@ -354,6 +356,8 @@ def noise(rows, out, args):
         ax.axvline(args.step_s, color="gray", linestyle="--")
     ax.set(xlabel="Time (s)", ylabel="ADC codes")
     ax.legend()
+    if getattr(args, "label", None):
+        fig.suptitle(args.label)
     save(fig, out, "filters")
     if args.threshold is not None:
         threshold, band = args.threshold, args.band
@@ -368,6 +372,8 @@ def noise(rows, out, args):
         ax.step(t, np.array(decision, dtype=int), where="post", label="Hysteresis")
         ax.set(xlabel="Time (s)", ylabel="Decision (0/1)")
         ax.legend()
+        if getattr(args, "label", None):
+            fig.suptitle(args.label)
         save(fig, out, "decision")
         stats["decision_transitions"] = {"single": int(np.count_nonzero(np.diff(direct))),
                                           "hysteresis": int(np.count_nonzero(np.diff(decision)))}
@@ -419,6 +425,7 @@ def main():
     modes["noise"].add_argument("--spike-codes", type=float)
     modes["noise"].add_argument("--threshold", type=float)
     modes["noise"].add_argument("--band", type=float, default=3)
+    modes["noise"].add_argument("--label", help="Provenance label printed on generated plots")
     modes["budget"].add_argument("--value", type=float, required=True)
     modes["budget"].add_argument("--unit", required=True)
     args = parser.parse_args()

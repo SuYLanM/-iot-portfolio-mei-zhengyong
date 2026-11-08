@@ -1,0 +1,49 @@
+{
+  "raw": {
+    "n": 496,
+    "mean": 1800.1068548387098,
+    "sd": 12.003647315539363,
+    "range": 75.0,
+    "sd_reduction_percent": 0.0
+  },
+  "mean5": {
+    "n": 496,
+    "mean": 1800.1141129032258,
+    "sd": 5.107344920872533,
+    "range": 30.799999999999955,
+    "sd_reduction_percent": 57.45172457490648
+  },
+  "median5": {
+    "n": 496,
+    "mean": 1799.967741935484,
+    "sd": 6.212968494778204,
+    "range": 31.0,
+    "sd_reduction_percent": 48.24099432898878
+  },
+  "ema": {
+    "n": 496,
+    "mean": 1800.140807546292,
+    "sd": 3.686987882942087,
+    "range": 21.092642510685664,
+    "sd_reduction_percent": 69.28443675474301
+  },
+  "synthetic_spike": {
+    "index": 250,
+    "injected_codes": 1000,
+    "peak_deviation_codes": {
+      "raw": 1000.0,
+      "mean5": 200.0,
+      "median5": 3.0,
+      "ema": 200.0
+    }
+  },
+  "raw_all_samples": {
+    "n": 500,
+    "mean": 1800.09,
+    "sd": 12.001248265069751,
+    "range": 75.0,
+    "min": 1765.0,
+    "max": 1840.0
+  },
+  "provenance": "SYNTHETIC_SIMULATION"
+}

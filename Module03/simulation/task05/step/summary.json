@@ -1,0 +1,15 @@
+{
+  "half_step_crossing_s": {
+    "raw": 4.99,
+    "mean5": 5.029999999999999,
+    "median5": 5.029999999999999,
+    "ema": 5.04234375
+  },
+  "delay_vs_raw_s": {
+    "raw": 0.0,
+    "mean5": 0.03999999999999915,
+    "median5": 0.03999999999999915,
+    "ema": 0.05234374999999947
+  },
+  "provenance": "SYNTHETIC_SIMULATION"
+}
