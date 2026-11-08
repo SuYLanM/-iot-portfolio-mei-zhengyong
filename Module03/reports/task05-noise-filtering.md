@@ -132,7 +132,7 @@ The retry was analyzed using the measured pre-transition mean before 60 s and th
 | Median-5 | 66.81711 s | 39.95 ms |
 | EMA, alpha 0.2 | 66.85237 s | 75.21 ms |
 
-These are measured replay differences on a nonideal descending input. The 20 ms sample interval, noise and manual motion limit timing precision. The clipped endpoint prevents determining the physical voltage span beyond the ADC floor. The result demonstrates filter delay on this recorded signal; the requested clean rising, unclipped potentiometer step still needs a new capture. The measured values were not replaced with theoretical group delay.
+These are measured replay differences on a nonideal descending input. The 20 ms sample interval, noise and manual motion limit timing precision. The clipped endpoint prevents determining the physical voltage span beyond the ADC floor. A subsequent unclipped capture is described below.
 
 [Retry raw CSV](../evidence/task05-noise/hardware-pot/pot-step-retry-20261109-034147.csv) · [Latency calculations](../figures/task05-noise/hardware-pot-step/summary.json)
 
@@ -141,6 +141,29 @@ Reproduce the latency and transition decisions with `python Module03/analyze.py 
 ![Real descending transition with all samples retained](../figures/task05-noise/hardware-pot-step/filters.png)
 
 ![Zoom around the common half-span threshold](../figures/task05-noise/hardware-pot-step/step-crossing-zoom.png)
+
+#### Unclipped follow-up
+
+After checking a non-clipped starting position, logging began before the next rotation instruction. This run preserved **5553 samples** with **zero ADC floor or ceiling codes**. A small earlier movement changed the code by about 20, followed by the main descending transition near 86 s. The stable 75–85 s window averaged 1958.07 codes (1.7500 V API estimate) and the 95–110 s window averaged 1328.12 codes (1.2322 V API estimate). The requested increase was not observed. The recorded descending change is used for the following delay comparison.
+
+For a reproducible common 50% crossing, the analysis used all samples before 85 s for its initial mean and the last 20 rows for the terminal mean.
+
+| Trace | 50% crossing since run start | Additional delay relative to raw |
+|---|---:|---:|
+| Raw | 86.29012 s | 0 ms |
+| Mean-5 | 86.32757 s | 37.45 ms |
+| Median-5 | 86.33016 s | 40.03 ms |
+| EMA, alpha 0.2 | 86.35902 s | 68.90 ms |
+
+The unclipped run provides the preferred real-data latency comparison. All samples, including the earlier small movement and the manual transition, are retained. The input has a finite slew rather than an ideal instantaneous step, so interpolation precision does not imply sub-millisecond timing accuracy.
+
+[Unclipped original CSV](../evidence/task05-noise/hardware-pot/pot-step-clean-20261109-034900.csv) · [UART log](../evidence/task05-noise/hardware-pot/pot-step-clean-20261109-034900.serial.txt) · [Calculated latency](../figures/task05-noise/hardware-pot-step-unclipped/summary.json)
+
+![Unclipped real potentiometer transition](../figures/task05-noise/hardware-pot-step-unclipped/filters.png)
+
+![Unclipped half-span crossing comparison](../figures/task05-noise/hardware-pot-step-unclipped/step-crossing-zoom.png)
+
+Reproduce with `python Module03/analyze.py noise Module03/evidence/task05-noise/hardware-pot/pot-step-clean-20261109-034900.csv Module03/figures/task05-noise/hardware-pot-step-unclipped --step-s 85 --label "HARDWARE unclipped potentiometer transition"`.
 
 Use the same sketch and collector for both future potentiometer runs. The GPIO34 channel is named LDR in the existing sketch; the actual circuit connected determines the source.
 
@@ -179,7 +202,7 @@ For the frost-alarm scenario, separate turn-on and turn-off temperatures can red
 
 ## Results and conclusion
 
-Tasks 5.1 and 5.2 have fresh 500-point hardware captures. Task 5.3 has real-data filter replay and an explicitly injected spike. Task 5.4 has measured relative delay for a real descending transition, with a clean rising step pending. Task 5.5 has real-data decision comparisons plus a labeled drift demonstration. Hardware uncertainty, input conditions and software timing limits remain part of interpreting these results.
+Tasks 5.1 and 5.2 have fresh 500-point hardware captures. Task 5.3 has real-data filter replay and an explicitly injected spike. Task 5.4 has measured relative delay for a real unclipped descending transition. An ascending transition was not obtained. Task 5.5 has real-data decision comparisons plus a labeled drift demonstration. Hardware uncertainty, input conditions and software timing limits remain part of interpreting these results.
 
 ## Figures and raw data
 
