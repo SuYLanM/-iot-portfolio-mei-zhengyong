@@ -11,5 +11,6 @@ The ESP32 reads the Capacitive Soil Moisture Sensor V1.2 at 500 ms intervals usi
 | [ADC over time](images/adc_over_time.png) | Modeled traces across seven windows |
 | [Experimental setup photograph](images/experimental_setup.jpg) | ESP32 on a breadboard connected to the probe at the water cup |
 | [Bench diagnostic archive](data/) | Air and approximately 1 cm immersion captures, including original and deduplicated records |
+| [Operator-supplied calibration samples](data/operator-supplied-depth-calibration.csv) | 63 ADC readings at reported depths of 1, 2, and 3 cm |
 
-The bench diagnostic returned ADC 0 in both conditions. A valid hardware depth calibration is pending.
+The initial bench diagnostic returned ADC 0 in both conditions. A separate operator-supplied dataset was used to fit a two-point calibration at 1 and 3 cm and check it at a held-out 2 cm level. The predicted depth was 2.139 cm. The supplied lists did not include timestamps or a serial export.
