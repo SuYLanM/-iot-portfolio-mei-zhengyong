@@ -67,6 +67,18 @@ The operator supplied 21 integer ADC readings at each reported depth of 1, 2, an
 
 Fitting only the 1 cm and 3 cm means gives `ADC = 2869.59524 − 319.88095 × depth_cm`. Inverting the line at the held-out 2 cm mean gives **2.139 cm**, a signed error of **+0.139 cm** relative to the reported reference depth. The depth check verifies the calibration against this one operator-supplied level. The measured error does not establish an accuracy specification across the full range.
 
+### Supplementary timestamped data
+
+The [timestamped CSV supplied by the operator](data/operator-supplied-depth-timestamped.csv) contains 21 readings per depth. Its timestamps are 200 ms apart within each group, with a 4.0 s span from first to last. The archived sketch samples every 500 ms. The ADC values also differ from the untimestamped list at 52 of 63 corresponding row positions. The timestamp source and the relationship between the two submissions have not been confirmed, so the datasets are analyzed separately.
+
+| Reported depth (cm) | n | Mean ADC | Minimum | Maximum | Sample SD |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 21 | 2550.90 | 2532 | 2569 | 7.50 |
+| 2 | 21 | 2187.43 | 2166 | 2207 | 10.63 |
+| 3 | 21 | 1910.67 | 1895 | 1926 | 7.82 |
+
+Fitting the timestamped 1 and 3 cm means gives `ADC = 2871.02381 − 320.11905 × depth_cm`. The held-out 2 cm mean gives **2.135 cm**, a signed error of **+0.135 cm**. This supplementary calculation does not resolve the timing discrepancy or establish repeatability between independent runs.
+
 ## 6. Discussion
 
 A capacitive probe creates an electric field around its electrodes. Water changes the effective permittivity within that field as more of the probe is wetted, changing the capacitance sensed by the circuit. The module converts its electrical response to an analog output, which the ESP32 digitizes. The output polarity and sensitivity depend on the electronics and geometry. The probe's response in a cup may also depend on water composition, probe position, nearby surfaces, and the presence of residual moisture. [DFRobot capacitive sensing reference](https://wiki.dfrobot.com/sen0193/docs/18035) · [Texas Instruments capacitive liquid-level sensing reference](https://www.ti.com/lit/ds/symlink/fdc1004.pdf)
