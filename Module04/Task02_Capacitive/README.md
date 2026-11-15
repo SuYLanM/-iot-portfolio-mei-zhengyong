@@ -4,7 +4,7 @@ The ESP32 reads the Capacitive Soil Moisture Sensor V1.2 at 500 ms intervals usi
 
 | Resource | Contents |
 |---|---|
-| [Arduino sketch](Module4_Task2_Capacitive.ino) | GPIO34 logger with elapsed time and raw ADC counts |
+| [Arduino sketch](Task02_Capacitive.ino) | GPIO34 logger with elapsed time and raw ADC counts |
 | [Experiment report](experiment-report.md) | Procedure, results, discussion, and calibration status |
 | [Synthetic dataset](simulation/synthetic-capacitive-water-level.csv) | Original 147 modeled samples with provenance in each row |
 | [ADC vs depth](images/adc_vs_depth.png) | Modeled mean and sample standard deviation by depth |

@@ -19,7 +19,7 @@ Evaluate how the analog output of a capacitive probe can be used to distinguish 
 | GND | GND |
 | AOUT | GPIO34 |
 
-The [Arduino sketch](Module4_Task2_Capacitive.ino) configures GPIO34 as an input and reads the 12-bit ADC every 500 ms. The serial output contains the elapsed device time in milliseconds and the raw ADC count at 115200 baud. Counts are used directly because the input voltage was not independently calibrated. [Arduino-ESP32 ADC documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html)
+The [Arduino sketch](Task02_Capacitive.ino) configures GPIO34 as an input and reads the 12-bit ADC every 500 ms. The serial output contains the elapsed device time in milliseconds and the raw ADC count at 115200 baud. Counts are used directly because the input voltage was not independently calibrated. [Arduino-ESP32 ADC documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html)
 
 ![Experimental setup showing the ESP32, breadboard, capacitive probe, and water cup](images/experimental_setup.jpg)
 

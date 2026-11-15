@@ -32,6 +32,10 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 
 [Module 03 guide and task checklist](Module03/README.md) links to ESP32 capture sketches, CSV templates, analysis tools and the lab report. Software preparation is verified. Bench measurements and classroom exchanges are pending.
 
+## Module 04 — Liquid Measurement & Sensor Selection
+
+[Module 04 report and experiment index](Module04/README.md) links to conductive and capacitive liquid measurement, six-axis IMU measurements, and the attributed partner material on binary detection, sea-state classification, and tank sensor selection.
+
 ## Pre-study and Preparation
 
 - [Module 0 pre-study](00-pre-study.md): original notes, datasheet study, project idea and Wokwi evidence; retained as submitted.
@@ -57,6 +61,7 @@ Module01/
   records/                  Follow-up plans and blank measurement tables
 Hardware/pictures/          Original hardware photographs and screenshots
 Module02/                   Bus/I2C theory and code; hardware tests pending
+Module04/                   Liquid-level and IMU experiments with partner reference material
 Reflections/                Reflection instructions and original prompts
 sketch.ino, diagram.json    Original Wokwi preparation source
 wokwi_*.png                 Original simulation screenshots

@@ -1,6 +1,6 @@
 # Module 4 Task 3 — Six-axis attitude measurement
 
-Open `Module4_Task3_IMU.ino` in Arduino IDE. Select **M5StickS3** from the M5Stack board package. The sketch uses M5Unified to initialize the built-in BMI270 and M5GFX display. Open the native USB serial port at 115200 baud. The sketch targets 25 serial samples per second and refreshes the screen about five times per second.
+Open `Task03_IMU.ino` in Arduino IDE. Select **M5StickS3** from the M5Stack board package. The sketch uses M5Unified to initialize the built-in BMI270 and M5GFX display. Open the native USB serial port at 115200 baud. The sketch targets 25 serial samples per second and refreshes the screen about five times per second.
 
 The local build uses M5Stack ESP32 3.3.10, M5Unified 0.3.0, M5GFX 0.3.0, and M5PM1 1.0.7. Select OPI PSRAM, Hardware CDC and JTAG, and USB CDC on boot. To enter download mode manually, hold the side Reset button until the green LED flashes, then release it. Windows can assign a different COM port in download mode.
 

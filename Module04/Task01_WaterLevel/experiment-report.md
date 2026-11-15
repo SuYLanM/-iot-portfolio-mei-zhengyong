@@ -2,7 +2,7 @@
 
 ## Setup and procedure
 
-The two metal probes were connected to the LM393 module. The ESP32 DevKit supplied 3.3 V and shared ground with the module. AO went to GPIO34 and DO to GPIO18. The [Arduino sketch](Module4_Task1_WaterLevel.ino) used 12-bit ADC readings, 500 ms sampling, and a 115200 baud serial connection on COM3.
+The two metal probes were connected to the LM393 module. The ESP32 DevKit supplied 3.3 V and shared ground with the module. AO went to GPIO34 and DO to GPIO18. The [Arduino sketch](Task01_WaterLevel.ino) used 12-bit ADC readings, 500 ms sampling, and a 115200 baud serial connection on COM3.
 
 After the operator confirmed each position, 21 samples were recorded over a 10.0 s first-to-last interval. The same probe pair was used for all five conditions. The immersion depths are approximate. In E the probes were fully out of the water and left unwiped. Gaps between windows correspond to periods without recorded samples, so the plot cannot establish the timing of the actual transitions.
 

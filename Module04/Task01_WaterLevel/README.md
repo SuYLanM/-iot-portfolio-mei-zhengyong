@@ -13,7 +13,7 @@
 
 ## 打开程序和校准
 
-1. 在 Arduino IDE 中打开本目录的 `Module4_Task1_WaterLevel.ino`。选择对应的 ESP32 DevKit 板型，经典 ESP32 可选 **ESP32 Dev Module**。选择实际串口，点击验证，再手动上传。
+1. 在 Arduino IDE 中打开本目录的 `Task01_WaterLevel.ino`。选择对应的 ESP32 DevKit 板型，经典 ESP32 可选 **ESP32 Dev Module**。选择实际串口，点击验证，再手动上传。
 2. 打开串口监视器，设为 **115200 baud**。每 500 ms 输出 `time_ms,AO,DO,state`。AO 是 12 位原始读数（0–4095），DO 为 0 或 1。校准前状态为 `UNCALIBRATED`。
 3. 把干燥探针放在空气中，等 DO 稳定后发送 `d`。再将两根探针浸入水中至清楚可重复的深度，等 DO 稳定后发送 `w`。两次 DO 必须不同，程序才会显示 `DRY` 或 `WET`。
 4. 若两次 DO 相同，先检查接线和 AO 是否随浸水变化。如果模块有阈值电位器，在干湿条件之间调整并复查 DO。调整阈值后发送 `r`，重新记录两个参考。重启也会清空校准。
