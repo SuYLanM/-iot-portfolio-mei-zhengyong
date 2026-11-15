@@ -25,6 +25,8 @@ The [Arduino sketch](Task02_Capacitive.ino) configures GPIO34 as an input and re
 
 *Figure 1. The physical bench setup used for the hardware check.*
 
+[Wiring close-up of the ESP32 and V1.2 probe](images/capacitive_wiring_closeup.jpg)
+
 ## 4. Experimental Procedure
 
 1. Connect the sensor and upload the sketch. Confirm the serial stream and sampling interval in air.
