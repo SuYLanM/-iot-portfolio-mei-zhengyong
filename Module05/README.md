@@ -11,7 +11,7 @@ hardware method. Every build is a PlatformIO project against
 | Task | Deliverable | Status | Evidence |
 |---|---|---|---|
 | [1 — One LED, PWM fade](#task-1--one-led-pwm-fade) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output--task-1); photo pending |
-| [2 — RGB LED and `R G B` REPL](#task-2--rgb-led-and-serial-repl) | [`task2-rgb/`](task2-rgb/) | Built, flashed, R/G/B/white verified on hardware | [REPL transcript](#task-2--rgb-led-and-serial-repl); photo and currents pending |
+| [2 — RGB LED and `R G B` REPL](#task-2--rgb-led-and-serial-repl) | [`task2-rgb/`](task2-rgb/) | Built, flashed, R/G/B/white verified on hardware; photographic measurements added | [Nine original photos and current analysis](task2-rgb/README.md#photographic-measurements-and-branch-current-calculation); blue assignment and complete per-channel currents pending |
 | 3 — 8-pixel WS2812B strip | `task3-strip/` | Not started | — |
 
 ## Equipment
@@ -123,13 +123,18 @@ than in the LED wiring:
    accepting CR, LF and CRLF in the firmware.
 
 Observation carried into the power work: at the same duty value the red channel is
-visibly brighter than green and blue. That is the forward-voltage difference the
-module describes (red ≈1.9 V, green ≈2.1 V, blue ≈3.0–3.4 V), not a fault — the
-per-channel currents still have to be measured to quantify it.
+visibly brighter than green and blue. Forward voltage affects branch current,
+but optical efficiency and visual sensitivity also influence perceived brightness.
+The [photographic measurement analysis](task2-rgb/README.md#photographic-measurements-and-branch-current-calculation)
+now records nine original images: green gives approximately 4.5 mA using the
+documented nominal 220 ohm resistor. Near-white gives an estimated 3.2 mA in one
+unidentified branch, with an unresolved 0.2 V voltage-balance difference. The blue
+photo assignments are inconsistent and need confirmation before a validated
+current can be reported. These images do not document their exact PWM commands.
 
 ## Evidence to add
 
 1. Photo or video of the fade with the 220 ohm resistor visible.
-2. Measured current at full duty (Task 1) and per channel (Task 2).
-3. Photo or video of the RGB LED showing red, green, blue and white.
-4. The `Module05/README.md` study-log entries completed with the measurements.
+2. Measured current at full duty (Task 1); red-only current and confirmed blue/per-channel measurements (Task 2).
+3. Red-only RGB photo or video; green, blue and near-white measurement photographs are already linked in the Task 2 report.
+4. Confirm blue probe-node assignments, the measured near-white branch, and PWM settings for a complete Task 2 comparison.
