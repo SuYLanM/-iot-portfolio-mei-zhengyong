@@ -38,12 +38,12 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 
 ## Module 05 — LEDs and Light as Output
 
-[Module 05 guide and task index](Module05/README.md) documents the PWM fade on a single LED and links the upcoming RGB LED and WS2812B strip tasks. Task 1 is built, flashed and serial-verified on real hardware; Tasks 2 and 3 are not started.
+[Module 05 guide and task index](Module05/README.md) documents the PWM fade on a single LED and the RGB LED serial `R G B` REPL. Tasks 1 and 2 are built, flashed and verified on real hardware; Task 3 is not started.
 
 | Task | Evidence status | Project | Hardware evidence |
 |---|---|---|---|
 | 1 — One LED, PWM fade | Built, flashed, serial verified (GPIO 13) | [task1-led](Module05/task1-led/) | Serial capture; photo and current measurement pending |
-| 2 — RGB LED `R G B` REPL | Not started | — | — |
+| 2 — RGB LED `R G B` REPL | Built, flashed, R/G/B/white verified on hardware | [task2-rgb](Module05/task2-rgb/) | REPL transcript; photo and per-channel currents pending |
 | 3 — 8-pixel WS2812B | Not started | — | — |
 
 This board does not break out GPIO 16, so the module's default pin is replaced by GPIO 13 (and GPIO 14 / 27 for the RGB channels); the reasoning is recorded in [Module 05 — wiring](Module05/README.md#wiring--task-1).
