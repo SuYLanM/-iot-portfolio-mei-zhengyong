@@ -5,7 +5,9 @@ Project rules for any AI agent working in this folder.
 ## Board
 
 - MH-ET LIVE ESP32 MiniKit, PlatformIO board id `mhetesp32minikit`
-- Platform `espressif32` 8.0.0, Arduino framework, Arduino core 3.3.12
+- Previously reported toolchain: `espressif32` 8.0.0, Arduino core 3.3.12.
+  The configuration uses the Arduino framework but does not pin package versions;
+  verify the resolved toolchain when rebuilding rather than assuming these reports.
 - PlatformIO CLI `pio` is on PATH. Work from this folder (the one holding
   `platformio.ini`); keep the project on an ASCII path.
 
@@ -37,21 +39,23 @@ Project rules for any AI agent working in this folder.
   `#include <NeoPixelBusLg.h>` — including only `NeoPixelBus.h` gives
   "'NeoPixelBusLg' does not name a type".
 - Driver: `NeoEsp32Rmt0Ws2812xMethod` (RMT channel 0, hardware waveform). The
-  legacy RMT driver prints a deprecation warning on Arduino core 3.x; it is
-  harmless.
+  existing record reports a legacy-RMT deprecation warning. Do not treat
+  this as a Wi-Fi/BLE stress-test result or compatibility with every core version.
 - Colour order is `NeoGrbFeature` (the strip is GRB, not RGB).
 
 ## Power
 
 - `strip.SetLuminance(80)` or lower. 8 x 60 mA = 480 mA at full white, which is
-  already the USB 2.0 port limit before the ESP32's own 100-250 mA.
+  close to a 500 mA budget before adding the board. This is a planning
+  assumption, not a measurement or a guarantee of available port power.
+  Preserve the earlier luminance-96 photos without changing the source cap of 80.
 - Never power the strip from a GPIO or from the 3V3 pin.
 
 ## Firmware rules
 
 - `src/main.cpp` must start with `#include <Arduino.h>`.
 - Serial protocol: `index R G B` with `index` 0..7 and values 0..255, plus
-  `clear`. Echo every applied change and reject malformed, out-of-range or
+  `all R G B` and `clear`. Echo every applied change and reject malformed, out-of-range or
   out-of-bounds input with an error line.
 - Accept CR, LF and CRLF as line endings, and drop other control bytes (a stray
   NUL arrives when the port opens).

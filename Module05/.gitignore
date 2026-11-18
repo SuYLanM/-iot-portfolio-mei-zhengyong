@@ -1,0 +1,23 @@
+# Every Module05 project: keep source, reports and evidence.
+.pio/
+compile_commands.json
+.vscode/
+build/
+__pycache__/
+*.py[cod]
+*.bin
+*.elf
+*.hex
+*.uf2
+*.o
+*.a
+*.map
+# Ignoring is not a substitute for checking staged content for secrets.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
+secrets.h

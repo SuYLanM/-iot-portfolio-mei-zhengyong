@@ -10,9 +10,10 @@ hardware method. Every build is a PlatformIO project against
 
 | Task | Deliverable | Status | Evidence |
 |---|---|---|---|
-| [1 — One LED, PWM fade](#task-1--one-led-pwm-fade) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output--task-1); photo pending |
+| [1 — One LED, PWM fade](task1-led/README.md) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output--task-1); photo pending |
 | [2 — RGB LED and `R G B` REPL](#task-2--rgb-led-and-serial-repl) | [`task2-rgb/`](task2-rgb/) | Built, flashed, R/G/B/white verified on hardware; photographic measurements added | [Nine original photos and current analysis](task2-rgb/README.md#photographic-measurements-and-branch-current-calculation); blue assignment and complete per-channel currents pending |
 | [3 — 8-pixel WS2812B strip](task3-strip/README.md) | [`task3-strip/`](task3-strip/) | Source archived; selected-pixel and eight-pixel outputs documented | [Six photos and English experiment report](task3-strip/experiment-report.md); current/power not verified |
+| [4 — Share the repo](#task-4--share-the-repo-audit) | Unified projects, documentation and evidence | Repository preparation complete; measurements and Discord evidence remain partial | [Audit checklist](#task-4--share-the-repo-audit) |
 
 ## Equipment
 
@@ -52,7 +53,7 @@ G = GPIO 14, B = GPIO 27, and WS2812B data = GPIO 13.
 | Common | — | direct wire | GND (common cathode) |
 
 Each channel needs its own 220 ohm resistor: a shared resistor couples the
-channels, so "red only" would light the other two as well. Task 2 reuses GPIO 13
+channel currents and changes colour balance when multiple channels are on. Task 2 reuses GPIO 13
 from Task 1, so the single LED has to be unplugged first.
 
 The part in use behaves as a **common cathode** build (`COMMON_ANODE = false`). A
@@ -162,9 +163,9 @@ out-of-range values and wrong arity. Verified over the serial console:
 Two points the module asks this build to justify:
 
 1. **Driver method.** The RMT peripheral generates the 800 kHz NRZ waveform in
-   hardware, so Wi-Fi/BLE interrupts cannot corrupt a frame; a bit-banged or
-   software-timed path would glitch under radio load. The legacy RMT driver
-   prints a deprecation warning on Arduino core 3.3.12, which is harmless.
+   hardware, reducing dependence on CPU instruction timing compared with
+   bit-banging. This follows the library guidance; no Wi-Fi/BLE stress test is
+   archived here. The existing record reports a legacy-driver deprecation warning.
 2. **Power.** Only the 8-pixel case exists on this bench, so the 30 / 60 / 144
    rows are extrapolated from the per-pixel cost rather than observed. The
    per-pixel cost itself still has to be measured with a meter.
@@ -183,6 +184,25 @@ luminance 96, whereas the archived source uses 80; quantitative comparisons
 must preserve this distinction. No fresh build or hardware run was performed
 for the photographic report update.
 
+### Task 4 study-log addition
+
+This is a record-based technical reflection, not an invented classroom exchange.
+Checking the archived source showed GPIO13 despite an old Task 1 comment saying
+GPIO16. Comparing images with source also exposed luminance **96 versus 80**.
+The electrical review checked the AI-derived green-current estimate against the
+photographed 1.0 V resistor drop and nominal 220 ohm, while rejecting a numerical
+strip-current claim because the meter shows mV without a known shunt.
+The learning is that a plausible calculation needs correct units, measurement
+nodes, operating settings, and source-version context to become evidence.
+
+The portfolio URL to share is
+[Module05](https://github.com/SuYLanM/-iot-portfolio-mei-zhengyong/tree/main/Module05).
+This is the configured origin (its repository name starts with a hyphen).
+**Discord sharing: Pending**. When actually posted, add the message URL or
+screenshot; neither a repository push nor this prepared link proves it was shared.
+No jointly agreed learning or peer feedback is claimed here.
+
+
 ## Evidence to add
 
 1. Photo or video of the fade with the 220 ohm resistor visible.
@@ -192,4 +212,89 @@ for the photographic report update.
 5. Strip off/single/eight-pixel photographs are archived; retain the luminance-96 versus source-luminance-80 distinction.
 6. Measured strip current at `SetLuminance(80)`: baseline, one pixel, all eight,
    so the 30 / 60 / 144 rows can be derived rather than only asserted.
-7. The `Module05/README.md` study-log entries completed with the measurements.
+7. Actual Discord share link or screenshot and any later measurement records; the existing Study log preserves current limitations.
+
+
+## Project navigation and serial control
+
+| Task | Source | Build configuration | Development rules | Report and photographs |
+|---|---|---|---|---|
+| 1 | [main.cpp](task1-led/src/main.cpp) | [platformio.ini](task1-led/platformio.ini) | [AGENTS.md](task1-led/AGENTS.md) | [README](task1-led/README.md); dedicated fade photo/video pending |
+| 2 | [main.cpp](task2-rgb/src/main.cpp) | [platformio.ini](task2-rgb/platformio.ini) | [AGENTS.md](task2-rgb/AGENTS.md) | [Report](task2-rgb/README.md), [9 original photos](task2-rgb/images/) |
+| 3 | [main.cpp](task3-strip/src/main.cpp) | [platformio.ini](task3-strip/platformio.ini) | [AGENTS.md](task3-strip/AGENTS.md) | [Project README](task3-strip/README.md), [report](task3-strip/experiment-report.md), [6 original photos](task3-strip/images/) |
+
+The shared [AGENTS.md](AGENTS.md) records board, pins, libraries and evidence
+rules. All three projects use 115200 baud. Task 1 runs automatically. Task 2
+accepts `R G B` (0..255) or `off`; for example `0 255 0` requests green.
+Task 3 accepts `index R G B` (index 0..7), `all R G B`, or `clear`; for example
+`0 255 0 0` selects pixel 0 red. Invalid input is rejected by the archived
+parsers. These are usage examples, not a newly acquired serial transcript.
+CR, LF and CRLF are accepted; the documented Windows workaround leaves
+`send_on_enter` disabled. Detect the current port with `pio device list` rather
+than assuming the historical COM8 remains assigned.
+
+The Task 3 driver is `NeoEsp32Rmt0Ws2812xMethod`, RMT channel 0, with
+`NeoGrbFeature` and `NeoPixelBusLg` from `NeoPixelBusLg.h`. The hardware method
+is consistent with [NeoPixelBus guidance](https://github.com/Makuna/NeoPixelBus/wiki/ESP32-NeoMethods).
+It reduces software-timing dependence; it is not proof of immunity to every
+interrupt, supply fault or data-level problem. Strip power and data are separate:
+5 V power does not establish a guaranteed input-high margin for 3.3 V data.
+The photos demonstrate operation in this setup, not a worst-case logic-margin
+test. Check the particular strip's input specification for a robust installation.
+
+## Measured currents and calculated estimates
+
+| Experiment / condition | Current record | Evidence and qualification |
+|---|---|---|
+| Task 1, external LED | **Not measured** | No resistor-drop/current reading archived for this LED. |
+| Task 2, green | Approximately **4.5 mA**, calculated from measurement | 1.0 V resistor indication / nominal 220 ohm; [photos](task2-rgb/README.md#green-condition). |
+| Task 2, red alone | **Not measured** | No red-only current or resistor-drop evidence. |
+| Task 2, blue | **Not measured reliably** | Supplied photo-node assignments conflict; 12.7 mA is conditional arithmetic, not a validated current. A possible 0.4 V resistor reading would imply 1.8 mA only if confirmed. |
+| Task 2, near-white | Approximately **3.2 mA**, qualified branch estimate | 0.7 V / nominal 220 ohm; branch unspecified, 0.2 V voltage-balance discrepancy. Not total RGB current. |
+| Task 3, strip off / one / eight lit | **Not measured** | Meter photos show 0.8 / 2.7 / 16.0 **mV**, not mA; shunt and nodes unknown. |
+
+No resistor tolerance, exact PWM setting, calibrated meter accuracy, or total
+strip current is invented. These qualifications remain part of the result.
+
+## Strip power budget — computed versus measured
+
+For planning only, use the course's conservative **60 mA per pixel at full white**
+model. Actual strip variants, idle current, brightness scaling, and supply voltage
+can change the result. The luminance-80 column uses a simple proportional model:
+`I80 = n × 60 mA × 80/255`; power uses a **nominal 5 V**, not a measured supply.
+
+| Pixels | Full-white current, computed | Full-white power at 5 V, computed | Luminance 80 current, computed | Luminance 80 power at 5 V, computed | Measured current |
+|---|---:|---:|---:|---:|---|
+| 8 | 0.480 A | 2.40 W | 0.151 A | 0.75 W | **Not measured** |
+| 30 | 1.800 A | 9.00 W | 0.565 A | 2.82 W | **Not measured**; no 30-pixel test |
+| 60 | 3.600 A | 18.00 W | 1.129 A | 5.65 W | **Not measured**; no 60-pixel test |
+| 144 | 8.640 A | 43.20 W | 2.711 A | 13.55 W | **Not measured**; no 144-pixel test |
+
+Only the eight-pixel assembly is photographed. At full white, its modelled
+480 mA leaves just 20 mA within a nominal 500 mA USB allowance for everything
+else, so it is unsuitable as a whole-system budget. Luminance 80 provides more
+headroom but is not a supply qualification. The photographs use an earlier
+luminance 96 and must not validate the luminance-80 estimates. Larger strips need
+a separately rated 5 V supply, shared ground, suitable wiring and power injection;
+include the controller and design margin. Do not assume USB-C current capability
+from connector shape alone. [Power guidance](https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels)
+explains supply sizing; the actual source must be checked.
+
+## Task 4 — Share the repo audit
+
+This audit follows the [official Module 5 task](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/05-leds-and-light-output.md#-task-4--share-the-repo-ai-first).
+The three independent projects are already consolidated under `Module05/`;
+no relocation or replacement of earlier evidence was necessary.
+
+| Deliverable | Status in this repository |
+|---|---|
+| Three projects with source and configuration | Present; original firmware preserved. |
+| Module README, wiring, REPL, driver and power table | Present, with measured/computed distinctions. |
+| Module rules and per-project README / AGENTS | Present; actual GPIO13/14/27 mapping, GRB, eight pixels, 115200 baud and cap 80 checked against source. |
+| Photographic evidence | Task 2: nine originals; Task 3: six originals; Task 1 dedicated fade evidence pending. |
+| Measured current records | Partial; see current table. Missing readings stay Not measured. |
+| Build products and local secrets | Module ignore rules added; tracked-file and link checks performed. No new firmware upload. |
+| Source/version reproducibility | Board and dependency names documented. Platform/library versions are unpinned, so fresh builds can resolve differently; no fresh compile claimed in this audit. |
+| Portfolio commit and push | Included in this Task 4 update; use Git history for the exact commit. |
+| Repo URL in Study log | Recorded below. |
+| Discord post | **Pending external evidence**; no post or peer confirmation supplied or created. |

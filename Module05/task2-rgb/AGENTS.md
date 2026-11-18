@@ -5,7 +5,9 @@ Project rules for any AI agent working in this folder.
 ## Board
 
 - MH-ET LIVE ESP32 MiniKit, PlatformIO board id `mhetesp32minikit`
-- Platform `espressif32` 8.0.0, Arduino framework, Arduino core 3.3.12
+- Previously reported toolchain: `espressif32` 8.0.0, Arduino core 3.3.12.
+  The configuration uses the Arduino framework but does not pin package versions;
+  verify the resolved toolchain when rebuilding rather than assuming these reports.
 - PlatformIO CLI `pio` is on PATH. Work from this folder (the one holding
   `platformio.ini`); keep the project on an ASCII path.
 
