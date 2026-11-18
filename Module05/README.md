@@ -12,7 +12,7 @@ hardware method. Every build is a PlatformIO project against
 |---|---|---|---|
 | [1 — One LED, PWM fade](#task-1--one-led-pwm-fade) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output--task-1); photo pending |
 | [2 — RGB LED and `R G B` REPL](#task-2--rgb-led-and-serial-repl) | [`task2-rgb/`](task2-rgb/) | Built, flashed, R/G/B/white verified on hardware; photographic measurements added | [Nine original photos and current analysis](task2-rgb/README.md#photographic-measurements-and-branch-current-calculation); blue assignment and complete per-channel currents pending |
-| 3 — 8-pixel WS2812B strip | `task3-strip/` | Not started | — |
+| [3 — 8-pixel WS2812B strip](#task-3--8-pixel-ws2812b-strip) | [`task3-strip/`](task3-strip/) | Built, flashed, addressable REPL verified | [REPL transcript](#task-3--8-pixel-ws2812b-strip); power table pending |
 
 ## Equipment
 
@@ -21,6 +21,7 @@ hardware method. Every build is a PlatformIO project against
 | Board | MH-ET LIVE ESP32 MiniKit (`mhetesp32minikit`); chip reported as ESP32-D0WD-V3 rev v3.1, 4 MB flash |
 | Host link | CP210x USB-to-UART bridge, enumerated as `COM8` |
 | Indicator | 5 mm LED (module specifies red or yellow for this task) |
+| Strip | 8-pixel WS2812B, pads `VDC` / `GND` / `DIN`, 5 V supply |
 | Resistor | 220 ohm in series with the LED |
 | Toolchain | PlatformIO Core 6.2.0, `espressif32` 8.0.0, Arduino core 3.3.12 |
 
@@ -58,10 +59,26 @@ The part in use behaves as a **common cathode** build (`COMMON_ANODE = false`). 
 common-anode part wires its common pin to 3V3 and needs the flag set to `true`,
 which inverts the duty so that 255 still means full brightness.
 
+## Wiring — Task 3
+
+| Strip pad | Goes to | Note |
+|---|---|---|
+| `VDC` (5 V supply) | board `5V` | the strip needs 5 V, not 3V3 |
+| `GND` | board `GND` | the ground must be shared with the board |
+| `DIN` (data in) | **GPIO 13** | the `DOUT` end stays unconnected |
+
+Connect in the order GND, then DIN, then VDC, and only while the board is
+unpowered; never plug or unplug the strip while it is powered. Data is
+unidirectional, so it must enter at the `DIN` end of the strip. A 330 ohm series
+resistor in the data line is optional insurance and is not fitted here.
+
+Task 3 reuses GPIO 13, which already carried Task 1's LED and Task 2's red
+channel, so those have to be unplugged first.
+
 ## Build and flash
 
 ```sh
-cd Module05/task1-led      # or Module05/task2-rgb
+cd Module05/task1-led      # or task2-rgb, task3-strip
 pio run -t upload          # build and flash
 pio device monitor -b 115200
 ```
@@ -132,9 +149,37 @@ unidentified branch, with an unresolved 0.2 V voltage-balance difference. The bl
 photo assignments are inconsistent and need confirmation before a validated
 current can be reported. These images do not document their exact PWM commands.
 
+### Task 3 — 8-pixel WS2812B strip
+
+The firmware drives eight pixels over a single data line with
+`NeoPixelBusLg<NeoGrbFeature, NeoEsp32Rmt0Ws2812xMethod, NeoGammaNullMethod>` at
+`SetLuminance(80)`. It accepts `index R G B` (index 0..7), `all R G B` and
+`clear`, echoes every applied change, and rejects out-of-bounds indices,
+out-of-range values and wrong arity. Verified over the serial console:
+`all 255 255 255` lit the whole strip, `0 255 0 0` lit only the first pixel, and
+`8 255 0 0` / `all 300 0 0` were rejected.
+
+Two points the module asks this build to justify:
+
+1. **Driver method.** The RMT peripheral generates the 800 kHz NRZ waveform in
+   hardware, so Wi-Fi/BLE interrupts cannot corrupt a frame; a bit-banged or
+   software-timed path would glitch under radio load. The legacy RMT driver
+   prints a deprecation warning on Arduino core 3.3.12, which is harmless.
+2. **Power.** Only the 8-pixel case exists on this bench, so the 30 / 60 / 144
+   rows are extrapolated from the per-pixel cost rather than observed. The
+   per-pixel cost itself still has to be measured with a meter.
+
+`all R G B` was added specifically for the power measurement: eight separate
+per-pixel commands would refresh the strip eight times instead of holding one
+steady state.
+
 ## Evidence to add
 
 1. Photo or video of the fade with the 220 ohm resistor visible.
 2. Measured current at full duty (Task 1); red-only current and confirmed blue/per-channel measurements (Task 2).
 3. Red-only RGB photo or video; green, blue and near-white measurement photographs are already linked in the Task 2 report.
 4. Confirm blue probe-node assignments, the measured near-white branch, and PWM settings for a complete Task 2 comparison.
+5. Photo or video of the strip with one pixel lit and with all eight lit.
+6. Measured strip current at `SetLuminance(80)`: baseline, one pixel, all eight,
+   so the 30 / 60 / 144 rows can be derived rather than only asserted.
+7. The `Module05/README.md` study-log entries completed with the measurements.
