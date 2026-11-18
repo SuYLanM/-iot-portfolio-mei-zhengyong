@@ -1,0 +1,90 @@
+# Module 5 — LEDs and Light as Output
+
+## Module Overview
+
+Light is the actuator used most often in this course. This module starts with a
+single LED driven by PWM, then moves to an RGB LED with a serial `R G B` REPL,
+and finally to an 8-pixel WS2812B strip driven by `NeoPixelBus` through an ESP32
+hardware method. Every build is a PlatformIO project against
+`board = mhetesp32minikit`.
+
+| Task | Deliverable | Status | Evidence |
+|---|---|---|---|
+| [1 — One LED, PWM fade](#task-1--one-led-pwm-fade) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output); photo pending |
+| 2 — RGB LED and `R G B` REPL | `task2-rgb/` | Not started | — |
+| 3 — 8-pixel WS2812B strip | `task3-strip/` | Not started | — |
+
+## Equipment
+
+| Item | Detail |
+|---|---|
+| Board | MH-ET LIVE ESP32 MiniKit (`mhetesp32minikit`); chip reported as ESP32-D0WD-V3 rev v3.1, 4 MB flash |
+| Host link | CP210x USB-to-UART bridge, enumerated as `COM8` |
+| Indicator | 5 mm LED (module specifies red or yellow for this task) |
+| Resistor | 220 ohm in series with the LED |
+| Toolchain | PlatformIO Core 6.2.0, `espressif32` 8.0.0, Arduino core 3.3.12 |
+
+## Wiring — Task 1
+
+| From | Via | To |
+|---|---|---|
+| GPIO 13 | 220 ohm | LED anode (long leg) |
+| LED cathode (short leg, flat side of the body) | direct wire | GND |
+
+The resistor is not optional: with the LED directly across 3V3 the forward
+current is limited only by the pin and the LED, which destroys one or both.
+
+**Pin deviation from the course module.** The module specifies GPIO 16 for the
+fade. This board does not break out GPIO 16, so the fade is on **GPIO 13**
+instead. GPIO 13 is a general-purpose output, is not a strapping pin, and is not
+shared with the SPI flash, so it behaves like GPIO 16 for PWM. The same
+substitution carries into the later tasks: the planned mapping is R = GPIO 13,
+G = GPIO 14, B = GPIO 27, and WS2812B data = GPIO 13.
+
+## Build and flash
+
+```sh
+cd Module05/task1-led
+pio run -t upload          # build and flash
+pio device monitor -b 115200
+```
+
+The sketch starts with `#include <Arduino.h>`: PlatformIO compiles `.cpp` files
+as C++ and does not add it, while the Arduino IDE does.
+
+## Verified serial output
+
+Captured from `COM8` at 115200 baud after a reset of the flashed board:
+
+```text
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+...
+entry 0x4008059c
+Task 1: PWM fade on GPIO 13
+```
+
+The final line is the `Serial.println(LED_PIN)` in `setup()`, so it also confirms
+the flashed binary is the one built for GPIO 13.
+
+## Study log
+
+### Task 1 — one LED, PWM fade
+
+The fade raises the PWM duty cycle from 0 to 255 in steps of 8 ms and then
+brings it back down, so the LED brightens and dims smoothly; **duty cycle is the
+fraction of each PWM period during which the output is high, and the LED's
+average current — and therefore its apparent brightness — follows that
+fraction.** A linear ramp in duty looks faster at the dim end than at the bright
+end, which is why gamma correction appears further down this module.
+
+Open points for this task:
+
+- Measured forward current for the LED at full brightness (multimeter in series,
+  or the voltage across the 220 ohm resistor via `I = U / R`) — still to measure.
+- Photograph or short video of the fade on the real circuit — still to record.
+
+## Evidence to add
+
+1. Photo or video of the fade with the 220 ohm resistor visible.
+2. Measured current at full duty.
+3. The `Module05/README.md` study-log entry above completed with the measurement.

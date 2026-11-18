@@ -36,6 +36,18 @@ Task labels follow this portfolio's experiment reports. The button sketch retain
 
 [Module 04 report and experiment index](Module04/README.md) links to conductive and capacitive liquid measurement, six-axis IMU measurements, and the attributed partner material on binary detection, sea-state classification, and tank sensor selection.
 
+## Module 05 — LEDs and Light as Output
+
+[Module 05 guide and task index](Module05/README.md) documents the PWM fade on a single LED and links the upcoming RGB LED and WS2812B strip tasks. Task 1 is built, flashed and serial-verified on real hardware; Tasks 2 and 3 are not started.
+
+| Task | Evidence status | Project | Hardware evidence |
+|---|---|---|---|
+| 1 — One LED, PWM fade | Built, flashed, serial verified (GPIO 13) | [task1-led](Module05/task1-led/) | Serial capture; photo and current measurement pending |
+| 2 — RGB LED `R G B` REPL | Not started | — | — |
+| 3 — 8-pixel WS2812B | Not started | — | — |
+
+This board does not break out GPIO 16, so the module's default pin is replaced by GPIO 13 (and GPIO 14 / 27 for the RGB channels); the reasoning is recorded in [Module 05 — wiring](Module05/README.md#wiring--task-1).
+
 ## Pre-study and Preparation
 
 - [Module 0 pre-study](00-pre-study.md): original notes, datasheet study, project idea and Wokwi evidence; retained as submitted.
@@ -62,6 +74,7 @@ Module01/
 Hardware/pictures/          Original hardware photographs and screenshots
 Module02/                   Bus/I2C theory and code; hardware tests pending
 Module04/                   Liquid-level and IMU experiments with partner reference material
+Module05/                   LED PWM fade; RGB and WS2812B tasks in progress
 Reflections/                Reflection instructions and original prompts
 sketch.ino, diagram.json    Original Wokwi preparation source
 wokwi_*.png                 Original simulation screenshots
