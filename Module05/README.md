@@ -12,7 +12,7 @@ hardware method. Every build is a PlatformIO project against
 |---|---|---|---|
 | [1 — One LED, PWM fade](#task-1--one-led-pwm-fade) | [`task1-led/`](task1-led/) | Built, flashed, serial verified | [Serial capture](#verified-serial-output--task-1); photo pending |
 | [2 — RGB LED and `R G B` REPL](#task-2--rgb-led-and-serial-repl) | [`task2-rgb/`](task2-rgb/) | Built, flashed, R/G/B/white verified on hardware; photographic measurements added | [Nine original photos and current analysis](task2-rgb/README.md#photographic-measurements-and-branch-current-calculation); blue assignment and complete per-channel currents pending |
-| 3 — 8-pixel WS2812B strip | `task3-strip/` | Not started | — |
+| [3 — 8-pixel WS2812B strip](task3-strip/README.md) | [`task3-strip/`](task3-strip/) | Selected-pixel and eight-pixel outputs demonstrated in supplied photographs; source/build logs not yet archived | [Six original photos and English report](task3-strip/README.md); meter indications recorded as mV, current not verified |
 
 ## Equipment
 
@@ -132,9 +132,25 @@ unidentified branch, with an unresolved 0.2 V voltage-balance difference. The bl
 photo assignments are inconsistent and need confirmation before a validated
 current can be reported. These images do not document their exact PWM commands.
 
+### Task 3 — individually addressable strip
+
+The [Task 3 report](task3-strip/README.md) archives six original photographs.
+The first three show a bottom red pixel, then an additional blue/cyan top pixel,
+then a white-appearing pixel at the third position from the bottom. The remaining
+three show the strip off, one pixel illuminated, and all eight illuminated.
+The photographed terminal identifies GPIO13, eight pixels, NeoPixelBus with
+an ESP32 RMT method, and luminance 96. This is photographic evidence of operation;
+the original source and build/upload logs are not yet archived here.
+
+An important measurement distinction is that the meter displays **0.8, 2.7,
+and 16.0 mV**, not mA. Without documented probe nodes and a known shunt resistance,
+these observations do not establish strip current or power. The report separates
+the demonstrated lighting patterns from the remaining quantitative measurements.
+
 ## Evidence to add
 
 1. Photo or video of the fade with the 220 ohm resistor visible.
 2. Measured current at full duty (Task 1); red-only current and confirmed blue/per-channel measurements (Task 2).
 3. Red-only RGB photo or video; green, blue and near-white measurement photographs are already linked in the Task 2 report.
 4. Confirm blue probe-node assignments, the measured near-white branch, and PWM settings for a complete Task 2 comparison.
+5. Task 3 original source/configuration and build/upload/serial logs; documented power wiring and current-measurement circuit for quantitative load analysis.
