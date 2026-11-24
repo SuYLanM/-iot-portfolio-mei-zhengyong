@@ -59,7 +59,7 @@ This board does not break out GPIO 16, so the module's default pin is replaced b
 
 ## Learning Reflections
 
-[Reflection instructions](Reflections/README.md) · [Reflection 1](Reflections/ref01.md). Reflection 1 currently contains prompts, not a completed personal reflection. Later reflections have not been supplied.
+[Individual reflections index and checklist](Reflections/README.md) · [Module 1](Reflections/ref01.md) · [Module 2](Reflections/ref02.md) · [Module 3](Reflections/ref03.md) · [Module 4](Reflections/ref04.md) · [Module 5](Reflections/ref05.md). The five evidence-based reflection drafts remain in `Reflections/`; personal confirmation is pending where noted.
 
 ## Repository Structure
 
@@ -75,7 +75,7 @@ Hardware/pictures/          Original hardware photographs and screenshots
 Module02/                   Bus/I2C theory and code; hardware tests pending
 Module04/                   Liquid-level and IMU experiments with partner reference material
 Module05/                   LED PWM fade; RGB and WS2812B tasks in progress
-Reflections/                Reflection instructions and original prompts
+Reflections/                Individual reflections and documentation checklist
 sketch.ino, diagram.json    Original Wokwi preparation source
 wokwi_*.png                 Original simulation screenshots
 docs/                      Audit and preserved course-template text

@@ -19,6 +19,12 @@ Status describes the linked evidence, not an instructor assessment.
 | 5. Use Arduino serial tools to inspect, log and visualize measurements. | I inspected serial screenshots for GPIO and ADC behaviour; a separate controlled plot/timing exercise is still prepared rather than measured. | [Serial record](evidence/serial-test.md), [LDR illuminated capture](../Hardware/pictures/esp32-ldr-illuminated.png), [serial/timing sketch](code/task02_serial_timing/task02_serial_timing.ino) | Inspection demonstrated; Needs further evidence for the planned timing/plot exercise. |
 | 6. Measure ADC resolution, read an LDR and apply initial digital filters. | I observed endpoints and light response. The Module 1 filter sketch is prepared; later real filter measurements belong to Module 3, not this session. | [ADC record](records/task03-adc.md), [LDR report](evidence/Task04_LDR.md), [filter preparation](code/task05_filters/README.md), [later measured filters](../Module03/reports/task05-noise-filtering.md) | Partial; Needs further evidence for local voltage-step calibration and Module 1 filter execution. |
 
+## Individual Reflection
+
+Read my [Module 1 Individual Reflection](../Reflections/ref01.md) for learning takeaways, difficulties, AI verification, and self-assessment against the learning goals.
+
+[Learning Goals](#learning-goals) · [Study log](#study-log)
+
 ## Group Members
 
 - Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)

@@ -14,6 +14,12 @@ Status describes the linked evidence, not an instructor assessment.
 | 5. Address strip pixels and justify a hardware driver suitable for radio-active ESP32 use. | I documented selected-pixel patterns, GRB and NeoPixelBus RMT channel 0; the photos show luminance 96 while current source caps it at 80. | [Strip source](task3-strip/src/main.cpp), [six-photo report](task3-strip/experiment-report.md) | Addressing demonstrated; Needs further evidence for Wi-Fi/BLE stress verification. |
 | 6. Compute and measure power demand and choose an adequate USB/supply arrangement. | I compared computed 8/30/60/144-pixel budgets with the lack of validated strip-current measurements; mV indications are not mA. | [Computed/measured budget](#strip-power-budget--computed-versus-measured), [meter photographs](task3-strip/experiment-report.md) | Computed planning complete; Needs further evidence for current, supply capability and margin. |
 
+## Individual Reflection
+
+Read my [Module 5 Individual Reflection](../Reflections/ref05.md) for learning takeaways, difficulties, AI verification, and self-assessment against the learning goals.
+
+[Learning Goals](#learning-goals) · [Study log](#study-log)
+
 ## Module Overview
 
 Light is the actuator used most often in this course. This module starts with a

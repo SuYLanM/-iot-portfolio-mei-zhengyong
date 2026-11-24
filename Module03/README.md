@@ -28,6 +28,12 @@ Status describes the linked evidence, not an instructor assessment.
 | 4. Quantify noise and filter it while assessing latency. | I compared MA5, median5 and EMA0.2 using fresh 500-point hardware streams and a real descending transition; spikes/drift are labelled synthetic. | [Filter report](reports/task05-noise-filtering.md), [recomputed table](data/task06-analysis/filter-comparison.csv), [noise plot](figures/task06-analysis/filter-noise.png) | Hardware-data analysis demonstrated; manual-step and sample-interval limits remain. |
 | 5. State a simple measurement-uncertainty budget. | I propagated the ADC calibration noise and coefficient covariance, separating a conditional random budget from unknown systematic terms. | [Uncertainty report](reports/task06-uncertainty-filtering.md), [budget CSV](data/task06-analysis/uncertainty-budget.csv), [contribution plot](figures/task06-analysis/contributions.png) | Conditional analysis complete; Needs further evidence for DMM specifications, drift and systematic bounds. |
 
+## Individual Reflection
+
+Read my [Module 3 Individual Reflection](../Reflections/ref03.md) for learning takeaways, difficulties, AI verification, and self-assessment against the learning goals.
+
+[Learning Goals](#learning-goals) · [Study log](#study-log)
+
 ## Final status with supplementary simulation
 
 [Supplementary Simulation — Not Hardware Measurement](simulation/supplementary/README.md) contains reproducible parameters, synthetic CSVs, figures and limitations. These additions do not replace missing physical evidence. No further hardware experiments are planned for this submission stage.

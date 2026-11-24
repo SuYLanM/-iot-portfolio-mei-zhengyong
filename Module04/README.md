@@ -13,6 +13,12 @@ Status describes the linked evidence, not an instructor assessment.
 | 4. Use motion/shock sensing to distinguish harbor/outside and relate motion to level readings. | I logged stationary, tilt, shaking and recovered-rest IMU windows; the partner supplies sea-state classification references. | [My IMU code](Task03_IMU/Task03_IMU.ino), [real shaking CSV](Task03_IMU/data/test-F-slow-shaking.csv), [curve](Task03_IMU/figures/imu-test-overview.png), [partner classification](partner_reference/README.md) | Motion demonstrated; Needs further evidence for my own validated classifier and synchronized tank-motion test. |
 | 5. Produce a pod recommendation/theory report and apply it to a local industrial story. | I assembled an evidence-led report and clearly credited LudwigMo for Sections 4–6 instead of presenting them as independent work. | [Contributions](#references-and-contributions), [partner decision sheet](partner_reference/README.md) | Needs further evidence: my confirmed pod recommendation, personal transfer story and peer exchange. |
 
+## Individual Reflection
+
+Read my [Module 4 Individual Reflection](../Reflections/ref04.md) for learning takeaways, difficulties, AI verification, and self-assessment against the learning goals.
+
+[Learning Goals](#learning-goals) · [Study log](#study-log)
+
 ## Module Overview
 
 This portfolio compares water-presence detection, continuous liquid-level estimation, and motion measurement in a tabletop setup. Tasks 1–3 are Mei Zhengyong’s experiments. Sections 4–6 present LudwigMo’s reference experiments and tank-selection proposal. The numbering is for portfolio navigation.

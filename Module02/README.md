@@ -18,6 +18,12 @@ Status describes the linked evidence, not an instructor assessment.
 | 5. Operate two bus devices and resolve an address conflict. | I verified LCD 0x27 and a wired ESP32-controlled target at 0x42, including data checks. The second target is an MCU slave; conflict resolution remains theoretical. | [Dual-target report](two-devices.md), [real log](evidence/task07-two-devices/dual-wired-serial-20261102.txt), [photo](evidence/task07-two-devices/task07_lcd_dual_address_demo.jpg), [conflict notes](address-conflict.md) | Adaptation demonstrated; Needs further evidence for two real sensors and a physical conflict/fix. |
 | 6. Evaluate a low-cost ESP32 instrument and agree class debugging tools. | I retained native captures for LOW/HIGH, grounded PWM and NACK-only I2C; sample-derived timing is not independent timebase calibration. | [Instrument report](scope-decision.md), [grounded capture](evidence/task09-esp8266-pwm/pulseview-pwm-esp8266-grounded-retest-01.sr), [replay image](evidence/task09-esp8266-pwm/pwm-grounded-retest-01-replay.jpg) | Instrument evidence partial; Needs further evidence for sensor-data decode and actual class agreement. |
 
+## Individual Reflection
+
+Read my [Module 2 Individual Reflection](../Reflections/ref02.md) for learning takeaways, difficulties, AI verification, and self-assessment against the learning goals.
+
+[Learning Goals](#learning-goals) · [Study log](#study-log)
+
 ## Group Members
 
 - Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
