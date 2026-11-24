@@ -1,5 +1,18 @@
 # Module 4 — Liquid Measurement & Sensor Selection
 
+## Learning Goals
+
+The rows follow the numbering and meaning of the [official module goals](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/04-liquid-measurement-and-sensor-selection.md).
+Status describes the linked evidence, not an instructor assessment.
+
+| Official goal (paraphrased) | How I learned or checked it | Existing evidence | Evidence status |
+|---|---|---|---|
+| 1. Distinguish binary, thresholded, continuous and hybrid sensing and the quantity actually measured. | I used the conductive AO/DO results to separate wet/dry detection from a calibrated continuous depth claim. | [Conductive report](Task01_WaterLevel/experiment-report.md), [raw windows](Task01_WaterLevel/data/), [AO plot](Task01_WaterLevel/ao-time-series.png) | Demonstrated for this wet/dry setup; hybrid integration not demonstrated. |
+| 2. Match a sensing principle to liquid, tank, decision and failure conditions. | I compared conductivity, dielectric response and motion effects using my records and attributed partner recommendations; chemistry, foam, hygiene and mounting are design constraints, not all bench-tested. | [Decision sheet](#section-6--decision-sheet-for-four-tanks), [partner provenance](partner_reference/README.md), [my setup photo](Task02_Capacitive/images/experimental_setup.jpg) | Analysis/reference support; Needs further evidence for my own confirmed choices and installation testing. |
+| 3. Calibrate continuous and binary tank sensing, derive volume and uncertainty, and combine a hybrid if useful. | I have real binary windows. The capacitive attempt has zero-valued diagnostics, separate simulation and supplied datasets with unresolved acquisition provenance. | [Capacitive report](Task02_Capacitive/experiment-report.md), [supplied/diagnostic data](Task02_Capacitive/data/), [simulation](Task02_Capacitive/simulation/synthetic-capacitive-water-level.csv) | Needs further evidence: validated continuous volume, uncertainty and hybrid measurements; partner calibration is not my measurement. |
+| 4. Use motion/shock sensing to distinguish harbor/outside and relate motion to level readings. | I logged stationary, tilt, shaking and recovered-rest IMU windows; the partner supplies sea-state classification references. | [My IMU code](Task03_IMU/Task03_IMU.ino), [real shaking CSV](Task03_IMU/data/test-F-slow-shaking.csv), [curve](Task03_IMU/figures/imu-test-overview.png), [partner classification](partner_reference/README.md) | Motion demonstrated; Needs further evidence for my own validated classifier and synchronized tank-motion test. |
+| 5. Produce a pod recommendation/theory report and apply it to a local industrial story. | I assembled an evidence-led report and clearly credited LudwigMo for Sections 4–6 instead of presenting them as independent work. | [Contributions](#references-and-contributions), [partner decision sheet](partner_reference/README.md) | Needs further evidence: my confirmed pod recommendation, personal transfer story and peer exchange. |
+
 ## Module Overview
 
 This portfolio compares water-presence detection, continuous liquid-level estimation, and motion measurement in a tabletop setup. Tasks 1–3 are Mei Zhengyong’s experiments. Sections 4–6 present LudwigMo’s reference experiments and tank-selection proposal. The numbering is for portfolio navigation.
@@ -138,3 +151,25 @@ The portfolio demonstrates binary water detection and six-axis motion logging. A
 - Sections 4–6 retain LudwigMo’s original text, reported results, sketches, and images in the partner archive, including the source license. Measurements and recommendations there are credited to LudwigMo. No standalone partner CSV was supplied for these sections. [Partner reference and license](partner_reference/README.md)
 - The ultrasonic setup photos come from LudwigMo’s Sections 2 and 3 and are reproduced as supporting evidence for the tank decision. Mei’s original cup photograph and wiring close-up accompany Task 2. [Partner calibration and disturbance tests](https://github.com/LudwigMo/sensorik-aktorik-portfolio/blob/a91cfa6491b854ff9ea7858242c6c1142b48ca65/Module04/README.md#2-volume-calibration-and-validation)
 - The course workbook defines the learning goals and the joint decision sheet and demonstration deliverables. [HSBI Module 4 workbook](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/04-liquid-measurement-and-sensor-selection.md)
+
+
+## Study log
+
+### Study log — evidence, limitations and contributions
+
+I compared conductive detection, a capacitive attempt and six-axis motion.
+The 105 conductive samples separate tested wet and dry conditions but do not
+establish continuous depth. My capacitive diagnostics returned zero; the separate
+147-point dataset is synthetic. Later supplied ADC lists and timestamped data
+differ and have unresolved acquisition provenance, so photographs alone cannot
+turn them into verified level/volume calibration. I learned that the quantity a
+sensor measures and the decision I need are different questions.
+
+I used StickS3/BMI270 captures to compare static tilt, shaking and return to rest.
+Acceleration-derived roll/pitch are affected by motion; my moving-platform tank
+correction has not been tested. Codex helped build acquisition/analysis tools and
+organize the evidence. I verified suggestions against the CSV windows and kept
+simulation separate. I retained LudwigMo's code, images and decision sheet as
+attributed partner references, not my own measurements or proof of a discussion.
+My [individual reflection](../Reflections/ref04.md) requires personal confirmation;
+pod agreement, instructor feedback and Discord sharing remain unconfirmed.

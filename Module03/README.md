@@ -15,6 +15,19 @@
 | All | A. Shared study log | References, findings, verified LLM answers, examples, mini checks and calibration decisions | Evidence-based analytical notes added. Personal learning, pod agreement and classroom checks pending |
 | 2–3 | B. Two pod exchanges | Independent-point review, agreed learning, shared artefact and Discord post | Classroom activity pending |
 
+## Learning Goals
+
+The rows follow the numbering and meaning of the [official module goals](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/03-sensor-characterization-and-calibration.md).
+Status describes the linked evidence, not an instructor assessment.
+
+| Official goal (paraphrased) | How I learned or checked it | Existing evidence | Evidence status |
+|---|---|---|---|
+| 1. Describe transfer behaviour, sensitivity, span, linearity, hysteresis, repeatability and resolution. | I fitted the real LDR ladder and evaluated manual return/sweep measurements while retaining anomalies and illumination assumptions. | [LDR report](reports/task01-ldr.md), [raw ladder](evidence/task01-ldr/), [fit](figures/task01-ldr/transfer-fit.png), [repeatability](reports/task04-repeatability.md) | Substantial measured support; Needs further evidence for controlled timing and absolute-light/reference validation. |
+| 2. Describe response time, time constant, bandwidth and self-heating. | I analysed the real water-temperature step, obtaining an operational tau near 9.67 s; the air response is explicitly simulated. | [DS18B20 report](reports/task02-ds18b20.md), [real step CSV](evidence/task02-ds18b20/water-step/20261104-173236.csv), [curve](figures/task02-ds18b20/water-step/thermal-step.png) | Water response demonstrated; Needs further evidence for air response, bandwidth and self-heating. |
+| 3. Calibrate at two points and validate at a third independent point. | I paired ADC samples with the confirmed 0.568/2.398 V endpoints and held out 1.526 V. LDR endpoints also excluded their validation point. Temperature correction lacks a reference. | [Calibration report](reports/task03-calibration.md), [paired CSV](evidence/task03-calibration/adc/paired-points.csv), [DMM photos](evidence/task03-calibration/adc/photos/), [validation plot](figures/task03-calibration/adc/adc-validation.png) | ADC/LDR recorded validation complete; Needs further evidence for Task 3c independent temperature reference. |
+| 4. Quantify noise and filter it while assessing latency. | I compared MA5, median5 and EMA0.2 using fresh 500-point hardware streams and a real descending transition; spikes/drift are labelled synthetic. | [Filter report](reports/task05-noise-filtering.md), [recomputed table](data/task06-analysis/filter-comparison.csv), [noise plot](figures/task06-analysis/filter-noise.png) | Hardware-data analysis demonstrated; manual-step and sample-interval limits remain. |
+| 5. State a simple measurement-uncertainty budget. | I propagated the ADC calibration noise and coefficient covariance, separating a conditional random budget from unknown systematic terms. | [Uncertainty report](reports/task06-uncertainty-filtering.md), [budget CSV](data/task06-analysis/uncertainty-budget.csv), [contribution plot](figures/task06-analysis/contributions.png) | Conditional analysis complete; Needs further evidence for DMM specifications, drift and systematic bounds. |
+
 ## Final status with supplementary simulation
 
 [Supplementary Simulation — Not Hardware Measurement](simulation/supplementary/README.md) contains reproducible parameters, synthetic CSVs, figures and limitations. These additions do not replace missing physical evidence. No further hardware experiments are planned for this submission stage.
@@ -113,3 +126,21 @@ These are retrospective conclusions from archived records. Each member's own exp
 - **Which seasonal effects were measured?** Short-run noise, response, repeatability and held-out calibration errors were observed. Seasonal drift, installation and environmental dependence were not bounded.
 
 These are document-based draft answers. Instructor mini checks and personal or joint confirmation remain pending.
+
+### Individual evidence review for this portfolio update
+
+I used real light ladders, repeated positions and temperature conversions to
+separate sensor response from data-processing assumptions. I retained the first
+15/60 cm records alongside recaptures instead of removing awkward observations.
+The ADC fit used paired 0.568/2.398 V references, not the earlier 2.389 V photo;
+the independent 1.526 V point still had +12.994 mV error after correction.
+The photo-name/display mismatch at the low point is also disclosed in the report.
+The water step supports a response estimate, not an independent thermometer.
+
+Codex assisted acquisition, scripts, models, plots and covariance checks. I checked
+its work against raw CSVs and retained zero-input failures before the real LDR
+stream recovered after reconnection. I cannot identify the exact original wiring
+fault from that recovery alone. Synthetic spikes and supplementary virtual probes
+remain separate. My [reflection](../Reflections/ref03.md) is for personal review;
+Task 3c references, additional real probes, complete systematic uncertainty and
+actual peer/Discord evidence remain pending.

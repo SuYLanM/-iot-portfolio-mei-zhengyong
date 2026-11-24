@@ -4,6 +4,20 @@
 
 [Portfolio home](../README.md) · [Official Module 2](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md) · [Requirements checklist](task-checklist.md) · [Sources / verification](references.md)
 
+## Learning Goals
+
+The rows follow the numbering and meaning of the [official module goals](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/02-i2c-and-sensor-addressing.md).
+Status describes the linked evidence, not an instructor assessment.
+
+| Official goal (paraphrased) | How I learned or checked it | Existing evidence | Evidence status |
+|---|---|---|---|
+| 1. Compare direct pins/PWM with UART, RS-232/485, Modbus, CAN, I2C/I3C, SPI and OneWire. | I prepared the CAN profile and bus comparison, distinguishing modulation, electrical layers and addressed protocols. | [CAN profile](bus-can.md), [comparison](bus-comparison.md), [pin/divider report](pins-and-dividers.md) | Research prepared; Needs further evidence for personal explanation and class comparison/pitch. |
+| 2. Explain I2C electrical operation, addressing and transaction features. | I related stuck-low diagnostics to a shared bus and used real ACK/NACK records; repeated-start and stretching explanations remain theory. | [Theory notes](study-log.md), [LOW diagnostic](evidence/task05-i2c-scanning/lcd-line-diagnostic-serial-20261102.txt), [positive scans](evidence/ds1302-lcd-extension/scanner-serial-20261102.txt) | Partial practical support; Needs further evidence for repeated-start/stretching observations. |
+| 3. Wire and scan the bus and identify responding devices. | I obtained 0x27 in five sweeps, then no address in four sweeps after the LCD SDA connection was removed. This was SDA disconnection, not full module removal. | [Scanner](code/task05_i2c_scanner/README.md), [before log](evidence/ds1302-lcd-extension/scanner-serial-20261102.txt), [after log](evidence/task05-i2c-scanning/sda-disconnect/serial-20261102.txt) | Hardware verified within this LCD configuration. |
+| 4. Compare library readings with direct sensor-register reads. | I prepared the BME280 example but did not obtain matching real sensor values. DS1302 is a three-wire RTC, not a replacement I2C sensor. | [Register report](register-reading.md), [example code](code/task06_library_vs_register/README.md), [RTC extension](evidence/ds1302-lcd-extension/README.md) | Needs further evidence: actual sensor-library and direct-register comparison. |
+| 5. Operate two bus devices and resolve an address conflict. | I verified LCD 0x27 and a wired ESP32-controlled target at 0x42, including data checks. The second target is an MCU slave; conflict resolution remains theoretical. | [Dual-target report](two-devices.md), [real log](evidence/task07-two-devices/dual-wired-serial-20261102.txt), [photo](evidence/task07-two-devices/task07_lcd_dual_address_demo.jpg), [conflict notes](address-conflict.md) | Adaptation demonstrated; Needs further evidence for two real sensors and a physical conflict/fix. |
+| 6. Evaluate a low-cost ESP32 instrument and agree class debugging tools. | I retained native captures for LOW/HIGH, grounded PWM and NACK-only I2C; sample-derived timing is not independent timebase calibration. | [Instrument report](scope-decision.md), [grounded capture](evidence/task09-esp8266-pwm/pulseview-pwm-esp8266-grounded-retest-01.sr), [replay image](evidence/task09-esp8266-pwm/pwm-grounded-retest-01-replay.jpg) | Instrument evidence partial; Needs further evidence for sensor-data decode and actual class agreement. |
+
 ## Group Members
 
 - Mei Zhengyong — GitHub: [@SuYLanM](https://github.com/SuYLanM)
@@ -42,7 +56,7 @@ The original required English output filenames are retained. Task 2 now uses **b
 - [CAN wiring / module checks](can-wiring.md) · [Blank CAN hardware and classroom record](evidence/task02-can-test-record.md). Local self-test is separate from two-node physical CAN verification.
 - [Independent Arduino sketches and English instructions](code/README.md), Tasks 5–7 now support classic ESP32 Dev Module / Core 3.3.12 and WeMos ESP8266 / Core 3.1.2. Task 1 now includes a separate GPIO35 fixed-resistor divider baseline; it does not replace the original 5 V measurement. Default scanner SDA21/SCL22 must be checked against the actual board and sensor modules.
 - Unknown sensors/registers/addresses remain disabled placeholders; their templates emit Pending messages, not fabricated values. No third-party sensor library was selected.
-- [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). Task 9 original LOW/HIGH acquisitions and genuine replay screenshots are now [available](evidence/task09-logic-analyzer/README.md); Task 1 photographs are documented with unconfirmed nodes; Task 5–7 sensor results remain Pending.
+- [Evidence register and blank report framework](evidence/README.md) · [Pictures directory](pictures/README.md). Task 9 original LOW/HIGH acquisitions and genuine replay screenshots are now [available](evidence/task09-logic-analyzer/README.md); Task 1 photographs are documented with unconfirmed nodes; Tasks 5 and 7 have the LCD/MCU evidence above; Task 6 real sensor comparison remains Pending.
 - [Original software validation](validation.md) · [Task 9 follow-up build/host validation](task09-analyzer-build.md). Earlier Core 3.3.12 preparation is retained; original firmware also compiled with Core 3.3.7. The user confirmed IDE flashing, and original-firmware LOW/HIGH acquisition was verified without an assistant reflash or applied patch. GPIO22/23 conflicts and pending runtime timing checks remain explicit in the scope record. B-class research is unchanged.
 
 ## Next Actual Session
@@ -55,3 +69,25 @@ The original required English output filenames are retained. Task 2 now uses **b
 6. Complete personal/pod understanding, neighbouring-pod discussion and real Discord sharing. Optional Task 10 follows working instrumentation.
 
 Existing Module 01, Module 0, Reflection and original template archive remain intact. [Original Module 02 template](../docs/archive/module02-template.txt) is historical material, not completed evidence.
+
+
+## Study log
+
+### Evidence-led review and individual contribution
+
+I retained the initial SDA/SCL LOW failure and the later positive scanner run.
+The five connected sweeps found 0x27; four SDA-disconnected sweeps found none.
+I then documented 0x27 and 0x42 with real data checks, identifying the second
+as an ESP32-controlled target rather than a second sensor. These are stronger
+checks than assuming that a configured address must respond. DS1302 uses its own
+three-wire interface; neither it nor LCD output completes the sensor-register task.
+Codex helped prepare scanner/diagnostic firmware, parse logs and investigate
+instrument feasibility. I checked results with actual ACK/NACK logs, display
+readback and native analyzer captures. Stale slave replies were rejected before
+fresh ones were accepted. Sensor library/register comparison, physical address
+conflict resolution and a final class instrument choice remain unverified.
+
+The detailed [theory log](study-log.md), [instrument decision](scope-decision.md)
+and [individual reflection](../Reflections/ref02.md) separate my archived work
+from prepared CAN/classroom material. Specific Felix/pod feedback and Discord
+sharing await my confirmation; no new hardware run was performed for this review.

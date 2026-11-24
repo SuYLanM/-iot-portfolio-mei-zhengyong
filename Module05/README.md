@@ -1,5 +1,19 @@
 # Module 5 — LEDs and Light as Output
 
+## Learning Goals
+
+The rows follow the numbering and meaning of the [official module goals](https://github.com/iotempire/iotempire-teaching/blob/main/full-classes/hsbi-sensors-actuators-10d/modules/05-leds-and-light-output.md).
+Status describes the linked evidence, not an instructor assessment.
+
+| Official goal (paraphrased) | How I learned or checked it | Existing evidence | Evidence status |
+|---|---|---|---|
+| 1. Explain LED physics and choose a current-limiting resistor. | I checked green resistor-drop arithmetic against photographs and kept blue-node ambiguity explicit; all branch resistors are nominal 220 ohm. | [RGB report/photos](task2-rgb/README.md), [current table](#measured-currents-and-calculated-estimates) | Partial; Needs further evidence for red/blue currents and confirmed measurement conditions. |
+| 2. Use PWM and explain duty, frequency and perceptual gamma. | I inspected the 0..255 fade and distinguished on-time fraction from voltage; no measured PWM frequency or visual gamma comparison is archived. | [Fade source](task1-led/src/main.cpp), [Task 1 record](task1-led/README.md) | Fade implementation recorded; Needs further evidence for dedicated fade video and frequency/gamma tests. |
+| 3. Mix RGB colours and explain additive mixing. | I retained common-cathode control and green/blue/near-white photos, without treating camera colour as calibrated chromaticity. | [RGB source](task2-rgb/src/main.cpp), [original images](task2-rgb/images/), [report](task2-rgb/README.md) | Photographic/control support; Needs further evidence for complete balanced-current/color comparison. |
+| 4. Prepare an AI-assisted PlatformIO project and verify its implementation. | I checked actual GPIO constants, project configuration and serial handling; package versions remain unpinned and historical reports are not fresh builds. | [Shared development rules](AGENTS.md), [Task 1 project](task1-led/README.md), [Task 4 audit](#task-4--share-the-repo-audit) | Projects published and checks recorded; exact fresh-environment reproducibility needs further evidence. |
+| 5. Address strip pixels and justify a hardware driver suitable for radio-active ESP32 use. | I documented selected-pixel patterns, GRB and NeoPixelBus RMT channel 0; the photos show luminance 96 while current source caps it at 80. | [Strip source](task3-strip/src/main.cpp), [six-photo report](task3-strip/experiment-report.md) | Addressing demonstrated; Needs further evidence for Wi-Fi/BLE stress verification. |
+| 6. Compute and measure power demand and choose an adequate USB/supply arrangement. | I compared computed 8/30/60/144-pixel budgets with the lack of validated strip-current measurements; mV indications are not mA. | [Computed/measured budget](#strip-power-budget--computed-versus-measured), [meter photographs](task3-strip/experiment-report.md) | Computed planning complete; Needs further evidence for current, supply capability and margin. |
+
 ## Module Overview
 
 Light is the actuator used most often in this course. This module starts with a
@@ -202,6 +216,23 @@ This is the configured origin (its repository name starts with a hyphen).
 screenshot; neither a repository push nor this prepared link proves it was shared.
 No jointly agreed learning or peer feedback is claimed here.
 
+### Individual review of AI-assisted LED work
+
+I compared source constants with documentation rather than trusting generated
+comments: Task 1 drives GPIO13 despite its older GPIO16 comment. The RGB code
+uses separate PWM branches and rejects invalid serial values. The measured green
+resistor indication supports an approximate current; the blue node assignments
+remain inconsistent, and the near-white estimate concerns one unidentified branch.
+I kept those limitations rather than filling a complete current table by theory.
+
+Codex helped draft firmware, troubleshoot terminal line endings, organize photos
+and calculate budgets. I checked these outputs against source and original images.
+The strip photos demonstrate pixel patterns but show mV, not current, and their
+luminance 96 differs from source luminance 80. Calculated supply budgets therefore
+remain planning estimates. I have not documented a measured gamma comparison,
+radio stress test, or calibrated strip power. My [reflection](../Reflections/ref05.md)
+adds an individual evidence-based account for my confirmation. Discord posting
+and any jointly agreed learning remain pending; this review does not claim them.
 
 ## Evidence to add
 
